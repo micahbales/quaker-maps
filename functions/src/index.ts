@@ -1,10 +1,16 @@
 import * as functions from 'firebase-functions'
-import * as admin from 'firebase-admin'
 import * as express from 'express'
-import helloWorld from './controllers/hello_world'
-admin.initializeApp()
+import { getMeeting, getMeetings } from './controllers/meetings'
+
+// Initialize Express
 const app = express()
 
-app.get('/helloWorld', helloWorld)
+/**
+ * Meetings Routes
+ */
 
+app.get('/meetings', getMeetings)
+app.get('/meetings/:docId', getMeeting)
+
+// Expose express API to Firebase
 exports.api = functions.https.onRequest(app)
