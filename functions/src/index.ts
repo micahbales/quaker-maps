@@ -5,6 +5,13 @@ import { getMeeting, getMeetings } from './controllers/meetings'
 // Initialize Express
 const app = express()
 
+// Allow CORS requests from client
+app.use((req: any, res: any, next: any) => {
+    res.header("Access-Control-Allow-Origin", "*")
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
+    next()
+})
+
 /**
  * Meetings Routes
  */
