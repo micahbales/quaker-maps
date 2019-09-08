@@ -2,6 +2,8 @@ import React from 'react'
 import { fetchMeetings } from './api/fetch_meetings'
 import { Meeting } from './types'
 import { MainMap } from './components/MainMap/MainMap'
+import { NavBar } from './components/NavBar/NavBar'
+import { CssBaseline } from '@material-ui/core';
 const apiKey: string | undefined = process.env.REACT_APP_GOOGLE_MAPS_API_KEY
 
 
@@ -25,14 +27,22 @@ const App: React.FC = () => {
   
   const [appState, setAppState] = React.useState(initialState)
   
-  React.useEffect(() => { fetchMeetings(appState, setAppState) }, [])
+  React.useEffect(() => {
+    fetchMeetings(appState, setAppState)
+  }, [])
 
   return apiKey ? (
-    <MainMap 
-      apiKey={apiKey}
-      appState={appState}
-      setAppState={setAppState}
-    />
+    <>
+      <CssBaseline />
+      <NavBar 
+        meetings={appState.meetings}
+      />
+      <MainMap
+        apiKey={apiKey}
+        appState={appState}
+        setAppState={setAppState}
+      />
+    </>
   ) : (
     <h1>
       Error: Need Valid API Key

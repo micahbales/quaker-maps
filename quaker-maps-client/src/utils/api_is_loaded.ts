@@ -30,5 +30,9 @@ interface ApiIsLoadedOptions {
 // Fit map to its bounds after the api is loaded
 export const apiIsLoaded = ({ map, maps, setAppState, appState }: ApiIsLoadedOptions) => {
     setAppState({ ...appState, map, maps })
-    setMapBounds(map, maps, appState.meetings)
+    
+    // Only update bounds if there is map data to bound
+    if (appState.meetings.length > 0) {
+        setMapBounds(map, maps, appState.meetings)
+    }
 }
