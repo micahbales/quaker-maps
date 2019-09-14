@@ -15,20 +15,22 @@ import map from 'lodash/map'
 
 
 interface NavMenuProps {
+    filterMeetings: any
     meetings: Meeting[]
     setDrawerIsOpen: (option: boolean) => void
 }
 
 export const NavMenu: React.FC<NavMenuProps> = ({
+    filterMeetings,
     meetings,
     setDrawerIsOpen,
 }) => {
     const classes = useStyles()
     const [state, setState] = React.useState({
         // Title of every yearly meeting
-        yearlyMeetings: getYearlyMeetingTitles(meetings),
+        yearly_meetings: getYearlyMeetingTitles(meetings),
         // Title of currently selected yearly meeting
-        yearlyMeeting: '',
+        yearly_meeting: '',
     })
 
     function handleChange(event: React.ChangeEvent<{ name?: string; value: unknown }>) {
@@ -36,6 +38,7 @@ export const NavMenu: React.FC<NavMenuProps> = ({
             ...oldValues,
             [event.target.name as string]: event.target.value,
         }))
+        filterMeetings(event.target.name, event.target.value)
     }
 
     return (
@@ -54,14 +57,14 @@ export const NavMenu: React.FC<NavMenuProps> = ({
                         Yearly Meeting
                     </InputLabel>
                     <Select
-                        value={state.yearlyMeeting}
+                        value={state.yearly_meeting}
                         onChange={handleChange}
-                        input={<OutlinedInput labelWidth={50} name="yearlyMeeting" id="outlined-yearly-meeting-simple" />}
+                        input={<OutlinedInput labelWidth={50} name="yearly_meeting" id="outlined-yearly-meeting-simple" />}
                     >
                         <MenuItem value="">
                             <em>None</em>
                         </MenuItem>
-                        {state.yearlyMeetings.map((yearlyMeeting: string, index: number) => (
+                        {state.yearly_meetings.map((yearlyMeeting: string, index: number) => (
                             <MenuItem value={yearlyMeeting} key={index}>
                                 {yearlyMeeting}
                             </MenuItem>

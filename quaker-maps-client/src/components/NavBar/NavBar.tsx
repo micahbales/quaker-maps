@@ -10,10 +10,12 @@ import { Meeting } from '../../types'
 import React from 'react'
 
 interface NavBarProps {
+    filterMeetings: any
     meetings: Meeting[]
 }
 
 export const NavBar: React.FC<NavBarProps> = ({
+    filterMeetings,
     meetings,
 }) => {
     const classes = useStyles()
@@ -21,11 +23,12 @@ export const NavBar: React.FC<NavBarProps> = ({
     const toggleDrawer = (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
         setDrawerIsOpen(open)
     }
-
+    
     return (
         <>
             <Drawer open={drawerIsOpen} onClose={toggleDrawer(false)}>
                 <NavMenu
+                    filterMeetings={filterMeetings}
                     meetings={meetings}
                     setDrawerIsOpen={setDrawerIsOpen}
                 />

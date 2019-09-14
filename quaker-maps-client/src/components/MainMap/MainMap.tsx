@@ -1,7 +1,7 @@
 import React from 'react'
 import GoogleMapReact from 'google-map-react'
 import { MapMarker } from '../MapMarker/MapMarker'
-import { apiIsLoaded } from '../../utils/api_is_loaded'
+import { updateMapBounds } from '../../utils/update_map_bounds'
 import { AppState } from '../../App'
 import { Meeting } from '../../types'
 
@@ -21,7 +21,8 @@ export const MainMap: React.FC<MainMapProps> = ({
             bootstrapURLKeys={{ key: apiKey }}
             center={appState.center}
             defaultZoom={appState.defaultZoom}
-            onGoogleApiLoaded={({ map, maps }) => apiIsLoaded({ map, maps, setAppState, appState })}
+            // Populate and bound map with meetings
+            onGoogleApiLoaded={({ map, maps }) => updateMapBounds({ map, maps, setAppState, appState })}
             /**
              * google-maps-react utils API doesn't currently have typings available,
              * so we're bypassing the library to directly set bounds on the Google Maps API,

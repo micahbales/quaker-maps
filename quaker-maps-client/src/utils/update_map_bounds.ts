@@ -20,7 +20,7 @@ const setMapBounds = (map: any, maps: any, meetings: Meeting[]) => {
     map.fitBounds(bounds)
 }
 
-interface ApiIsLoadedOptions {
+interface UpdateMapBoundsOptions {
     map: any
     maps: any
     setAppState: (appState: AppState) => void
@@ -28,11 +28,12 @@ interface ApiIsLoadedOptions {
 }
 
 // Fit map to its bounds after the api is loaded
-export const apiIsLoaded = ({ map, maps, setAppState, appState }: ApiIsLoadedOptions) => {
+export const updateMapBounds = ({ map, maps, setAppState, appState }: UpdateMapBoundsOptions) => {
+    // Save map & maps to our appState so that we can re-populate the map
     setAppState({ ...appState, map, maps })
-    
+
     // Only update bounds if there is map data to bound
-    if (appState.meetings.length > 0) {
-        setMapBounds(map, maps, appState.meetings)
+    if (appState.filteredMeetings.length > 0) {
+        setMapBounds(map, maps, appState.filteredMeetings)
     }
 }

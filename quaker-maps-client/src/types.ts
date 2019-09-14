@@ -24,3 +24,27 @@ export interface Meeting {
     yearly_meeting: string
     zip: string
 }
+
+export type MeetingFields =
+    'accessibility' |
+    'address' |
+    'branch' |
+    'city' |
+    // 'created_at' |
+    'description' |
+    'id' |
+    // 'latitude' |
+    // 'lgbt_affirming' |
+    // 'longitude' |
+    // 'mappable' |
+    'phone' |
+    'school_time' |
+    'slug' |
+    'state' |
+    'title' |
+    'website' |
+    'worship_style' |
+    'worship_time' |
+    'yearly_meeting' |
+    'zip' 
+    
