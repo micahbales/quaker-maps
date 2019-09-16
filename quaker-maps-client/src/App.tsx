@@ -1,6 +1,6 @@
 import React from 'react'
 import { fetchMeetings } from './api/fetch_meetings'
-import { Meeting, MeetingFields } from './types'
+import { Meeting } from './types'
 import { MainMap } from './components/MainMap/MainMap'
 import { NavBar } from './components/NavBar/NavBar'
 import { CssBaseline } from '@material-ui/core';
@@ -44,11 +44,17 @@ const App: React.FC = () => {
     }
   }, [appState.filteredMeetings])
 
-  const filterMeetings = (attr: MeetingFields, value: string) => {
-    // Remove all meetings that don't meet the criteria
-    const filteredMeetings = appState.meetings.filter(
-      meeting => meeting[attr].includes(value)
-    )
+  const filterMeetings = (newSelectValues: string[]) => {
+    // Remove all meetings that don't meet ALL selected criteria
+    const filteredMeetings = appState.meetings.filter(meeting => {
+      for (let attr in newSelectValues) {
+        // @ts-ignore : Element implicitly has an 'any' type because expression of type 'any' can't be used to index type
+        if (!meeting[attr]) continue
+        // @ts-ignore - TODO: figure out why Typescript doesn't like us using a string as an index type here
+        if (newSelectValues[attr] && !meeting[attr].includes(newSelectValues[attr])) return false
+      }
+      return true
+    })
     setAppState({ ...appState, filteredMeetings })
   }
 

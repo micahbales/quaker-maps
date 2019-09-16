@@ -3,6 +3,7 @@ export interface Meeting {
     address: string
     branch: string
     city: string
+    country: string
     created_at: {
         _seconds: number,
         _nanoseconds: number
@@ -30,6 +31,7 @@ export type MeetingFields =
     'address' |
     'branch' |
     'city' |
+    'country' |
     // 'created_at' |
     'description' |
     'id' |
