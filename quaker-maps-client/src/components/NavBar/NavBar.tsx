@@ -26,12 +26,14 @@ export const NavBar: React.FC<NavBarProps> = ({
     
     return (
         <>
-            <Drawer open={drawerIsOpen} onClose={toggleDrawer(false)}>
+            <Drawer open={drawerIsOpen} onClose={toggleDrawer(false)} variant="persistent">
+                {/* Don't render NavMenu until meetings have been fetched, because we need meetings to populate our form fields */}
+                {meetings.length > 0 && 
                 <NavMenu
                     filterMeetings={filterMeetings}
                     meetings={meetings}
                     setDrawerIsOpen={setDrawerIsOpen}
-                />
+                />}
             </Drawer>
             <div className={classes.root}>
                 <AppBar position="static">

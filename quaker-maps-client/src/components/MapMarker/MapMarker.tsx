@@ -65,7 +65,7 @@ export const MapMarker: React.FC<MapMarkerProps> = ({
                     </p>
                     <p>
                         {meeting.website && `Learn more about this meeting at its `}
-                        {meeting.website && <a href={meeting.website} target="_blank">website</a>}{`.`}
+                        {meeting.website && <a href={meeting.website} target="_blank" rel="noopener noreferrer">website</a>}{`.`}
                     </p>
                 </Typography>
             </Popover>

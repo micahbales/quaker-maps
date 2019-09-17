@@ -7,6 +7,7 @@ import InputLabel from '@material-ui/core/InputLabel'
 import MenuItem from '@material-ui/core/MenuItem'
 import FormControl from '@material-ui/core/FormControl'
 import Select from '@material-ui/core/Select'
+import styled from 'styled-components'
 import { getTitles } from './utils/get_titles'
 import { Meeting } from '../../../../types'
 import React from 'react'
@@ -25,7 +26,7 @@ export const NavMenu: React.FC<NavMenuProps> = ({
 }) => {
     const classes = useStyles()
 
-    const [selectTitles, setSelectTitles] = React.useState({
+    const [selectTitles] = React.useState({
         accessibilitys: getTitles(meetings, 'accessibility'),
         branchs: getTitles(meetings, 'branch'),
         citys: getTitles(meetings, 'city'),
@@ -62,6 +63,7 @@ export const NavMenu: React.FC<NavMenuProps> = ({
             role="presentation"
         >
             <div className={classes.drawerHeader}>
+                <Header>Filter Meetings</Header>
                 <IconButton onClick={() => setDrawerIsOpen(false)}>
                     <ChevronLeftIcon />
                 </IconButton>
@@ -72,12 +74,12 @@ export const NavMenu: React.FC<NavMenuProps> = ({
                         <InputLabel htmlFor={`outlined-${title}-simple`}>
                             {title.replace(/_/g, ' ')}
                         </InputLabel>
-                        <Select
+                        <StyledSelect
                             // TODO: Figure out what this TypeScript error is all about
                             // @ts-ignore : 'expression of type 'string' can't be used to index selectValues'
                             value={selectValues[title]}
                             onChange={handleChange}
-                            input={<OutlinedInput labelWidth={50} name={title} id={`outlined-${title}-simple`} />}
+                            input={<OutlinedInput labelWidth={title.length * 7.5} name={title} id={`outlined-${title}-simple`} />}
                         >
                             <MenuItem value="">
                                 <em>None</em>
@@ -88,7 +90,7 @@ export const NavMenu: React.FC<NavMenuProps> = ({
                                     {name}
                                 </MenuItem>
                             ))}
-                        </Select>
+                        </StyledSelect>
                     </FormControl>
                 ))}
             </List>
@@ -113,3 +115,13 @@ const useStyles = makeStyles(theme => ({
         width: 250,
     },
 }))
+
+const Header = styled.h1`
+    font-size: 24px;
+    text-align: center;
+`
+
+const StyledSelect = styled(Select)`
+    max-width: 230px;
+    width: 230px;
+`
