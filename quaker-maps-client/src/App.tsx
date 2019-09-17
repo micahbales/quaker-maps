@@ -63,7 +63,7 @@ const App: React.FC = () => {
       <CssBaseline />
       <NavBar
         filterMeetings={filterMeetings}
-        meetings={appState.filteredMeetings}
+        meetings={appState.meetings}
       />
       <MainMap
         apiKey={apiKey}

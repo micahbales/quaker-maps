@@ -35,7 +35,7 @@ export const MainMap: React.FC<MainMapProps> = ({
                 <MapMarker
                     lat={meeting.latitude}
                     lng={meeting.longitude}
-                    text={meeting.title}
+                    meeting={meeting}
                     key={i}
                 />
             ))}
