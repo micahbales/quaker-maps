@@ -5,6 +5,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import MenuIcon from '@material-ui/icons/Menu'
+import { Link } from 'react-router-dom'
 import { NavMenu } from './components/NavMenu/NavMenu'
 import { Meeting } from '../../types'
 import React from 'react'
@@ -55,6 +56,7 @@ const useStyles = makeStyles(theme => ({
     root: {
         display: 'flex',
         flexGrow: 1,
+        height: '7vh',
     },
     menuButton: {
         marginRight: theme.spacing(2),

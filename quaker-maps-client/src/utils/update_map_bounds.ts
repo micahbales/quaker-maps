@@ -1,4 +1,4 @@
-import { AppState } from '../App'
+import { MainMapState } from '../App'
 import { Meeting } from '../types'
 
 const getMapBounds = (maps: any, meetings: Meeting[]) => {
@@ -21,19 +21,20 @@ const setMapBounds = (map: any, maps: any, meetings: Meeting[]) => {
 }
 
 interface UpdateMapBoundsOptions {
+    filteredMeetings: Meeting[]
     map: any
     maps: any
-    setAppState: (appState: AppState) => void
-    appState: AppState
+    setMainMapState: (mainMapState: MainMapState) => void
+    mainMapState: MainMapState
 }
 
 // Fit map to its bounds after the api is loaded
-export const updateMapBounds = ({ map, maps, setAppState, appState }: UpdateMapBoundsOptions) => {
-    // Save map & maps to our appState so that we can re-populate the map
-    setAppState({ ...appState, map, maps })
+export const updateMapBounds = ({ filteredMeetings, map, maps, setMainMapState, mainMapState }: UpdateMapBoundsOptions) => {
+    // Save map & maps to our mainMapState so that we can re-populate the map
+    setMainMapState({ ...mainMapState, map, maps })
 
     // Only update bounds if there is map data to bound
-    if (appState.filteredMeetings.length > 0) {
-        setMapBounds(map, maps, appState.filteredMeetings)
+    if (filteredMeetings.length > 0) {
+        setMapBounds(map, maps, filteredMeetings)
     }
 }
