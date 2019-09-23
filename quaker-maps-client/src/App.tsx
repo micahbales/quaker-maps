@@ -3,7 +3,8 @@ import { fetchMeetings } from './api/fetch_meetings'
 import { Meeting } from './types'
 import { MainMap } from './components/MainMap/MainMap'
 import { NavBar } from './components/NavBar/NavBar'
-import { CssBaseline } from '@material-ui/core';
+import { CssBaseline } from '@material-ui/core'
+import { getFilterMeetings } from './utils/get_filter_meetings'
 import { updateMapBounds } from './utils/update_map_bounds'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import { InfoPage } from './static_pages/InfoPage'
@@ -12,11 +13,8 @@ import { FaqPage } from './static_pages/FaqPage'
 import { ContactPage } from './static_pages/ContactPage'
 const apiKey: string | undefined = process.env.REACT_APP_GOOGLE_MAPS_API_KEY
 
-
 export interface AppState {
   filteredMeetings: Meeting[]
-  map?: any
-  maps?: any
   meetings: Meeting[]
 }
 
@@ -30,21 +28,20 @@ export interface MainMapState {
   maps?: any
 }
 
-const initialMainMapState: MainMapState = {
-  center: { lat: 0, lng: 0 },
-  defaultZoom: 11,
-}
-
 const App: React.FC = () => {
   const initialAppState: AppState = {
     filteredMeetings: [],
     meetings: [],
   }
+
+  const initialMainMapState: MainMapState = {
+    center: { lat: 0, lng: 0 },
+    defaultZoom: 11,
+  }
   
   const [appState, setAppState] = React.useState(initialAppState)
   const [mainMapState, setMainMapState] = React.useState(initialMainMapState)
 
-  
   // Fetch initial meeting state
   React.useEffect(() => {
     fetchMeetings(
@@ -58,26 +55,14 @@ const App: React.FC = () => {
   // Re-populate and re-bound map whenever meetings are filtered
   React.useEffect(() => {
     if (mainMapState.map && mainMapState.maps) {
-      const map = appState.map
-      const maps = appState.maps
+      const map = mainMapState.map
+      const maps = mainMapState.maps
       const filteredMeetings = appState.filteredMeetings
       updateMapBounds({ filteredMeetings, map, maps, mainMapState, setMainMapState })
     }
   }, [appState.filteredMeetings])
 
-  const filterMeetings = (newSelectValues: string[]) => {
-    // Remove all meetings that don't meet ALL selected criteria
-    const filteredMeetings = appState.meetings.filter(meeting => {
-      for (let attr in newSelectValues) {
-        // @ts-ignore : Element implicitly has an 'any' type because expression of type 'any' can't be used to index type
-        if (!meeting[attr]) continue
-        // @ts-ignore - TODO: figure out why Typescript doesn't like us using a string as an index type here
-        if (newSelectValues[attr] && !meeting[attr].includes(newSelectValues[attr])) return false
-      }
-      return true
-    })
-    setAppState({ ...appState, filteredMeetings })
-  }
+  const filterMeetings = getFilterMeetings(appState, setAppState)
 
   const MainMapView = () => (<MainMap
     apiKey={apiKey || ''}

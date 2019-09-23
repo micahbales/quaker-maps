@@ -47,7 +47,7 @@ export const MainMap: React.FC<MainMapProps> = ({
                  */
                 yesIWantToUseGoogleMapApiInternals={true}
             >
-                {appState.meetings.map((meeting: Meeting, i) => (
+                {appState.filteredMeetings.map((meeting: Meeting, i) => (
                     <MapMarker
                         lat={meeting.latitude}
                         lng={meeting.longitude}
