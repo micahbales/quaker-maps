@@ -1,7 +1,7 @@
 import React from 'react'
 
 export const AboutPage: React.FC = () => (
-    <>
+    <div style={{ padding: '25px' }}>
         <h1>About Quakermaps.com</h1>
         
         <h2>Quakerism</h2>
@@ -35,5 +35,5 @@ export const AboutPage: React.FC = () => (
         <h2>Who We Are</h2>
 
         <p>Quaker Maps is a project of the <a href="https://www.fojf.org/" target="blank" rel="noopener noreferrer">Friends of Jesus Fellowship</a>.</p>
-    </>
+    </div>
 )

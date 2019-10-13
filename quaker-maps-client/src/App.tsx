@@ -6,11 +6,12 @@ import { NavBar } from './components/NavBar/NavBar'
 import { CssBaseline } from '@material-ui/core'
 import { getFilterMeetings } from './utils/get_filter_meetings'
 import { updateMapBounds } from './utils/update_map_bounds'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { Switch, BrowserRouter as Router, Route } from 'react-router-dom'
 import { InfoPage } from './static_pages/InfoPage'
 import { AboutPage } from './static_pages/AboutPage'
 import { FaqPage } from './static_pages/FaqPage'
 import { ContactPage } from './static_pages/ContactPage'
+import { FourOhFour } from './static_pages/FourOhFour'
 const apiKey: string | undefined = process.env.REACT_APP_GOOGLE_MAPS_API_KEY
 
 export interface AppState {
@@ -78,11 +79,14 @@ const App: React.FC = () => {
         filterMeetings={filterMeetings}
         meetings={appState.meetings}
       />
-      <Route exact path="/" component={MainMapView}/>
-      <Route exact path="/info" component={InfoPage}/>
-      <Route exact path="/about" component={AboutPage} />
-      <Route exact path="/frequently-asked-questions" component={FaqPage}/>
-      <Route exact path="/contact" component={ContactPage}/>
+      <Switch>
+        <Route exact path="/" component={MainMapView} />
+        <Route exact path="/info" component={InfoPage} />
+        <Route exact path="/about" component={AboutPage} />
+        <Route exact path="/frequently-asked-questions" component={FaqPage} />
+        <Route exact path="/contact" component={ContactPage} />
+        <Route component={FourOhFour} />
+      </Switch>
     </Router>
   ) : (
     <h1>

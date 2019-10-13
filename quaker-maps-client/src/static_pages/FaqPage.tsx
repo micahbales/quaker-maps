@@ -1,7 +1,7 @@
 import React from 'react'
 
 export const FaqPage: React.FC = () => (
-    <>
+    <div style={{ padding: '25px' }}>
         <h1>Frequently Asked Questions</h1>
 
         <h2>How do you collect your information?</h2>
@@ -23,5 +23,5 @@ export const FaqPage: React.FC = () => (
         <h2>My Meeting is listed, but the page is empty.</h2>
 
         <p>This is most likely because we could not find any information for your Meeting online. Contact us to have your Meeting’s basic information listed.</p>
-    </>
+    </div>
 )

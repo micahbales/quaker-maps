@@ -1,7 +1,7 @@
 import React from 'react'
 
 export const ContactPage: React.FC = () => (
-    <>
+    <div style={{ padding: '25px' }}>
         <h1>Contact</h1>
         
         <h2>Hold On!</h2>
@@ -12,6 +12,6 @@ export const ContactPage: React.FC = () => (
 
         <p>Quakermaps.com is not complete or exhaustive. We are still in the programming and testing stages of this project, and we know that some of the information is not fully accurate. Thanks for helping us to make Quaker Maps better.</p>
 
-        <p>Still have a question? Reach out to us via email at: info@quakermaps.com</p>
-    </>
+        <p>Still have a question? Reach out to us via email at: quakermaps@fojf.org</p>
+    </div>
 )

@@ -23,10 +23,9 @@ export const NavBar: React.FC<NavBarProps> = ({
     const toggleDrawer = (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
         setDrawerIsOpen(open)
     }
-    
     return (
         <>
-            <Drawer open={drawerIsOpen} onClose={toggleDrawer(false)} variant="persistent">
+            <Drawer open={drawerIsOpen} onClose={toggleDrawer(false)}>
                 {/* Don't render NavMenu until meetings have been fetched, because we need meetings to populate our form fields */}
                 {meetings.length > 0 && 
                 <NavMenu
@@ -38,9 +37,13 @@ export const NavBar: React.FC<NavBarProps> = ({
             <div className={classes.root}>
                 <AppBar position="static">
                     <Toolbar>
-                        <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={toggleDrawer(true)}>
-                            <MenuIcon />
-                        </IconButton>
+                         
+                        { /* Only show this button if we're on the root path - the MainMap view */
+                            window.location.pathname === '/' && 
+                            <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={toggleDrawer(true)}>
+                                <MenuIcon />
+                            </IconButton>
+                        }
                         <Typography variant="h6" className={classes.title}>
                             Quaker Maps
                         </Typography>
