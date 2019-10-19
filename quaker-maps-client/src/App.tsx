@@ -43,14 +43,44 @@ const App: React.FC = () => {
   const [appState, setAppState] = React.useState(initialAppState)
   const [mainMapState, setMainMapState] = React.useState(initialMainMapState)
 
+  const updateAllAppState = (meetings: Meeting[]) => {
+    setAppState({
+      ...appState,
+      filteredMeetings: meetings,
+      meetings,
+    })
+    setMainMapState({
+      ...mainMapState,
+      center: {
+        lat: meetings[0].latitude,
+        lng: meetings[0].longitude
+      },
+    })
+  }
+
+  const setupMapStateFromApi = async () => {
+    const meetings = await fetchMeetings()
+    updateAllAppState(meetings)
+    // Cache meetings in the client
+    localStorage.setItem('quaker-maps-meetings', JSON.stringify(meetings))
+    // Set expiration for one week from now
+    localStorage.setItem('quaker-maps-data-cache-expiration', JSON.stringify(Date.now() + 604800000))
+  }
+
   // Fetch initial meeting state
   React.useEffect(() => {
-    fetchMeetings(
-      appState, 
-      setAppState,
-      mainMapState,
-      setMainMapState
-      )
+    const storedMeetings = localStorage.getItem('quaker-maps-meetings')
+    const cacheExpiration = localStorage.getItem('quaker-maps-data-cache-expiration')
+    const cacheHasExpired = cacheExpiration && (JSON.parse(cacheExpiration) < Date.now())
+    
+    if (storedMeetings && !cacheHasExpired) {
+      // If local storage already has cached meetings data, use it
+      const meetings = JSON.parse(storedMeetings)
+      updateAllAppState(meetings)
+    } else {
+      // Otherwise, fetch meetings data
+      setupMapStateFromApi()
+    }
   }, [])
 
   // Re-populate and re-bound map whenever meetings are filtered
