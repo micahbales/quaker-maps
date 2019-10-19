@@ -12,6 +12,7 @@ import { AboutPage } from './static_pages/AboutPage'
 import { FaqPage } from './static_pages/FaqPage'
 import { ContactPage } from './static_pages/ContactPage'
 import { FourOhFour } from './static_pages/FourOhFour'
+import { MainMapLoading } from './components/MainMap/components/MainMapLoading'
 const apiKey: string | undefined = process.env.REACT_APP_GOOGLE_MAPS_API_KEY
 
 export interface AppState {
@@ -95,12 +96,14 @@ const App: React.FC = () => {
 
   const filterMeetings = getFilterMeetings(appState, setAppState)
 
-  const MainMapView = () => (<MainMap
+  const MainMapView = () => appState.meetings.length ? (<MainMap
     apiKey={apiKey || ''}
     appState={appState}
     mainMapState={mainMapState}
     setMainMapState={setMainMapState}
-  />)
+  />) : (
+    <MainMapLoading />
+  )
 
   return apiKey ? (
     <Router>
