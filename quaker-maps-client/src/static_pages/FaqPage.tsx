@@ -2,15 +2,15 @@ import React from 'react'
 
 export const FaqPage: React.FC = () => (
     <div style={{ padding: '25px' }}>
-        <h1>Frequently Asked Questions</h1>
+        <h1>Frequently Asked Questions About Quaker Maps</h1>
 
         <h2>How do you collect your information?</h2>
 
-        <p>Our information comes from publicly available information on the internet. That means that if a Yearly or Monthly Meeting is not listed on Quakermaps.com, it is likely because they have not made their information easily accessible online. (We're looking at you, Britain Yearly Meeting.)</p>
+        <p>Our listings come from publicly available information on the internet. That means that if a Yearly or Monthly Meeting is not present on Quakermaps.com, it is likely because they have not made their information easily accessible online. (We're looking at you, Britain Yearly Meeting.)</p>
 
         <h2>What is Quakerism?</h2>
         
-        <p>It is a religious movement sprung from a group of radical Christians in the 17th Century which has grown and changed into a modern body containing several branches.</p>
+        <p>It is a religious movement sprung from a group of radical Christians in the 17th Century which has grown and changed into a modern body containing several branches. The <a href="https://en.wikipedia.org/wiki/Quakers" target="blank" rel="noopener noreferrer">Wikipedia page for Quakers</a> is pretty good.</p>
 
         <h2>Why isn’t my church/meeting listed on Quakermaps.com?</h2>
 
@@ -24,7 +24,7 @@ export const FaqPage: React.FC = () => (
 
         <p>Our approach to categorization of meetings assumes that congregations are not welcoming to LGBT folks unless we have reason to believe that they are. We generally assume that meetings belonging to Friends General Conference are affirming. We generally assume that most everyone else is not affirming, unless we are specifically aware that a church is affirming.</p>
         
-        <p>These are broad assumptions, and we are going to be wrong a lot! For the safety of LGBT folks, when en doubt, we try to err on the side of assuming a congregation is not affirming. You can help us by correcting us when you find a meeting that is mis-categorized. And please, if you let us know that a meeting is, in fact, an affirming congregation, point us to some public statement they've made that they welcome LGBT folks in all aspects of life and leadership.</p>
+        <p>These are broad assumptions, and we are going to be wrong a lot! For the safety of LGBT folks, when in doubt, we try to err on the side of assuming a congregation is not affirming. You can help us by correcting us when you find a meeting that is mis-categorized. And please, if you let us know that a meeting is, in fact, an affirming congregation, point us to some public statement they've made that they welcome LGBT folks in all aspects of life and leadership.</p>
 
         <h2>My Meeting is listed, but its information is wrong or incomplete.</h2>
 

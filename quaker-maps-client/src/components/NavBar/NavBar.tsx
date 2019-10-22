@@ -53,19 +53,11 @@ export const NavBar: React.FC<NavBarProps> = ({
 
                         <Button
                             variant="contained"
-                            href="/about" 
-                            color={window.location.pathname === '/about' ? 'secondary' : 'primary'}
-                            className={classes.button}
-                        >
-                            About
-                        </Button>
-                        <Button
-                            variant="contained"
                             href="/info" 
                             color={window.location.pathname === '/info' ? 'secondary' : 'primary'}
                             className={classes.button}
                         >
-                            Quakerism
+                            Quakers?
                         </Button>
                         <Button
                             variant="contained"

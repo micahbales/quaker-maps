@@ -7,9 +7,9 @@ import InputLabel from '@material-ui/core/InputLabel'
 import MenuItem from '@material-ui/core/MenuItem'
 import FormControl from '@material-ui/core/FormControl'
 import Select from '@material-ui/core/Select'
-import styled from 'styled-components'
 import { getTitles } from './utils/get_titles'
 import { Meeting } from '../../../../types'
+import sample from 'lodash/sample'
 import React from 'react'
 
 
@@ -27,32 +27,44 @@ export const NavMenu: React.FC<NavMenuProps> = ({
     const classes = useStyles()
 
     const [selectTitles] = React.useState({
-        accessibilitys: getTitles(meetings, 'accessibility'),
         branchs: getTitles(meetings, 'branch'),
         lgbt_affirmings: ['true', 'false'],
         states: getTitles(meetings, 'state'),
         worship_styles: getTitles(meetings, 'worship_style'),
         yearly_meetings: getTitles(meetings, 'yearly_meeting'),
-        zips: getTitles(meetings, 'zip'),
     })
 
     const [selectValues, setSelectValues] = React.useState({
-        accessibility: '',
         branch: '',
         lgbt_affirming: '',
         state: '',
         worship_style: '',
         yearly_meeting: '',
-        zip: '',
     })
 
-    function handleChange(event: React.ChangeEvent<{ name?: string; value: unknown }>) {
+    const updateSelectValuesAndFilterMeetings = (name: string | undefined, value: unknown) => {
         const newSelectValues = {
             ...selectValues,
-            [event.target.name as string]: event.target.value,
+            [name as string]: value,
         }
         setSelectValues(newSelectValues)
         filterMeetings(newSelectValues)
+    }
+
+    /**
+     * Display a random yearly meeting on initial load
+     * This is helpful both because it makes the page much faster to load,
+     * and also because a smaller number of meetings is easier for a visitor to reason about
+     * */ 
+    React.useEffect(() => {
+        const randomYearlyMeeting: string | undefined = sample(getTitles(meetings, 'yearly_meeting'))
+        updateSelectValuesAndFilterMeetings('yearly_meeting', randomYearlyMeeting)
+    }, [])
+
+    function handleChange(event: React.ChangeEvent<{ name?: string; value: unknown }>) {
+        const name: string | undefined = event.target.name 
+        const value: unknown | undefined = event.target.value
+        updateSelectValuesAndFilterMeetings(name, value)
     }
 
     return (
@@ -61,7 +73,7 @@ export const NavMenu: React.FC<NavMenuProps> = ({
             role="presentation"
         >
             <div className={classes.drawerHeader}>
-                <Header>Filter Meetings</Header>
+                <h1 className={classes.header}>Filter Meetings</h1>
                 <IconButton onClick={() => setDrawerIsOpen(false)}>
                     <ChevronLeftIcon />
                 </IconButton>
@@ -72,12 +84,13 @@ export const NavMenu: React.FC<NavMenuProps> = ({
                         <InputLabel htmlFor={`outlined-${title}-simple`}>
                             {title.replace(/_/g, ' ')}
                         </InputLabel>
-                        <StyledSelect
+                        <Select
                             // TODO: Figure out what this TypeScript error is all about
                             // @ts-ignore : 'expression of type 'string' can't be used to index selectValues'
                             value={selectValues[title]}
                             onChange={handleChange}
                             input={<OutlinedInput labelWidth={title.length * 7.5} name={title} id={`outlined-${title}-simple`} />}
+                            className={classes.select}
                         >
                             <MenuItem value="">
                                 <em>None</em>
@@ -88,7 +101,7 @@ export const NavMenu: React.FC<NavMenuProps> = ({
                                     {name}
                                 </MenuItem>
                             ))}
-                        </StyledSelect>
+                        </Select>
                     </FormControl>
                 ))}
             </List>
@@ -108,18 +121,16 @@ const useStyles = makeStyles(theme => ({
         margin: theme.spacing(1),
         minWidth: 225,
     },
+    header: {
+        fontSize: 24,
+        textAlign: 'center',
+    },
     list: {
         height: 50,
         width: 250,
     },
+    select: {
+        maxWidth: 230,
+        width: 230,
+    }
 }))
-
-const Header = styled.h1`
-    font-size: 24px;
-    text-align: center;
-`
-
-const StyledSelect = styled(Select)`
-    max-width: 230px;
-    width: 230px;
-`

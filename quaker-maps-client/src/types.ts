@@ -31,7 +31,6 @@ export type MeetingFields =
     'address' |
     'branch' |
     'city' |
-    'country' |
     // 'created_at' |
     'description' |
     'id' |
