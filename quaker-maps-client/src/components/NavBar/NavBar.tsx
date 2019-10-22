@@ -3,8 +3,10 @@ import Drawer from '@material-ui/core/Drawer'
 import IconButton from '@material-ui/core/IconButton'
 import { makeStyles } from '@material-ui/core/styles'
 import Toolbar from '@material-ui/core/Toolbar'
-import Typography from '@material-ui/core/Typography'
 import MenuIcon from '@material-ui/icons/Menu'
+import Tooltip from '@material-ui/core/Tooltip'
+import Button from '@material-ui/core/Button'
+import Link from '@material-ui/core/Link'
 import { NavMenu } from './components/NavMenu/NavMenu'
 import { Meeting } from '../../types'
 import React from 'react'
@@ -25,7 +27,7 @@ export const NavBar: React.FC<NavBarProps> = ({
     }
     return (
         <>
-            <Drawer open={drawerIsOpen} onClose={toggleDrawer(false)}>
+            <Drawer open={drawerIsOpen} onClose={toggleDrawer(false)} variant="persistent">
                 {/* Don't render NavMenu until meetings have been fetched, because we need meetings to populate our form fields */}
                 {meetings.length > 0 && 
                 <NavMenu
@@ -37,16 +39,50 @@ export const NavBar: React.FC<NavBarProps> = ({
             <div className={classes.root}>
                 <AppBar position="static">
                     <Toolbar>
-                         
                         { /* Only show this button if we're on the root path - the MainMap view */
                             window.location.pathname === '/' && 
-                            <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={toggleDrawer(true)}>
-                                <MenuIcon />
-                            </IconButton>
+                            <Tooltip title="Filter Meetings">
+                                <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={toggleDrawer(true)}>
+                                    <MenuIcon />
+                                </IconButton>
+                            </Tooltip>
                         }
-                        <Typography variant="h6" className={classes.title}>
+                        <Link href="/" className={classes.homeButton}>
                             Quaker Maps
-                        </Typography>
+                        </Link>
+
+                        <Button
+                            variant="contained"
+                            href="/about" 
+                            color={window.location.pathname === '/about' ? 'secondary' : 'primary'}
+                            className={classes.button}
+                        >
+                            About
+                        </Button>
+                        <Button
+                            variant="contained"
+                            href="/info" 
+                            color={window.location.pathname === '/info' ? 'secondary' : 'primary'}
+                            className={classes.button}
+                        >
+                            Quakerism
+                        </Button>
+                        <Button
+                            variant="contained"
+                            href="/frequently-asked-questions" 
+                            color={window.location.pathname === '/frequently-asked-questions' ? 'secondary' : 'primary'}
+                            className={classes.button}
+                        >
+                            FAQ
+                        </Button>
+                        <Button
+                            variant="contained"
+                            href="/contact" 
+                            color={window.location.pathname === '/contact' ? 'secondary' : 'primary'}
+                            className={classes.button}
+                        >
+                            Contact
+                        </Button>
                     </Toolbar>
                 </AppBar>
             </div>
@@ -58,12 +94,21 @@ const useStyles = makeStyles(theme => ({
     root: {
         display: 'flex',
         flexGrow: 1,
-        height: '7vh',
+        height: '65px',
     },
     menuButton: {
         marginRight: theme.spacing(2),
     },
-    title: {
+    homeButton: {
+        color: '#fff',
         flexGrow: 1,
+        fontSize: 18,
+        textDecoration: 'none',
+        '&:hover': {
+            textDecoration: 'none',
+        }
     },
+    button: {
+        margin: '0px 5px'
+    }
 }))

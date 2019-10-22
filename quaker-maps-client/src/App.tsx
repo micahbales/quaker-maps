@@ -64,8 +64,8 @@ const App: React.FC = () => {
     updateAllAppState(meetings)
     // Cache meetings in the client
     localStorage.setItem('quaker-maps-meetings', JSON.stringify(meetings))
-    // Set expiration for one week from now
-    localStorage.setItem('quaker-maps-data-cache-expiration', JSON.stringify(Date.now() + 604800000))
+    // Set expiration for one day from now
+    localStorage.setItem('quaker-maps-data-cache-expiration', JSON.stringify(Date.now() + 86400000))
   }
 
   // Fetch initial meeting state

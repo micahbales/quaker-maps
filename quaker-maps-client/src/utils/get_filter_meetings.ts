@@ -5,6 +5,8 @@ export const getFilterMeetings = (appState: AppState, setAppState: (appState: Ap
         // Remove all meetings that don't meet ALL selected criteria
         const filteredMeetings = appState.meetings.filter(meeting => {
             for (let attr in newSelectValues) {
+                if (!meeting.mappable) return false
+
                 // @ts-ignore (see note at bottom of file)
                 if (meeting[attr] === '' || newSelectValues[attr] === '') continue
                 

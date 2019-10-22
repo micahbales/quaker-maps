@@ -29,8 +29,6 @@ export const NavMenu: React.FC<NavMenuProps> = ({
     const [selectTitles] = React.useState({
         accessibilitys: getTitles(meetings, 'accessibility'),
         branchs: getTitles(meetings, 'branch'),
-        citys: getTitles(meetings, 'city'),
-        countrys: getTitles(meetings, 'country'),
         lgbt_affirmings: ['true', 'false'],
         states: getTitles(meetings, 'state'),
         worship_styles: getTitles(meetings, 'worship_style'),
@@ -41,8 +39,6 @@ export const NavMenu: React.FC<NavMenuProps> = ({
     const [selectValues, setSelectValues] = React.useState({
         accessibility: '',
         branch: '',
-        city: '',
-        country: '',
         lgbt_affirming: '',
         state: '',
         worship_style: '',
