@@ -12,9 +12,16 @@ import { Meeting } from '../../../../types'
 import sample from 'lodash/sample'
 import React from 'react'
 
+export interface SelectValues {
+    branch: string
+    lgbt_affirming: string
+    state: string
+    worship_style: string
+    yearly_meeting: string
+}
 
 interface NavMenuProps {
-    filterMeetings: any
+    filterMeetings: (selectValues: SelectValues) => boolean
     meetings: Meeting[]
     setDrawerIsOpen: (option: boolean) => void
 }
@@ -34,7 +41,7 @@ export const NavMenu: React.FC<NavMenuProps> = ({
         yearly_meetings: getTitles(meetings, 'yearly_meeting'),
     })
 
-    const [selectValues, setSelectValues] = React.useState({
+    const [selectValues, setSelectValues] = React.useState<SelectValues>({
         branch: '',
         lgbt_affirming: '',
         state: '',
@@ -47,8 +54,11 @@ export const NavMenu: React.FC<NavMenuProps> = ({
             ...selectValues,
             [name as string]: value,
         }
-        setSelectValues(newSelectValues)
-        filterMeetings(newSelectValues)
+        const stateWasUpdated = filterMeetings(newSelectValues)
+        // Don't set dropdown values unless the selection was possible (updated the filtered meetings)
+        if (stateWasUpdated) {
+            setSelectValues(newSelectValues)
+        }
     }
 
     /**

@@ -1413,7 +1413,7 @@
       "city": "Chico",
       "branch": "Friends General Conference",
       "longitude": -121.825477,
-      "yearly_meeting": "Pacific YM",
+      "yearly_meeting": "Pacific Yearly Meeting",
       "mappable": true,
       "accessibility": "Wheelchair Accessible",
       "phone": "(530)345-3753",
@@ -1531,7 +1531,7 @@
       "city": "Redway",
       "branch": "Friends General Conference",
       "longitude": -123.87619,
-      "yearly_meeting": "Pacific YM"
+      "yearly_meeting": "Pacific Yearly Meeting"
     },
     {
       "id": "2vvcOXFdpzeiQQeUhGJ4",
@@ -2171,7 +2171,7 @@
       "city": "Haiku",
       "branch": "Friends General Conference",
       "longitude": -156.288021,
-      "yearly_meeting": "Pacific YM",
+      "yearly_meeting": "Pacific Yearly Meeting",
       "mappable": true,
       "accessibility": "",
       "phone": "(808)573-4987, (808)572-6729",
@@ -2551,7 +2551,7 @@
       "city": "Mendocino",
       "branch": "Friends General Conference",
       "longitude": -123.755471,
-      "yearly_meeting": "Pacific YM",
+      "yearly_meeting": "Pacific Yearly Meeting",
       "mappable": true
     },
     {
@@ -2708,7 +2708,7 @@
       "city": "Santa Rosa",
       "branch": "Friends General Conference",
       "longitude": -122.715642,
-      "yearly_meeting": "Pacific YM",
+      "yearly_meeting": "Pacific Yearly Meeting",
       "mappable": true
     },
     {
@@ -3812,7 +3812,7 @@
       "city": "Ukiah",
       "branch": "Friends General Conference",
       "longitude": -123.2226076,
-      "yearly_meeting": "Pacific YM",
+      "yearly_meeting": "Pacific Yearly Meeting",
       "mappable": true,
       "accessibility": "Wheelchair Accessible",
       "phone": "(707)485-8350",
@@ -4011,7 +4011,7 @@
       "city": "Berkeley",
       "branch": "Friends General Conference",
       "longitude": -122.267978,
-      "yearly_meeting": "Pacific YM",
+      "yearly_meeting": "Pacific Yearly Meeting",
       "mappable": true,
       "accessibility": "Wheelchair Accessible",
       "phone": "(510)843-9725",
@@ -4051,7 +4051,7 @@
       "city": "Aromas",
       "branch": "Friends General Conference",
       "longitude": -121.64072,
-      "yearly_meeting": "Pacific YM",
+      "yearly_meeting": "Pacific Yearly Meeting",
       "mappable": true,
       "accessibility": "Wheelchair Accessible"
     },
@@ -6479,7 +6479,7 @@
       "city": "Oakland",
       "branch": "Friends General Conference",
       "longitude": -122.19962,
-      "yearly_meeting": "Pacific YM",
+      "yearly_meeting": "Pacific Yearly Meeting",
       "mappable": true,
       "accessibility": "",
       "phone": "(510)336-9695",
@@ -6944,7 +6944,7 @@
       "city": "Santa Rosa",
       "branch": "Friends General Conference",
       "longitude": -122.673991,
-      "yearly_meeting": "Pacific YM",
+      "yearly_meeting": "Pacific Yearly Meeting",
       "mappable": true,
       "accessibility": "Wheelchair Accessible",
       "phone": "(707)573-4580",
@@ -7264,7 +7264,7 @@
       "city": "Ojai",
       "branch": "Friends General Conference",
       "longitude": -119.25005,
-      "yearly_meeting": "Pacific YM",
+      "yearly_meeting": "Pacific Yearly Meeting",
       "mappable": true
     },
     {
@@ -8310,7 +8310,7 @@
     {
       "id": "H2QPAubyfS0cHrihY72V",
       "longitude": -121.781217,
-      "yearly_meeting": "Pacific YM",
+      "yearly_meeting": "Pacific Yearly Meeting",
       "mappable": true,
       "accessibility": "",
       "phone": "(530)758-8492",
@@ -8967,7 +8967,7 @@
       "city": "Thousand Oaks",
       "branch": "Friends General Conference",
       "longitude": -118.952499,
-      "yearly_meeting": "Pacific YM",
+      "yearly_meeting": "Pacific Yearly Meeting",
       "mappable": true,
       "accessibility": "Wheelchair Accessible",
       "phone": "(805)498-6964",
@@ -9253,7 +9253,7 @@
       "city": "Seal Beach",
       "branch": "Friends General Conference",
       "longitude": -118.091675,
-      "yearly_meeting": "Pacific YM",
+      "yearly_meeting": "Pacific Yearly Meeting",
       "mappable": true,
       "accessibility": "Wheelchair Accessible",
       "phone": "(562)420-1155, (562)598-9242",
@@ -9637,7 +9637,7 @@
       "city": "Santa Cruz",
       "branch": "Friends General Conference",
       "longitude": -122.003558,
-      "yearly_meeting": "Pacific YM"
+      "yearly_meeting": "Pacific Yearly Meeting"
     },
     {
       "id": "Jo8lLrzebxkKVzer2Sct",
@@ -10418,7 +10418,7 @@
       "city": "Palo Alto",
       "branch": "Friends General Conference",
       "longitude": -122.12043,
-      "yearly_meeting": "Pacific YM",
+      "yearly_meeting": "Pacific Yearly Meeting",
       "mappable": true
     },
     {
@@ -10792,7 +10792,7 @@
       "city": "Pacific Grove",
       "branch": "Friends General Conference",
       "longitude": -121.922858,
-      "yearly_meeting": "Pacific YM",
+      "yearly_meeting": "Pacific Yearly Meeting",
       "mappable": true,
       "accessibility": "Wheelchair Accessible",
       "phone": "(831)644-0331",
@@ -11644,7 +11644,7 @@
       "city": "Redding",
       "branch": "Friends General Conference",
       "longitude": -122.71,
-      "yearly_meeting": "Pacific YM",
+      "yearly_meeting": "Pacific Yearly Meeting",
       "mappable": true,
       "accessibility": "Wheelchair Accessible",
       "phone": "(530)222-5527, (530)244-6216, (530)275-3513, (530)243-5350",
@@ -11704,7 +11704,7 @@
       "city": "San Diego",
       "branch": "Friends General Conference",
       "longitude": -117.11114,
-      "yearly_meeting": "Pacific YM",
+      "yearly_meeting": "Pacific Yearly Meeting",
       "mappable": true,
       "accessibility": "Wheelchair Accessible"
     },
@@ -12235,7 +12235,7 @@
       "city": "Santa Barbara",
       "branch": "Friends General Conference",
       "longitude": -119.7184466,
-      "yearly_meeting": "Pacific YM"
+      "yearly_meeting": "Pacific Yearly Meeting"
     },
     {
       "id": "Pp6HFWarG00n98ZeV9sL",
@@ -13707,7 +13707,7 @@
       "city": "Honolulu",
       "branch": "Friends General Conference",
       "longitude": -157.81801,
-      "yearly_meeting": "Pacific YM",
+      "yearly_meeting": "Pacific Yearly Meeting",
       "mappable": true,
       "accessibility": "",
       "phone": "(808)988-2714",
@@ -13800,7 +13800,7 @@
       "city": "Kane'ohe",
       "branch": "Friends General Conference",
       "longitude": -157.798559,
-      "yearly_meeting": "Pacific YM",
+      "yearly_meeting": "Pacific Yearly Meeting",
       "mappable": true,
       "accessibility": "",
       "phone": "(808)235-6500",
@@ -14138,7 +14138,7 @@
       "city": "Pasadena",
       "branch": "Friends General Conference",
       "longitude": -118.139384,
-      "yearly_meeting": "Pacific YM",
+      "yearly_meeting": "Pacific Yearly Meeting",
       "mappable": true,
       "accessibility": "",
       "phone": "(626)792-6223",
@@ -14179,7 +14179,7 @@
       "city": "Berkeley",
       "branch": "Friends General Conference",
       "longitude": -122.245672,
-      "yearly_meeting": "Pacific YM",
+      "yearly_meeting": "Pacific Yearly Meeting",
       "mappable": true,
       "accessibility": "Hearing Assistance System,Wheelchair Accessible",
       "phone": "(510)524-9186",
@@ -14576,7 +14576,7 @@
       "city": "Sebastopol",
       "branch": "Friends General Conference",
       "longitude": -122.824191,
-      "yearly_meeting": "Pacific YM"
+      "yearly_meeting": "Pacific Yearly Meeting"
     },
     {
       "id": "Uia1MSL2HKAnD2Vcz5CA",
@@ -14952,7 +14952,7 @@
       "city": "Sacramento",
       "branch": "Friends General Conference",
       "longitude": -121.467691,
-      "yearly_meeting": "Pacific YM",
+      "yearly_meeting": "Pacific Yearly Meeting",
       "mappable": true
     },
     {
@@ -15731,7 +15731,7 @@
       "city": "Fresno",
       "branch": "Friends General Conference",
       "longitude": -119.785856,
-      "yearly_meeting": "Pacific YM",
+      "yearly_meeting": "Pacific Yearly Meeting",
       "mappable": true,
       "accessibility": "",
       "phone": "(641) 715-3900, x 886633",
@@ -16607,7 +16607,7 @@
       "city": "Irvine",
       "branch": "Friends General Conference",
       "longitude": -117.855823,
-      "yearly_meeting": "Pacific YM",
+      "yearly_meeting": "Pacific Yearly Meeting",
       "mappable": true,
       "accessibility": "",
       "phone": "949-596-7508",
@@ -17873,7 +17873,7 @@
       "city": "Nevada City",
       "branch": "Friends General Conference",
       "longitude": -121.030949,
-      "yearly_meeting": "Pacific YM",
+      "yearly_meeting": "Pacific Yearly Meeting",
       "mappable": true,
       "accessibility": "",
       "worship_time": "9:45am",
@@ -17968,7 +17968,7 @@
       "city": "Las Vegas",
       "branch": "Friends General Conference",
       "longitude": -115.172824,
-      "yearly_meeting": "Pacific YM",
+      "yearly_meeting": "Pacific Yearly Meeting",
       "mappable": true,
       "accessibility": "",
       "phone": "(702)437-3247",
@@ -18245,7 +18245,7 @@
     {
       "id": "bkPlv7zxt7SQafhuud5e",
       "longitude": -122.415198,
-      "yearly_meeting": "Pacific YM",
+      "yearly_meeting": "Pacific Yearly Meeting",
       "mappable": true,
       "accessibility": "Wheelchair Accessible",
       "phone": "(415)431-7440",
@@ -20273,7 +20273,7 @@
       "city": "Santa Monica",
       "branch": "Friends General Conference",
       "longitude": -118.471513,
-      "yearly_meeting": "Pacific YM",
+      "yearly_meeting": "Pacific Yearly Meeting",
       "mappable": true,
       "accessibility": "Wheelchair Accessible",
       "phone": "(310)828-4069"
@@ -20291,7 +20291,7 @@
       "city": "San Luis Obispo",
       "branch": "Friends General Conference",
       "longitude": -120.660014,
-      "yearly_meeting": "Pacific YM",
+      "yearly_meeting": "Pacific Yearly Meeting",
       "mappable": true,
       "accessibility": "Wheelchair Accessible",
       "phone": "(805)543-2791",
@@ -20819,7 +20819,7 @@
     {
       "id": "gk4uu1dxHn00CHEWyJlq",
       "longitude": -121.928288,
-      "yearly_meeting": "Pacific YM",
+      "yearly_meeting": "Pacific Yearly Meeting",
       "mappable": true,
       "accessibility": "",
       "phone": "(408)246-0524",
@@ -21076,7 +21076,7 @@
       "city": "Riverside",
       "branch": "Friends General Conference",
       "longitude": -117.378139,
-      "yearly_meeting": "Pacific YM",
+      "yearly_meeting": "Pacific Yearly Meeting",
       "mappable": true,
       "accessibility": "",
       "worship_time": "10:00am",
@@ -21395,7 +21395,7 @@
       "city": "Visalia",
       "branch": "Friends General Conference",
       "longitude": -119.18883,
-      "yearly_meeting": "Pacific YM"
+      "yearly_meeting": "Pacific Yearly Meeting"
     },
     {
       "id": "hmSlcOT51WhVPbwHrbBO",
@@ -22183,7 +22183,7 @@
       "city": "Whittier",
       "branch": "Friends General Conference",
       "longitude": -118.027991,
-      "yearly_meeting": "Pacific YM"
+      "yearly_meeting": "Pacific Yearly Meeting"
     },
     {
       "id": "k0w1JtVYDaPmtBpay3fX",
@@ -23259,7 +23259,7 @@
       "city": "La Jolla",
       "branch": "Friends General Conference",
       "longitude": -117.274398,
-      "yearly_meeting": "Pacific YM",
+      "yearly_meeting": "Pacific Yearly Meeting",
       "mappable": true,
       "accessibility": "Wheelchair Accessible",
       "phone": "(858)456-1020",
@@ -24260,7 +24260,7 @@
       "city": "Reno",
       "branch": "Friends General Conference",
       "longitude": -119.809022,
-      "yearly_meeting": "Pacific YM",
+      "yearly_meeting": "Pacific Yearly Meeting",
       "mappable": true,
       "accessibility": "Wheelchair Accessible",
       "phone": "(775)329-9400",
@@ -25098,7 +25098,7 @@
       "city": "Jackson",
       "branch": "Friends General Conference",
       "longitude": -120.740373,
-      "yearly_meeting": "Pacific YM",
+      "yearly_meeting": "Pacific Yearly Meeting",
       "mappable": true
     },
     {
@@ -26018,7 +26018,7 @@
       "city": "Arcata",
       "branch": "Friends General Conference",
       "longitude": -124.090548,
-      "yearly_meeting": "Pacific YM",
+      "yearly_meeting": "Pacific Yearly Meeting",
       "mappable": true,
       "accessibility": "Hearing Assistance System",
       "phone": "(707) 444-3069",
@@ -26314,7 +26314,7 @@
       "city": "Kamuela",
       "branch": "Friends General Conference",
       "longitude": -155.737058,
-      "yearly_meeting": "Pacific YM",
+      "yearly_meeting": "Pacific Yearly Meeting",
       "mappable": true,
       "accessibility": "",
       "phone": "(808)322-3116",
@@ -27540,7 +27540,7 @@
       "city": "Lakeport",
       "branch": "Friends General Conference",
       "longitude": -122.921206,
-      "yearly_meeting": "Pacific YM",
+      "yearly_meeting": "Pacific Yearly Meeting",
       "mappable": true
     },
     {
@@ -27921,7 +27921,7 @@
       "city": "Kahaheo",
       "branch": "Friends General Conference",
       "longitude": -159.529211,
-      "yearly_meeting": "Pacific YM",
+      "yearly_meeting": "Pacific Yearly Meeting",
       "mappable": true
     },
     {
@@ -27932,7 +27932,7 @@
       "city": "Claremont",
       "branch": "Friends General Conference",
       "longitude": -117.726785,
-      "yearly_meeting": "Pacific YM",
+      "yearly_meeting": "Pacific Yearly Meeting",
       "mappable": true,
       "accessibility": "Hearing Assistance System,Wheelchair Accessible",
       "phone": "(909)624-9114, (714)271-3569, (909)621-1089",
@@ -28275,7 +28275,7 @@
       "city": "Jackson",
       "branch": "Friends General Conference",
       "longitude": -120.740373,
-      "yearly_meeting": "Pacific YM",
+      "yearly_meeting": "Pacific Yearly Meeting",
       "mappable": true,
       "accessibility": "Wheelchair Accessible",
       "language": "English",
@@ -28760,7 +28760,7 @@
       "city": "Napa",
       "branch": "Friends General Conference",
       "longitude": -122.342345,
-      "yearly_meeting": "Pacific YM",
+      "yearly_meeting": "Pacific Yearly Meeting",
       "mappable": true,
       "accessibility": "Some Areas Accessible",
       "phone": "(707)253-1505"
