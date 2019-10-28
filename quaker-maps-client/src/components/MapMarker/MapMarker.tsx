@@ -55,18 +55,14 @@ export const MapMarker: React.FC<MapMarkerProps> = ({
                     // Typography's base component is <p>, but this caused issues. See: https://stackoverflow.com/a/53494821/5767962
                     component={'div'}
                 >
-                    <h3>{meeting.title}</h3>
-                    <p>
-                        Located in {meeting.city}, {meeting.state}, {meeting.title} meets for {meeting.worship_style} worship.
-                    </p>
-                    <p>
-                        {meeting.yearly_meeting && `${meeting.title} is part of ${meeting.yearly_meeting}. `}
-                        {meeting.branch && `It is part of ${meeting.yearly_meeting}`}
-                    </p>
-                    <p>
-                        {meeting.website && `Learn more about this meeting at its `}
-                        {meeting.website && <a href={meeting.website} target="_blank" rel="noopener noreferrer">website</a>}{`.`}
-                    </p>
+                    <h2 className={classes.header}>{meeting.title}</h2>
+                    <ul className={classes.list}>
+                        <li>{meeting.city && meeting.state && `Location: ${meeting.address && meeting.address} in ${meeting.city}, ${meeting.state}`}</li>
+                        <li>{meeting.worship_style && `Worship Style: ${meeting.worship_style}`}</li>
+                        <li>{meeting.yearly_meeting && `Yearly Meeting: ${meeting.yearly_meeting}`}</li>
+                        <li>{meeting.branch && `Branch: ${meeting.branch}`}</li>
+                        <li>{meeting.website && 'Website: '}{meeting.website && <a href={'http://' + meeting.website} target="_blank" rel="noopener noreferrer">{meeting.website}</a>}</li>
+                    </ul>
                 </Typography>
             </Popover>
         </>
@@ -75,8 +71,16 @@ export const MapMarker: React.FC<MapMarkerProps> = ({
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
+        header: {
+            fontSize: 24,
+        },
+        list: {
+            listStyleType: 'none',
+            padding: 4,
+        },
         typography: {
             padding: theme.spacing(2),
+            paddingTop: theme.spacing(0),
         },
     }),
 )
