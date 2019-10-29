@@ -34,7 +34,7 @@ export const MapMarker: React.FC<MapMarkerProps> = ({
     return (
         <>
             <IconButton aria-describedby={id} onClick={handleClick}>
-                <HomeIcon color="primary"/>
+                <HomeIcon color="primary" className={classes.marker} />
             </IconButton>
             <Popover
                 id={id}
@@ -77,6 +77,16 @@ const useStyles = makeStyles((theme: Theme) =>
         list: {
             listStyleType: 'none',
             padding: 4,
+        },
+        /**
+         * The marker must be repositioned manually because google-map-react positions the marker according to its upper-left-hand corner, rather than its center
+         * Without this styling, the markers change positions depending on the level of zoom
+         * For more information, see this bug report: https://github.com/google-map-react/google-map-react/issues/796
+         * This might be a bug that's worth fixing and submitting a PR to the library
+         */
+        marker: {
+            position: 'absolute',
+            transform: 'translate(-50%, -100%)'
         },
         typography: {
             padding: theme.spacing(2),
