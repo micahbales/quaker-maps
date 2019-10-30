@@ -33,9 +33,12 @@ export const MapMarker: React.FC<MapMarkerProps> = ({
 
     return (
         <>
-            <IconButton aria-describedby={id} onClick={handleClick}>
-                <HomeIcon color="primary" className={classes.marker} />
-            </IconButton>
+            <IconButton
+                aria-describedby={id}
+                onClick={handleClick}
+                className={classes.marker}
+                children={<HomeIcon color="primary" />} 
+            />
             <Popover
                 id={id}
                 open={open}
