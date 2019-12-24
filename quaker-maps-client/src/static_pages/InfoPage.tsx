@@ -19,9 +19,9 @@ export const InfoPage: React.FC = () => (
             - George Fox
         </blockquote>
 
-        <img src={presence} style={{
+        <img src={presence} alt="The Presence in the Midst Painting" style={{
             height: '400px',
-        }}></img>
+        }}/>
 
         <h2>Quakerism 101</h2>
 
@@ -33,11 +33,11 @@ export const InfoPage: React.FC = () => (
 
         <p>Friends testify to an inward experience of the Spirit of Christ that is available to each individual; but Quakerism is not an individualistic path. Just as the Holy Spirit speaks to us directly as individuals, we also experience God speaking to us as a group when we gather with the intention to receive God’s will together. Some Friends express this experience by speaking of the “Testimony of Community.” All Friends believe that to be fully faithful to God, our individualism will be brought under control and we will be gathered into community that seeks to know and live out the divine will.</p>
 
-        <img src={preaching} style={{
+        <img src={preaching} alt="Early Quakers preaching" style={{
             float: 'left',
             height: '300px',
             paddingRight: '15px',
-        }}></img>
+        }}/>
 
         <p>Quakers believe that all of life has the potential to be sacramental. That is to say, the reality of God’s power and love can be embodied and experienced in every aspect of life. Rather than placing our emphasis on specific days, times, rituals or ceremonies, Friends place our focus on the possibility of God’s presence and action in every moment.</p>
 
@@ -53,11 +53,11 @@ export const InfoPage: React.FC = () => (
 
         <h3>Quaker Practice</h3>
 
-        <img src={kingdom} style={{
+        <img src={kingdom} alt="Wood print of The Peaceable Kingdom" style={{
             float: 'right',
             height: '300px',
             paddingRight: '15px',
-        }}></img>
+        }}/>
 
         <p>There are two corporate practices that are distinctive to Friends and which deserve special attention in any introduction to the Quaker movement: Waiting worship and Friends’ decision - making process.</p>
 
@@ -75,7 +75,7 @@ export const InfoPage: React.FC = () => (
             float: 'left',
             height: '300px',
             paddingRight: '15px',
-        }} alt="universalist liberal quakers"></img>
+        }} alt="universalist liberal quakers"/>
 
         <p>Friends of this perspective, while recognizing that Quakerism has historically been a branch of the Christian Church, do not believe that Quakerism is or should be limited to a Christian – or Western – understanding. Friends who hold this perspective often see Quakerism as a meeting ground for followers of various world religions – and of none at all. The Friends practice of worship in expectant silence is often seen as particularly conducive to interfaith dialogue, as people of all faiths can benefit from contemplation and grounded sharing.</p>
 
@@ -89,7 +89,7 @@ export const InfoPage: React.FC = () => (
             float: 'right',
             height: '300px',
             paddingRight: '15px',
-        }} alt="christ-centered liberal quakers"></img>
+        }} alt="christ-centered liberal quakers"/>
 
         <p>The Christ-centered Liberal viewpoint is that, while Quakerism should not be defined by any particular set of beliefs, the life and teachings of Jesus are central to their personal faith journey. Some Christ-centered Liberal Friends would self - identify as Christians; others would not. On an individual level, the perspective of Christ - centered Liberal Friends is different from that of universalist Liberal Friends; however, there is not necessarily any conflict between these two perspectives in their view of the Meeting community.</p>
 
@@ -103,7 +103,7 @@ export const InfoPage: React.FC = () => (
             float: 'left',
             height: '300px',
             paddingRight: '15px',
-        }} alt="conservative quakers"></img>
+        }} alt="conservative quakers"/>
 
         <p>Friends who hold a conservative viewpoint (whether or not they are members of a Conservative Yearly Meeting) are in some ways similar to Christ - centered Liberal Friends. Both see Friends practices of waiting worship and decision - making as being central to their understanding of what it means to be a Friend, and both have a personal commitment to Jesus as Guide and Teacher. Unlike Christ-centered Liberal Friends, however, Friends from the conservative perspective hold that faith in Jesus Christ and fidelity to the Christian tradition are essential for the Meeting community as a whole. While seeking not to be legalistic about beliefs, Friends from the conservative viewpoint see common Christian faith – not only common worship and decision - making practice – as being the basis for membership in the Meeting.</p>
 
@@ -115,7 +115,7 @@ export const InfoPage: React.FC = () => (
             float: 'right',
             height: '300px',
             paddingRight: '15px',
-        }} alt="evangelical quakers"></img>
+        }} alt="evangelical quakers"/>
 
         <p>Evangelical Friends are those who have been influenced, to some degree or another, by the Protestant stream of Christianity that is predominant in North America. While in agreement with conservative Friends that Christian faith is crucial for the Meeting as a whole, evangelical Friends are more open to modifying Friends practice to better suit what they sense to be the needs of their local community. While most evangelical Friends still practice waiting worship, almost all evangelical Friends now include prepared elements in their worship services. Employing congregational singing and prepared sermons, Meetings with a predominantly evangelical viewpoint might, at first glance, appear similar to mainstream Protestant services. Some are even more experimental, including praise bands and electronic presentations.</p>
 
@@ -125,7 +125,7 @@ export const InfoPage: React.FC = () => (
             float: 'left',
             height: '300px',
             paddingRight: '15px',
-        }} alt="fundamentalist quakers"></img>
+        }} alt="fundamentalist quakers"/>
 
         <p>There are Friends of an evangelical perspective throughout the Orthodox and Evangelical branches.</p>
 

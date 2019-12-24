@@ -12,17 +12,9 @@ import {
 import { ChevronLeft } from '@material-ui/icons'
 import { FlashAlert } from '../../../FlashAlert'
 import { getTitles } from './utils/get_titles'
-import { Meeting } from '../../../../types'
+import { Meeting, SelectKeys, SelectTitleKeys, SelectTitles, SelectValues } from '../../../../types'
 import sample from 'lodash/sample'
 import React from 'react'
-
-export interface SelectValues {
-    branch: string
-    lgbt_affirming: string
-    state: string
-    worship_style: string
-    yearly_meeting: string
-}
 
 interface NavMenuProps {
     filterMeetings: (selectValues: SelectValues) => boolean
@@ -37,7 +29,7 @@ export const NavMenu: React.FC<NavMenuProps> = ({
 }) => {
     const classes = useStyles()
 
-    const [selectTitles] = React.useState({
+    const [selectTitles] = React.useState<SelectTitles>({
         branchs: getTitles(meetings, 'branch'),
         lgbt_affirmings: ['true', 'false'],
         states: getTitles(meetings, 'state'),
@@ -113,31 +105,31 @@ export const NavMenu: React.FC<NavMenuProps> = ({
                 </IconButton>
             </div>
             <List>
-                {Object.keys(selectValues).map((title: string, index: number) => (
-                    <FormControl variant="outlined" className={classes.formControl} key={index}>
-                        <InputLabel htmlFor={`outlined-${title}-simple`}>
-                            {title.replace(/_/g, ' ')}
-                        </InputLabel>
-                        <Select
-                            // TODO: Figure out what this TypeScript error is all about
-                            // @ts-ignore : 'expression of type 'string' can't be used to index selectValues'
-                            value={selectValues[title]}
-                            onChange={handleChange}
-                            input={<OutlinedInput labelWidth={title.length * 7.5} name={title} id={`outlined-${title}-simple`} />}
-                            className={classes.select}
-                        >
-                            <MenuItem value="">
-                                <em>None</em>
-                            </MenuItem>
-                            // @ts-ignore : 'expression of type 'string' can't be used to index selectTitles'
-                            {Object.values(selectTitles[`${title}s`]).map((name: string, index: number) => (
-                                <MenuItem value={name} key={index}>
-                                    {name}
+                {Object.keys(selectValues).map((key: string, index: number) => {
+                    const selectKey = key as SelectKeys
+                    return (
+                        <FormControl variant="outlined" className={classes.formControl} key={index}>
+                            <InputLabel htmlFor={`outlined-${selectKey}-simple`}>
+                                {selectKey.replace(/_/g, ' ')}
+                            </InputLabel>
+                            <Select
+                                value={selectValues[selectKey]}
+                                onChange={handleChange}
+                                input={<OutlinedInput labelWidth={selectKey.length * 7.5} name={selectKey} id={`outlined-${selectKey}-simple`} />}
+                                className={classes.select}
+                            >
+                                <MenuItem value="">
+                                    <em>None</em>
                                 </MenuItem>
-                            ))}
-                        </Select>
-                    </FormControl>
-                ))}
+                                {Object.values(selectTitles[`${selectKey}s` as SelectTitleKeys]).map((name: string, index: number) => (
+                                    <MenuItem value={name} key={index}>
+                                        {name}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
+                    )
+                })}
             </List>
 
             {/*Show alert and button when an invalid selection is chosen*/}

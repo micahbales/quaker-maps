@@ -7,8 +7,8 @@ import SearchIcon from '@material-ui/icons/Search'
 import Tooltip from '@material-ui/core/Tooltip'
 import Button from '@material-ui/core/Button'
 import Link from '@material-ui/core/Link'
-import { NavMenu, SelectValues } from './components/NavMenu/NavMenu'
-import { Meeting } from '../../types'
+import { NavMenu } from './components/NavMenu/NavMenu'
+import { Meeting, SelectValues } from '../../types'
 import React from 'react'
 
 interface NavBarProps {

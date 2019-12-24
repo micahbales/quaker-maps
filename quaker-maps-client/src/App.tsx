@@ -11,12 +11,12 @@ import { FaqPage } from './static_pages/FaqPage'
 import { ContactPage } from './static_pages/ContactPage'
 import { FourOhFour } from './static_pages/FourOhFour'
 import { MainMapLoading } from './components/MainMap/components/MainMapLoading'
-import { meetings } from './data/meetings.json'
+import * as data from './data/meetings.json'
 const apiKey: string | undefined = process.env.REACT_APP_GOOGLE_MAPS_API_KEY
+const meetings: Meeting[] = data.meetings
 
 export interface AppState {
-  // TODO: Figure out why this is throwing if typed as 'Meeting[]'
-  filteredMeetings: any[]
+  filteredMeetings: Meeting[]
   meetings: Meeting[]
 }
 

@@ -3,7 +3,6 @@ export interface Meeting {
     address: string
     branch: string
     city: string
-    country: string
     created_at: {
         _seconds: number,
         _nanoseconds: number
@@ -47,5 +46,24 @@ export type MeetingFields =
     'worship_style' |
     'worship_time' |
     'yearly_meeting' |
-    'zip' 
-    
+    'zip'
+
+export type SelectKeys = 'branch' | 'lgbt_affirming' | 'state' | 'worship_style' | 'yearly_meeting'
+
+export interface SelectValues {
+    branch: string
+    lgbt_affirming: string
+    state: string
+    worship_style: string
+    yearly_meeting: string
+}
+
+export type SelectTitleKeys = 'branchs' | 'lgbt_affirmings' | 'states' | 'worship_styles' | 'yearly_meetings'
+
+export interface SelectTitles {
+    branchs: string[]
+    lgbt_affirmings: string[]
+    states: string[]
+    worship_styles: string[]
+    yearly_meetings: string[]
+}
