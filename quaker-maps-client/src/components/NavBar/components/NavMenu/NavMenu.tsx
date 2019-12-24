@@ -1,12 +1,16 @@
-import IconButton from '@material-ui/core/IconButton'
-import List from '@material-ui/core/List'
-import { makeStyles } from '@material-ui/core/styles'
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
-import OutlinedInput from '@material-ui/core/OutlinedInput'
-import InputLabel from '@material-ui/core/InputLabel'
-import MenuItem from '@material-ui/core/MenuItem'
-import FormControl from '@material-ui/core/FormControl'
-import Select from '@material-ui/core/Select'
+import {
+    Button,
+    FormControl,
+    IconButton,
+    InputLabel,
+    List,
+    makeStyles,
+    MenuItem,
+    OutlinedInput,
+    Select
+} from '@material-ui/core'
+import { ChevronLeft } from '@material-ui/icons'
+import { FlashAlert } from '../../../FlashAlert'
 import { getTitles } from './utils/get_titles'
 import { Meeting } from '../../../../types'
 import sample from 'lodash/sample'
@@ -41,23 +45,31 @@ export const NavMenu: React.FC<NavMenuProps> = ({
         yearly_meetings: getTitles(meetings, 'yearly_meeting'),
     })
 
-    const [selectValues, setSelectValues] = React.useState<SelectValues>({
+    const initialSelectValues = {
         branch: '',
         lgbt_affirming: '',
         state: '',
         worship_style: '',
         yearly_meeting: '',
-    })
+    }
+    const [selectValues, setSelectValues] = React.useState<SelectValues>(initialSelectValues)
 
-    const updateSelectValuesAndFilterMeetings = (name: string | undefined, value: unknown) => {
+    const initialInvalidSelection = { name: '', value: '' }
+    const [invalidSelection, setInvalidSelection] = React.useState<{name: string, value: string}>(initialInvalidSelection)
+
+    const updateSelectValuesAndFilterMeetings = (name: string, value: string, values?: SelectValues) => {
+        const originalValues = values || selectValues
         const newSelectValues = {
-            ...selectValues,
+            ...originalValues,
             [name as string]: value,
         }
         const stateWasUpdated = filterMeetings(newSelectValues)
-        // Don't set dropdown values unless the selection was possible (updated the filtered meetings)
         if (stateWasUpdated) {
+            // Update dropdown values if the selection was possible (updated the filtered meetings)
             setSelectValues(newSelectValues)
+        } else {
+            // Otherwise, alert the user to the invalid selection and give them an option to reset on that selection
+            setInvalidSelection({ name, value })
         }
     }
 
@@ -68,13 +80,25 @@ export const NavMenu: React.FC<NavMenuProps> = ({
      * */ 
     React.useEffect(() => {
         const randomYearlyMeeting: string | undefined = sample(getTitles(meetings, 'yearly_meeting'))
-        updateSelectValuesAndFilterMeetings('yearly_meeting', randomYearlyMeeting)
+        if (randomYearlyMeeting) {
+            updateSelectValuesAndFilterMeetings('yearly_meeting', randomYearlyMeeting)
+        }
     }, [])
 
-    function handleChange(event: React.ChangeEvent<{ name?: string; value: unknown }>) {
-        const name: string | undefined = event.target.name 
-        const value: unknown | undefined = event.target.value
+    const handleChange = (event: React.ChangeEvent<{ name?: string; value: unknown }>) => {
+        const name: string = event.target.name || ''
+        const value: string = String(event.target.value)
         updateSelectValuesAndFilterMeetings(name, value)
+    }
+
+    const newSearchFromSingleCriterion = async () => {
+        const name = invalidSelection.name
+        const value = invalidSelection.value
+
+        await setInvalidSelection(initialInvalidSelection)
+        await setSelectValues(initialSelectValues)
+
+        updateSelectValuesAndFilterMeetings(name, value, initialSelectValues)
     }
 
     return (
@@ -85,7 +109,7 @@ export const NavMenu: React.FC<NavMenuProps> = ({
             <div className={classes.drawerHeader}>
                 <h1 className={classes.header}>Filter Meetings</h1>
                 <IconButton onClick={() => setDrawerIsOpen(false)}>
-                    <ChevronLeftIcon />
+                    <ChevronLeft />
                 </IconButton>
             </div>
             <List>
@@ -115,11 +139,30 @@ export const NavMenu: React.FC<NavMenuProps> = ({
                     </FormControl>
                 ))}
             </List>
+
+            {/*Show alert and button when an invalid selection is chosen*/}
+            {invalidSelection.value && (
+                <>
+                    <Button
+                        variant="contained"
+                        color="secondary"
+                        className={classes.button_invalid}
+                        onClick={newSearchFromSingleCriterion}>
+                        Search only {invalidSelection.name.replace(/_/g, ' ')} : {invalidSelection.value}
+                    </Button>
+                    <FlashAlert variant="error" message={
+                        `Adding ${invalidSelection.name.replace(/_/g, ' ')} : ${invalidSelection.value} to your search criteria does not result in any meetings`
+                    }/>
+                </>
+            )}
         </div>
     )
 }
 
 const useStyles = makeStyles(theme => ({
+    button_invalid: {
+        margin: '0 10px',
+    },
     drawerHeader: {
         display: 'flex',
         alignItems: 'center',
