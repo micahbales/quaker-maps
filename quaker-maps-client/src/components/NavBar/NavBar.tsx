@@ -7,8 +7,10 @@ import SearchIcon from '@material-ui/icons/Search'
 import Tooltip from '@material-ui/core/Tooltip'
 import Button from '@material-ui/core/Button'
 import Link from '@material-ui/core/Link'
+import { AppState } from '../../App'
+import { FlashAlert } from '../FlashAlert'
 import { NavMenu } from './components/NavMenu/NavMenu'
-import { Meeting, SelectValues } from '../../types'
+import { SelectValues } from '../../types'
 import React from 'react'
 
 /**
@@ -17,26 +19,28 @@ import React from 'react'
 
 interface NavBarProps {
     filterMeetings: (selectValues: SelectValues) => boolean
-    meetings: Meeting[]
+    appState: AppState
 }
 
 export const NavBar: React.FC<NavBarProps> = ({
     filterMeetings,
-    meetings,
+    appState,
 }) => {
     const classes = useStyles()
     const [drawerIsOpen, setDrawerIsOpen] = React.useState(false)
+    const [drawerHasBeenOpened, setDrawerHasBeenOpened] = React.useState(false)
     const toggleDrawer = (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
         setDrawerIsOpen(open)
+        setDrawerHasBeenOpened(true)
     }
     return (
         <>
             <Drawer open={drawerIsOpen} onClose={toggleDrawer(false)} variant="persistent">
                 {/* Don't render NavMenu until meetings have been fetched, because we need meetings to populate our form fields */}
-                {meetings.length > 0 && 
+                {appState.meetings.length > 0 &&
                 <NavMenu
                     filterMeetings={filterMeetings}
-                    meetings={meetings}
+                    meetings={appState.meetings}
                     setDrawerIsOpen={setDrawerIsOpen}
                 />}
             </Drawer>
@@ -82,6 +86,16 @@ export const NavBar: React.FC<NavBarProps> = ({
                     </Toolbar>
                 </AppBar>
             </div>
+
+            {/*
+              Show info about the yearly meeting being viewed when the MainMap is rendered for the first time
+              (it's at the root path and the NavMenu is not open)
+            */}
+            {!drawerHasBeenOpened && window.location.pathname === '/' && (
+                <FlashAlert variant="success" closeTimeout={10000} message={
+                    `You are viewing meetings in: ${appState.filteredMeetings[0].yearly_meeting}`
+                }/>
+            )}
         </>
     )
 }

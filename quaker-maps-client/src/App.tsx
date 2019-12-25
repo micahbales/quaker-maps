@@ -71,7 +71,7 @@ const App: React.FC = () => {
       <CssBaseline />
       <NavBar
         filterMeetings={filterMeetings}
-        meetings={appState.meetings}
+        appState={appState}
       />
       <Switch>
         <Route exact path="/" component={MainMapView} />
