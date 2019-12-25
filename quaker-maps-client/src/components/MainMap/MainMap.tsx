@@ -5,6 +5,10 @@ import { updateMapBounds } from '../../utils/update_map_bounds'
 import { AppState, MainMapState } from '../../App'
 import { Meeting } from '../../types'
 
+/**
+ * MainMap is the primary map of meetings that is displayed on the home page
+ */
+
 interface MainMapProps {
     apiKey: string
     appState: AppState

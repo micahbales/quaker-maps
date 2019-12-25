@@ -1783,29 +1783,6 @@
       "state": "Idaho"
     },
     {
-      "id": "3Sp5dbsknLM3W0ywJ2Rg",
-      "latitude": 35.3515611,
-      "state": "California",
-      "email": "bowlesfg@aol.com, rstotler@bak.rr.com",
-      "lgbt_affirming": true,
-      "created_at": {
-        "_seconds": 1571460387,
-        "_nanoseconds": 328000000
-      },
-      "title": "Bakersfield Quaker Meeting",
-      "worship_style": "Semi-programmed",
-      "city": "Bakersfield",
-      "branch": "Friends United Meeting",
-      "longitude": -119.0576298,
-      "yearly_meeting": "Western Association",
-      "mappable": true,
-      "accessibility": "",
-      "worship_time": "9:00am",
-      "address": "1401 Calle Poderosa",
-      "zip": "93309-7152",
-      "school_time": ""
-    },
-    {
       "id": "3ThseLbUVMWIghlYT1OC",
       "worship_style": "Programmed",
       "slug": "mt-ayr-friends-church",
@@ -15611,33 +15588,6 @@
       "state": "Idaho"
     },
     {
-      "id": "XLutymXyjRaGzmEisPS4",
-      "mappable": true,
-      "accessibility": "Hearing Assistance System, Wheelchair Accessible",
-      "phone": "(562)698-9805",
-      "description": "Philadelphia St. at Washington Ave. (not Washington Blvd.), 2 blocks W. of Painter Ave.",
-      "worship_time": "11:00am",
-      "address": "13205 Philadelphia St",
-      "zip": "90601-4303",
-      "school_time": "",
-      "worshipstyle": "Programmed",
-      "latitude": 33.9793494,
-      "state": "California",
-      "email": "rsettlage@aol.com",
-      "lgbt_affirming": true,
-      "created_at": {
-        "_seconds": 1571460387,
-        "_nanoseconds": 331000000
-      },
-      "title": "Whittier First Friends Church",
-      "worship_style": "Semi-programmed",
-      "website": "www.firstfriendswhittier.org",
-      "branch": "Friends United Meeting",
-      "city": "Whittier",
-      "longitude": -118.0346396,
-      "yearly_meeting": "Western Association"
-    },
-    {
       "id": "XMNNZ2GE4uSDPoGC9Z8t",
       "slug": "iglesia-los-amigos-de-miami",
       "city": "Miami",
@@ -15759,33 +15709,6 @@
       "city": "Box Elder",
       "longitude": -103.046485,
       "yearly_meeting": "Unaffiliated"
-    },
-    {
-      "id": "XTEcCgoM1TTRUmTSd3MX",
-      "city": "Berkeley",
-      "branch": "Friends United Meeting",
-      "longitude": -122.2830905,
-      "yearly_meeting": "Western Association",
-      "mappable": true,
-      "accessibility": "",
-      "phone": "(510)524-4112",
-      "description": "at Cedar & Sacramento Sts., 2 blocks north of North Berkely BART",
-      "worship_time": "11:00am",
-      "address": "1600 Sacramento St.",
-      "zip": "94702",
-      "school_time": "",
-      "worshipstyle": "Semi-programmed",
-      "latitude": 37.8764612,
-      "state": "California",
-      "email": "office@berkeleyfriendschurch.org",
-      "lgbt_affirming": true,
-      "created_at": {
-        "_seconds": 1571460387,
-        "_nanoseconds": 331000000
-      },
-      "title": "Berkeley Friends Church",
-      "worship_style": "Semi-programmed",
-      "website": "www.berkeleyfriendschurch.org"
     },
     {
       "id": "XUpyW5thzPMhUaaBOEnM",

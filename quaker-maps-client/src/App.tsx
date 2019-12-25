@@ -1,4 +1,5 @@
 import React from 'react'
+import { MeetingView } from './components/MeetingView/MeetingView'
 import { Meeting } from './types'
 import { MainMap } from './components/MainMap/MainMap'
 import { NavBar } from './components/NavBar/NavBar'
@@ -78,6 +79,7 @@ const App: React.FC = () => {
         <Route exact path="/about" component={FaqPage} />
         <Route exact path="/frequently-asked-questions" component={FaqPage} />
         <Route exact path="/contact" component={ContactPage} />
+        <Route path="/meeting/:slug" children={<MeetingView meetings={appState.meetings}/>} />
         <Route component={FourOhFour} />
       </Switch>
     </Router>
@@ -89,4 +91,3 @@ const App: React.FC = () => {
 }
 
 export default App
-

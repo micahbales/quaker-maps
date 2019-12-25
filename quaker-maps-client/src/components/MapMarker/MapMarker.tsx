@@ -2,9 +2,13 @@ import React from 'react'
 import HomeIcon from '@material-ui/icons/Home'
 import IconButton from '@material-ui/core/IconButton'
 import Popover from '@material-ui/core/Popover'
-import Typography from '@material-ui/core/Typography'
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles'
 import { Meeting } from '../../types'
+import { MeetingDetails } from '../MeetingView/components/MeetingDetails'
+
+/**
+ * MapMarker is the marker that represents a meeting on a map. It includes a popover with details about the meeting
+ */
 
 interface MapMarkerProps {
     lat: number
@@ -53,20 +57,7 @@ export const MapMarker: React.FC<MapMarkerProps> = ({
                     horizontal: 'center',
                 }}
             >
-                <Typography
-                    className={classes.typography}
-                    // Typography's base component is <p>, but this caused issues. See: https://stackoverflow.com/a/53494821/5767962
-                    component={'div'}
-                >
-                    <h2 className={classes.header}>{meeting.title}</h2>
-                    <ul className={classes.list}>
-                        <li>{meeting.city && meeting.state && `Location: ${meeting.address && meeting.address} in ${meeting.city}, ${meeting.state}`}</li>
-                        <li>{meeting.worship_style && `Worship Style: ${meeting.worship_style}`}</li>
-                        <li>{meeting.yearly_meeting && `Yearly Meeting: ${meeting.yearly_meeting}`}</li>
-                        <li>{meeting.branch && `Branch: ${meeting.branch}`}</li>
-                        <li>{meeting.website && 'Website: '}{meeting.website && <a href={'http://' + meeting.website} target="_blank" rel="noopener noreferrer">{meeting.website}</a>}</li>
-                    </ul>
-                </Typography>
+                <MeetingDetails meeting={meeting} title={meeting.title} />
             </Popover>
         </>
     )
@@ -75,11 +66,10 @@ export const MapMarker: React.FC<MapMarkerProps> = ({
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         header: {
+            border: 0,
             fontSize: 24,
-        },
-        list: {
-            listStyleType: 'none',
-            padding: 4,
+            margin: '12px 0 0 0',
+            textAlign: 'center'
         },
         /**
          * The marker must be repositioned manually because google-map-react positions the marker according to its upper-left-hand corner, rather than its center
@@ -90,10 +80,6 @@ const useStyles = makeStyles((theme: Theme) =>
         marker: {
             position: 'absolute',
             transform: 'translate(-50%, -100%)'
-        },
-        typography: {
-            padding: theme.spacing(2),
-            paddingTop: theme.spacing(0),
         },
     }),
 )

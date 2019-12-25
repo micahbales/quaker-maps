@@ -11,6 +11,10 @@ import { NavMenu } from './components/NavMenu/NavMenu'
 import { Meeting, SelectValues } from '../../types'
 import React from 'react'
 
+/**
+ * NavBar is the main navigation bar running across the top of Quaker Maps
+ */
+
 interface NavBarProps {
     filterMeetings: (selectValues: SelectValues) => boolean
     meetings: Meeting[]

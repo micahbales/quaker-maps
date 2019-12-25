@@ -16,6 +16,10 @@ import { Meeting, SelectKeys, SelectTitleKeys, SelectTitles, SelectValues } from
 import sample from 'lodash/sample'
 import React from 'react'
 
+/**
+ * NavMenu is the left-hand menu with select dropdowns for filtering meetings by criteria
+ */
+
 interface NavMenuProps {
     filterMeetings: (selectValues: SelectValues) => boolean
     meetings: Meeting[]

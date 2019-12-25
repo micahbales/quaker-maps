@@ -11,6 +11,10 @@ import SnackbarContent from '@material-ui/core/SnackbarContent'
 import WarningIcon from '@material-ui/icons/Warning'
 import { makeStyles, Theme } from '@material-ui/core/styles'
 
+/**
+ * FlashAlert is an alert message that is displayed temporarily on the screen
+ */
+
 const variantIcon = {
     success: CheckCircleIcon,
     warning: WarningIcon,
