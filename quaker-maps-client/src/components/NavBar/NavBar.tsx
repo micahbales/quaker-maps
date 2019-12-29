@@ -36,13 +36,14 @@ export const NavBar: React.FC<NavBarProps> = ({
     return (
         <>
             <Drawer open={drawerIsOpen} onClose={toggleDrawer(false)} variant="persistent">
-                {/* Don't render NavMenu until meetings have been fetched, because we need meetings to populate our form fields */}
+                {/* Don't render NavMenu until/unless we have meetings; we need meetings to populate our form fields */}
                 {appState.meetings.length > 0 &&
-                <NavMenu
-                    filterMeetings={filterMeetings}
-                    meetings={appState.meetings}
-                    setDrawerIsOpen={setDrawerIsOpen}
-                />}
+                    <NavMenu
+                        filterMeetings={filterMeetings}
+                        meetings={appState.meetings}
+                        setDrawerIsOpen={setDrawerIsOpen}
+                    />
+                }
             </Drawer>
             <div className={classes.root}>
                 <AppBar position="static">
@@ -92,7 +93,7 @@ export const NavBar: React.FC<NavBarProps> = ({
               (it's at the root path and the NavMenu is not open)
             */}
             {!drawerHasBeenOpened && window.location.pathname === '/' && (
-                <FlashAlert variant="success" closeTimeout={10000} message={
+                <FlashAlert variant="info" closeTimeout={10000} message={
                     `You are viewing meetings in: ${appState.filteredMeetings[0].yearly_meeting}`
                 }/>
             )}

@@ -1,5 +1,7 @@
 import React from 'react'
+import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles'
 import { MeetingView } from './components/MeetingView/MeetingView'
+import { QuakerMapsTheme } from './theme'
 import { Meeting } from './types'
 import { MainMap } from './components/MainMap/MainMap'
 import { NavBar } from './components/NavBar/NavBar'
@@ -13,6 +15,9 @@ import { ContactPage } from './static_pages/ContactPage'
 import { FourOhFour } from './static_pages/FourOhFour'
 import { MainMapLoading } from './components/MainMap/components/MainMapLoading'
 import * as data from './data/meetings.json'
+
+const theme = createMuiTheme(QuakerMapsTheme);
+
 const apiKey: string | undefined = process.env.REACT_APP_GOOGLE_MAPS_API_KEY
 const meetings: Meeting[] = data.meetings
 
@@ -67,22 +72,24 @@ const App: React.FC = () => {
   )
 
   return apiKey ? (
-    <Router>
-      <CssBaseline />
-      <NavBar
-        filterMeetings={filterMeetings}
-        appState={appState}
-      />
-      <Switch>
-        <Route exact path="/" component={MainMapView} />
-        <Route exact path="/info" component={InfoPage} />
-        <Route exact path="/about" component={FaqPage} />
-        <Route exact path="/frequently-asked-questions" component={FaqPage} />
-        <Route exact path="/contact" component={ContactPage} />
-        <Route path="/meeting/:slug" children={<MeetingView meetings={appState.meetings}/>} />
-        <Route component={FourOhFour} />
-      </Switch>
-    </Router>
+      <MuiThemeProvider theme={theme}>
+        <Router>
+          <CssBaseline />
+          <NavBar
+              filterMeetings={filterMeetings}
+              appState={appState}
+          />
+          <Switch>
+            <Route exact path="/" component={MainMapView} />
+            <Route exact path="/info" component={InfoPage} />
+            <Route exact path="/about" component={FaqPage} />
+            <Route exact path="/frequently-asked-questions" component={FaqPage} />
+            <Route exact path="/contact" component={ContactPage} />
+            <Route path="/meeting/:slug" children={<MeetingView meetings={appState.meetings}/>} />
+            <Route component={FourOhFour} />
+          </Switch>
+        </Router>
+      </MuiThemeProvider>
   ) : (
     <h1>
       Error: Need Valid API Key
