@@ -1,3 +1,4 @@
+import { makeStyles } from '@material-ui/core'
 import React from 'react'
 import GoogleMapReact from 'google-map-react'
 import { MapMarker } from '../MapMarker/MapMarker'
@@ -14,15 +15,18 @@ interface MainMapProps {
     appState: AppState
     mainMapState: MainMapState
     setMainMapState: (mainMapState: MainMapState) => void
+    marginLeft: string
 }
 
 export const MainMap: React.FC<MainMapProps> = ({
     apiKey,
     appState,
+    marginLeft
 }) => {
+    const classes = useStyles()
     const [mainMapState, setMainMapState] = React.useState(initialMainMapState)
     return (
-        <div style={{ height: '93vh', position: 'static', width: '100%' }}>
+        <div className={classes.root} style={{ marginLeft }}>
             <GoogleMapReact
                 bootstrapURLKeys={{ key: apiKey }}
                 center={mainMapState.center}
@@ -31,7 +35,7 @@ export const MainMap: React.FC<MainMapProps> = ({
                 onGoogleApiLoaded={({ map, maps }) => {
                     const filteredMeetings = appState.filteredMeetings
                     updateMapBounds({ 
-                        filteredMeetings, 
+                        filteredMeetings,
                         map, 
                         maps, 
                         setMainMapState, 
@@ -58,3 +62,16 @@ export const MainMap: React.FC<MainMapProps> = ({
         </div>
     )
 }
+
+const useStyles = makeStyles(theme => ({
+    root: {
+        flexGrow: 1,
+        height: '93vh',
+        position: 'static',
+        width: '100%',
+        transition: theme.transitions.create('margin', {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.leavingScreen,
+        }),
+    },
+}))

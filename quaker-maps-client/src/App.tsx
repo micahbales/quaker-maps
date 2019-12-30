@@ -1,12 +1,12 @@
 import React from 'react'
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles'
+import { MainMap } from './components/MainMap/MainMap'
 import { MeetingView } from './components/MeetingView/MeetingView'
+import { navMenuWidth } from './components/NavMenu/NavMenu'
+import { SiteNav } from './components/SiteNav'
 import { QuakerMapsTheme } from './theme'
 import { Meeting } from './types'
-import { MainMap } from './components/MainMap/MainMap'
-import { NavBar } from './components/NavBar/NavBar'
 import { CssBaseline } from '@material-ui/core'
-import { getFilterMeetings } from './utils/get_filter_meetings'
 import { updateMapBounds } from './utils/update_map_bounds'
 import { Switch, BrowserRouter as Router, Route } from 'react-router-dom'
 import { InfoPage } from './static_pages/InfoPage'
@@ -47,9 +47,11 @@ const App: React.FC = () => {
     filteredMeetings: meetings,
     meetings,
   }
-  
+
   const [appState, setAppState] = React.useState(initialAppState)
   const [mainMapState, setMainMapState] = React.useState(initialMainMapState)
+  const isViewingMainMap = window.location.pathname === '/'
+  const [navMenuIsOpen, setNavMenuIsOpen] = React.useState(isViewingMainMap)
 
   // Re-populate and re-bound map whenever meetings are filtered
   React.useEffect(() => {
@@ -61,13 +63,14 @@ const App: React.FC = () => {
     }
   }, [appState.filteredMeetings])
 
-  const filterMeetings = getFilterMeetings(appState, setAppState)
+
 
   const MainMapView = () => appState.meetings.length ? (<MainMap
     apiKey={apiKey || ''}
     appState={appState}
     mainMapState={mainMapState}
     setMainMapState={setMainMapState}
+    marginLeft={navMenuIsOpen ? navMenuWidth : '0px'}
   />) : (
     <MainMapLoading />
   )
@@ -76,9 +79,12 @@ const App: React.FC = () => {
       <MuiThemeProvider theme={theme}>
         <Router>
           <CssBaseline />
-          <NavBar
-              filterMeetings={filterMeetings}
+          <SiteNav
               appState={appState}
+              setAppState={setAppState}
+              isViewingMainMap={isViewingMainMap}
+              navMenuIsOpen={navMenuIsOpen}
+              setNavMenuIsOpen={setNavMenuIsOpen}
           />
           <Switch>
             <Route exact path="/" component={MainMapView} />

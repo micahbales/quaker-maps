@@ -10,7 +10,13 @@ import {
 } from '@material-ui/core'
 import { ChevronLeft } from '@material-ui/icons'
 import { getTitles } from './utils/get_titles'
-import { Meeting, SelectKeys, SelectTitleKeys, SelectTitles, SelectValues } from '../../../../types'
+import {
+    Meeting,
+    SelectKeys,
+    SelectTitleKeys,
+    SelectTitles,
+    SelectValues
+} from '../../types'
 import sample from 'lodash/sample'
 import React from 'react'
 
@@ -23,6 +29,8 @@ interface NavMenuProps {
     meetings: Meeting[]
     setDrawerIsOpen: (option: boolean) => void
 }
+
+export const navMenuWidth = '250px'
 
 export const NavMenu: React.FC<NavMenuProps> = ({
     filterMeetings,
@@ -78,7 +86,7 @@ export const NavMenu: React.FC<NavMenuProps> = ({
 
     return (
         <div
-            className={classes.list}
+            className={classes.root}
             role="presentation"
         >
             <div className={classes.drawerHeader}>
@@ -119,6 +127,10 @@ export const NavMenu: React.FC<NavMenuProps> = ({
 }
 
 const useStyles = makeStyles(theme => ({
+    root: {
+        height: 50,
+        width: navMenuWidth,
+    },
     button_invalid: {
         margin: '0 10px',
     },
@@ -136,10 +148,6 @@ const useStyles = makeStyles(theme => ({
     header: {
         fontSize: 24,
         textAlign: 'center',
-    },
-    list: {
-        height: 50,
-        width: 250,
     },
     select: {
         maxWidth: 230,

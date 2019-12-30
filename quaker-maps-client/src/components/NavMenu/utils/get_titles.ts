@@ -1,7 +1,7 @@
 import uniq from 'lodash/uniq'
 import flatten from 'lodash/flatten'
 import map from 'lodash/map'
-import { Meeting, MeetingFields } from '../../../../../types'
+import { Meeting, MeetingFields } from '../../../types'
 
 /**
  * getTitles extracts the names of every meeting attribute
