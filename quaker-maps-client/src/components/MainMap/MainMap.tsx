@@ -3,7 +3,7 @@ import React from 'react'
 import GoogleMapReact from 'google-map-react'
 import { MapMarker } from '../MapMarker/MapMarker'
 import { updateMapBounds } from '../../utils/update_map_bounds'
-import { AppState, initialMainMapState, MainMapState } from '../../App'
+import { AppState } from '../../App'
 import { Meeting } from '../../types'
 
 /**
@@ -13,9 +13,23 @@ import { Meeting } from '../../types'
 interface MainMapProps {
     apiKey: string
     appState: AppState
-    mainMapState: MainMapState
-    setMainMapState: (mainMapState: MainMapState) => void
     marginLeft: string
+}
+
+export interface MainMapState {
+    center: {
+        lat: number
+        lng: number
+    }
+    defaultZoom: number
+    map?: any
+    maps?: any
+}
+
+const initialMainMapState: MainMapState = {
+    // If there are no meetings, center map on North America and zoom out
+    center: { lat: 39.8283, lng: -98.5795 },
+    defaultZoom: 4,
 }
 
 export const MainMap: React.FC<MainMapProps> = ({

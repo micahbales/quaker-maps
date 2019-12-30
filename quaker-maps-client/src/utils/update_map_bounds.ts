@@ -1,4 +1,4 @@
-import { MainMapState } from '../App'
+import { MainMapState } from '../components/MainMap/MainMap'
 import { Meeting } from '../types'
 
 const getMapBounds = (maps: any, meetings: Meeting[]) => {
