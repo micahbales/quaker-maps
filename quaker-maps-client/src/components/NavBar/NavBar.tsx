@@ -18,7 +18,7 @@ import React from 'react'
  */
 
 interface NavBarProps {
-    filterMeetings: (selectValues: SelectValues) => boolean
+    filterMeetings: (selectValues: SelectValues) => void
     appState: AppState
 }
 
@@ -27,11 +27,10 @@ export const NavBar: React.FC<NavBarProps> = ({
     appState,
 }) => {
     const classes = useStyles()
+    const isViewingMainMap = window.location.pathname === '/'
     const [drawerIsOpen, setDrawerIsOpen] = React.useState(false)
-    const [drawerHasBeenOpened, setDrawerHasBeenOpened] = React.useState(false)
     const toggleDrawer = (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
         setDrawerIsOpen(open)
-        setDrawerHasBeenOpened(true)
     }
     return (
         <>
@@ -49,7 +48,7 @@ export const NavBar: React.FC<NavBarProps> = ({
                 <AppBar position="static">
                     <Toolbar>
                         { /* Only show this button if we're on the root path - the MainMap view */
-                            window.location.pathname === '/' && 
+                            isViewingMainMap &&
                             <Tooltip title="Filter Meetings">
                                 <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={toggleDrawer(true)}>
                                     <SearchIcon />
@@ -88,13 +87,10 @@ export const NavBar: React.FC<NavBarProps> = ({
                 </AppBar>
             </div>
 
-            {/*
-              Show info about the yearly meeting being viewed when the MainMap is rendered for the first time
-              (it's at the root path and the NavMenu is not open)
-            */}
-            {!drawerHasBeenOpened && window.location.pathname === '/' && (
-                <FlashAlert variant="info" closeTimeout={10000} message={
-                    `You are viewing meetings in: ${appState.filteredMeetings[0].yearly_meeting}`
+            {/* Alert user if they have selected invalid search criteria */}
+            {drawerIsOpen && isViewingMainMap && appState.filteredMeetings.length === 0 && (
+                <FlashAlert horizontal="center" vertical="bottom" variant="warning" closeTimeout={10000} message={
+                    'No meetings matched your search results. Try a different set of criteria.'
                 }/>
             )}
         </>

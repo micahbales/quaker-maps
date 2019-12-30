@@ -1,20 +1,5 @@
 import { AppState } from '../App'
-import isEqual from 'lodash/isEqual'
-import sortBy from 'lodash/sortBy'
-import { Meeting, SelectKeys, SelectValues } from '../types'
-
-const arraysAreEqual = (a: Meeting[], b: Meeting[]) => {
-    if (a.length !== b.length) {
-        return false
-    }
-    
-    const arr1 = sortBy(a)
-    const arr2 = sortBy(b)
-    for (let i = 0; i < arr1.length; i++) {
-        if (!isEqual(arr1[i], arr2[i])) return false
-    }
-    return true
-}
+import { SelectKeys, SelectValues } from '../types'
 
 export const getFilterMeetings = (appState: AppState, setAppState: (appState: AppState) => void) => {
     return (newSelectValues: SelectValues) => {
@@ -43,10 +28,6 @@ export const getFilterMeetings = (appState: AppState, setAppState: (appState: Ap
             return true
         })
 
-        const stateWasUpdated = !arraysAreEqual(appState.filteredMeetings, [...appState.filteredMeetings, ...filteredMeetings])
-        if (filteredMeetings.length > 0 && stateWasUpdated) {
-            setAppState({ ...appState, filteredMeetings })
-        }
-        return stateWasUpdated
+        setAppState({ ...appState, filteredMeetings })
     }
 }

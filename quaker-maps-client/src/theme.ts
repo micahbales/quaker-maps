@@ -1,4 +1,4 @@
-import { deepPurple, green, pink, red, yellow } from '@material-ui/core/colors'
+import { deepOrange, deepPurple, green, pink, red } from '@material-ui/core/colors'
 
 /**
  * This theme object provides the default theming for the whole site.
@@ -10,7 +10,7 @@ export const QuakerMapsTheme = {
         primary: deepPurple,
         secondary: pink,
         error: red,
-        warning: yellow,
+        warning: deepOrange,
         info: deepPurple,
         success: green,
     },

@@ -36,15 +36,16 @@ export interface MainMapState {
   maps?: any
 }
 
+export const initialMainMapState: MainMapState = {
+  // If there are no meetings, center map on North America and zoom out
+  center: { lat: 39.8283, lng: -98.5795 },
+  defaultZoom: 4,
+}
+
 const App: React.FC = () => {
   const initialAppState: AppState = {
     filteredMeetings: meetings,
     meetings,
-  }
-
-  const initialMainMapState: MainMapState = {
-    center: { lat: 0, lng: 0 },
-    defaultZoom: 11,
   }
   
   const [appState, setAppState] = React.useState(initialAppState)

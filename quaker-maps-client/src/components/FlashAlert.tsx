@@ -61,14 +61,18 @@ const AlertWrapper: React.FC<Props> = ({
 
 interface SnackbarAlertProps {
     closeTimeout?: number
+    horizontal: 'left' | 'right' | 'center'
     message: string
     variant?: 'success' | 'error' | 'info' | 'warning'
+    vertical: 'bottom' | 'top'
 }
 
 export const FlashAlert: React.FC<SnackbarAlertProps> = ({
     closeTimeout,
+    horizontal,
     message,
     variant,
+    vertical,
 }) => {
     const [open, setOpen] = React.useState(true)
     const timeout = closeTimeout || 6000
@@ -80,8 +84,8 @@ export const FlashAlert: React.FC<SnackbarAlertProps> = ({
     return (
         <Snackbar
             anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
+                vertical,
+                horizontal,
             }}
             open={open}
             autoHideDuration={timeout}

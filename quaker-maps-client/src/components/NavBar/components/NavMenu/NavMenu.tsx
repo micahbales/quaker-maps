@@ -1,5 +1,4 @@
 import {
-    Button,
     FormControl,
     IconButton,
     InputLabel,
@@ -10,7 +9,6 @@ import {
     Select
 } from '@material-ui/core'
 import { ChevronLeft } from '@material-ui/icons'
-import { FlashAlert } from '../../../FlashAlert'
 import { getTitles } from './utils/get_titles'
 import { Meeting, SelectKeys, SelectTitleKeys, SelectTitles, SelectValues } from '../../../../types'
 import sample from 'lodash/sample'
@@ -21,7 +19,7 @@ import React from 'react'
  */
 
 interface NavMenuProps {
-    filterMeetings: (selectValues: SelectValues) => boolean
+    filterMeetings: (selectValues: SelectValues) => void
     meetings: Meeting[]
     setDrawerIsOpen: (option: boolean) => void
 }
@@ -50,23 +48,14 @@ export const NavMenu: React.FC<NavMenuProps> = ({
     }
     const [selectValues, setSelectValues] = React.useState<SelectValues>(initialSelectValues)
 
-    const initialInvalidSelection = { name: '', value: '' }
-    const [invalidSelection, setInvalidSelection] = React.useState<{name: string, value: string}>(initialInvalidSelection)
-
     const updateSelectValuesAndFilterMeetings = (name: string, value: string, values?: SelectValues) => {
         const originalValues = values || selectValues
         const newSelectValues = {
             ...originalValues,
             [name as string]: value,
         }
-        const stateWasUpdated = filterMeetings(newSelectValues)
-        if (stateWasUpdated) {
-            // Update dropdown values if the selection was possible (updated the filtered meetings)
-            setSelectValues(newSelectValues)
-        } else {
-            // Otherwise, alert the user to the invalid selection and give them an option to reset on that selection
-            setInvalidSelection({ name, value })
-        }
+        filterMeetings(newSelectValues)
+        setSelectValues(newSelectValues)
     }
 
     /**
@@ -85,16 +74,6 @@ export const NavMenu: React.FC<NavMenuProps> = ({
         const name: string = event.target.name || ''
         const value: string = String(event.target.value)
         updateSelectValuesAndFilterMeetings(name, value)
-    }
-
-    const newSearchFromSingleCriterion = async () => {
-        const name = invalidSelection.name
-        const value = invalidSelection.value
-
-        await setInvalidSelection(initialInvalidSelection)
-        await setSelectValues(initialSelectValues)
-
-        updateSelectValuesAndFilterMeetings(name, value, initialSelectValues)
     }
 
     return (
@@ -135,22 +114,6 @@ export const NavMenu: React.FC<NavMenuProps> = ({
                     )
                 })}
             </List>
-
-            {/*Show alert and button when an invalid selection is chosen*/}
-            {invalidSelection.value && (
-                <>
-                    <Button
-                        variant="contained"
-                        color="secondary"
-                        className={classes.button_invalid}
-                        onClick={newSearchFromSingleCriterion}>
-                        Search only {invalidSelection.name.replace(/_/g, ' ')} : {invalidSelection.value}
-                    </Button>
-                    <FlashAlert variant="error" message={
-                        `Adding ${invalidSelection.name.replace(/_/g, ' ')} : ${invalidSelection.value} to your search criteria does not result in any meetings`
-                    }/>
-                </>
-            )}
         </div>
     )
 }

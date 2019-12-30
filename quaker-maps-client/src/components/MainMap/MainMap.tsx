@@ -2,7 +2,7 @@ import React from 'react'
 import GoogleMapReact from 'google-map-react'
 import { MapMarker } from '../MapMarker/MapMarker'
 import { updateMapBounds } from '../../utils/update_map_bounds'
-import { AppState, MainMapState } from '../../App'
+import { AppState, initialMainMapState, MainMapState } from '../../App'
 import { Meeting } from '../../types'
 
 /**
@@ -14,11 +14,6 @@ interface MainMapProps {
     appState: AppState
     mainMapState: MainMapState
     setMainMapState: (mainMapState: MainMapState) => void
-}
-
-const initialMainMapState: MainMapState = {
-    center: { lat: 0, lng: 0 },
-    defaultZoom: 11,
 }
 
 export const MainMap: React.FC<MainMapProps> = ({
