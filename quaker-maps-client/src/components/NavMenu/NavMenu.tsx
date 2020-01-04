@@ -28,14 +28,14 @@ interface NavMenuProps {
     filterMeetings: (selectValues: SelectValues) => void
     meetings: Meeting[]
     setDrawerIsOpen: (option: boolean) => void
+    navMenuWidth: string
 }
-
-export const navMenuWidth = '250px'
 
 export const NavMenu: React.FC<NavMenuProps> = ({
     filterMeetings,
     meetings,
     setDrawerIsOpen,
+    navMenuWidth
 }) => {
     const classes = useStyles()
 
@@ -88,6 +88,7 @@ export const NavMenu: React.FC<NavMenuProps> = ({
         <div
             className={classes.root}
             role="presentation"
+            style={{ width: navMenuWidth }}
         >
             <div className={classes.drawerHeader}>
                 <h1 className={classes.header}>Filter Meetings</h1>
@@ -129,7 +130,6 @@ export const NavMenu: React.FC<NavMenuProps> = ({
 const useStyles = makeStyles(theme => ({
     root: {
         height: 50,
-        width: navMenuWidth,
     },
     button_invalid: {
         margin: '0 10px',
@@ -139,7 +139,7 @@ const useStyles = makeStyles(theme => ({
         alignItems: 'center',
         padding: theme.spacing(0, 1),
         ...theme.mixins.toolbar,
-        justifyContent: 'flex-end',
+        justifyContent: 'space-between',
     },
     formControl: {
         margin: theme.spacing(1),

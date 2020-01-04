@@ -25,7 +25,7 @@ export const NavBar: React.FC<NavBarProps> = ({
 }) => {
     const classes = useStyles()
     return (
-        <div className={classes.content} style={{ marginLeft }}>
+        <div style={{ marginLeft }}>
             <AppBar position="static">
                 <Toolbar>
                     { /* Only show this button if we're on the root path - the MainMap view */
@@ -71,13 +71,6 @@ export const NavBar: React.FC<NavBarProps> = ({
 }
 
 const useStyles = makeStyles(theme => ({
-    content: {
-        flexGrow: 1,
-        transition: theme.transitions.create('margin', {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.leavingScreen,
-        }),
-    },
     menuButton: {
         marginRight: theme.spacing(2),
     },

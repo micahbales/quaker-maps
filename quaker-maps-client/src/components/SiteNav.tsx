@@ -4,7 +4,7 @@ import { AppState } from '../App'
 import { getFilterMeetings } from '../utils/get_filter_meetings'
 import { FlashAlert } from './FlashAlert'
 import { NavBar } from './NavBar/NavBar'
-import { NavMenu, navMenuWidth } from './NavMenu/NavMenu'
+import { NavMenu } from './NavMenu/NavMenu'
 
 /**
  * SiteNav is a container for all the site-wide navigation components for Quaker Maps
@@ -17,6 +17,8 @@ interface SiteNavProps {
     isViewingMainMap: boolean
     navMenuIsOpen: boolean
     setNavMenuIsOpen: (value: boolean) => void
+    marginLeft: string
+    navMenuWidth: string
 }
 
 export const SiteNav: React.FC<SiteNavProps> = ({
@@ -25,6 +27,8 @@ export const SiteNav: React.FC<SiteNavProps> = ({
     isViewingMainMap,
     navMenuIsOpen,
     setNavMenuIsOpen,
+    marginLeft,
+    navMenuWidth
 }) => {
     const filterMeetings = getFilterMeetings(appState, setAppState)
     const toggleDrawer = (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
@@ -39,18 +43,19 @@ export const SiteNav: React.FC<SiteNavProps> = ({
                     filterMeetings={filterMeetings}
                     meetings={appState.meetings}
                     setDrawerIsOpen={setNavMenuIsOpen}
+                    navMenuWidth={navMenuWidth}
                 />
                 }
             </Drawer>
             <NavBar
                 isViewingMainMap={isViewingMainMap}
                 toggleDrawer={toggleDrawer}
-                marginLeft={navMenuIsOpen ? navMenuWidth : '0px'}
+                marginLeft={marginLeft}
             />
             {/* Alert user if they have selected invalid search criteria */}
             {navMenuIsOpen && isViewingMainMap && appState.filteredMeetings.length === 0 && (
                 <FlashAlert horizontal="center" vertical="bottom" variant="warning" closeTimeout={10000} message={
-                    'No meetings matched your search results. Try a different set of criteria.'
+                    'No meetings found. Try a different set of criteria.'
                 }/>
             )}
         </>

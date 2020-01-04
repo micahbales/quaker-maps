@@ -1,8 +1,8 @@
 import React from 'react'
+import debounce from 'lodash/debounce'
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles'
 import { MainMap } from './components/MainMap/MainMap'
 import { MeetingView } from './components/MeetingView/MeetingView'
-import { navMenuWidth } from './components/NavMenu/NavMenu'
 import { SiteNav } from './components/SiteNav'
 import { QuakerMapsTheme } from './theme'
 import { Meeting } from './types'
@@ -22,7 +22,7 @@ import * as data from './data/meetings.json'
 
 const apiKey: string | undefined = process.env.REACT_APP_GOOGLE_MAPS_API_KEY
 const meetings: Meeting[] = data.meetings
-const theme = createMuiTheme(QuakerMapsTheme);
+const theme = createMuiTheme(QuakerMapsTheme)
 
 export interface AppState {
   filteredMeetings: Meeting[]
@@ -38,6 +38,19 @@ const App: React.FC = () => {
   const [appState, setAppState] = React.useState(initialAppState)
   const isViewingMainMap = window.location.pathname === '/'
   const [navMenuIsOpen, setNavMenuIsOpen] = React.useState(isViewingMainMap)
+  const [isMobile, setIsMobile] = React.useState(window.innerWidth < 960)
+  // NavMenu will cover the full screen in mobile, otherwise just 250px
+  const navMenuWidth = isMobile ? '100%' : '250px'
+  // Offset the main navigation and MainMap by the width of the NavMenu
+  const navMargin = navMenuIsOpen ? navMenuWidth : '0px'
+
+  window.onresize = debounce(() => {
+      if (window.innerWidth < 960) {
+          setIsMobile(true)
+      } else {
+          setIsMobile(false)
+      }
+  }, 100)
 
   if (!apiKey) return (<h1>Error: Google Maps API Key Is Invalid</h1>)
 
@@ -45,7 +58,7 @@ const App: React.FC = () => {
       <MainMap
         apiKey={apiKey || ''}
         appState={appState}
-        marginLeft={navMenuIsOpen ? navMenuWidth : '0px'}
+        marginLeft={navMargin}
       />
   ) : (
     <MainMapLoading />
@@ -61,6 +74,8 @@ const App: React.FC = () => {
               isViewingMainMap={isViewingMainMap}
               navMenuIsOpen={navMenuIsOpen}
               setNavMenuIsOpen={setNavMenuIsOpen}
+              marginLeft={navMargin}
+              navMenuWidth={navMenuWidth}
           />
           <Switch>
             <Route exact path="/" component={MainMapView} />
