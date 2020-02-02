@@ -1,13 +1,14 @@
 import { AppState } from '../App'
-import { SelectKeys, SelectValues } from '../types'
+import { NavMenuSelectKeys, NavMenuSelectValues } from '../components/NavMenu/types'
+import { UpdateMeetingsSelectKeys, UpdateMeetingsSelectValues } from '../components/UpdateMeetings/types'
 
 export const getFilterMeetings = (appState: AppState, setAppState: (appState: AppState) => void) => {
-    return (newSelectValues: SelectValues) => {
+    return (newSelectValues: NavMenuSelectValues | UpdateMeetingsSelectValues) => {
         // Remove all meetings that don't meet ALL selected criteria
         const filteredMeetings = appState.meetings.filter(meeting => {
             for (let key in newSelectValues) {
                 // Assure TypeScript that we expect all our newSelectValues attributes to be SelectValues
-                const attr = key as SelectKeys
+                const attr = key as UpdateMeetingsSelectKeys | NavMenuSelectKeys
 
                 if (!meeting.mappable || meeting[attr] === undefined) return false
 

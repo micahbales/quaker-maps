@@ -9,27 +9,20 @@ import {
     Select
 } from '@material-ui/core'
 import { ChevronLeft } from '@material-ui/icons'
-import { getTitles } from './utils/get_titles'
 import {
-    Meeting,
-    SelectKeys,
-    SelectTitleKeys,
-    SelectTitles,
-    SelectValues
-} from '../../types'
+    NavMenuProps,
+    NavMenuSelectKeys,
+    NavMenuSelectTitleKeys,
+    NavMenuSelectTitles,
+    NavMenuSelectValues
+} from './types'
+import { getTitles } from './utils/get_titles'
 import sample from 'lodash/sample'
 import React from 'react'
 
 /**
  * NavMenu is the left-hand menu with select dropdowns for filtering meetings by criteria
  */
-
-interface NavMenuProps {
-    filterMeetings: (selectValues: SelectValues) => void
-    meetings: Meeting[]
-    setDrawerIsOpen: (option: boolean) => void
-    navMenuWidth: string
-}
 
 export const NavMenu: React.FC<NavMenuProps> = ({
     filterMeetings,
@@ -39,7 +32,7 @@ export const NavMenu: React.FC<NavMenuProps> = ({
 }) => {
     const classes = useStyles()
 
-    const [selectTitles] = React.useState<SelectTitles>({
+    const [selectTitles] = React.useState<NavMenuSelectTitles>({
         branchs: getTitles(meetings, 'branch'),
         lgbt_affirmings: ['true', 'false'],
         states: getTitles(meetings, 'state'),
@@ -47,16 +40,15 @@ export const NavMenu: React.FC<NavMenuProps> = ({
         yearly_meetings: getTitles(meetings, 'yearly_meeting'),
     })
 
-    const initialSelectValues = {
+    const [selectValues, setSelectValues] = React.useState<NavMenuSelectValues>({
         branch: '',
         lgbt_affirming: '',
         state: '',
         worship_style: '',
         yearly_meeting: '',
-    }
-    const [selectValues, setSelectValues] = React.useState<SelectValues>(initialSelectValues)
+    })
 
-    const updateSelectValuesAndFilterMeetings = (name: string, value: string, values?: SelectValues) => {
+    const updateSelectValuesAndFilterMeetings = (name: string, value: string, values?: NavMenuSelectValues) => {
         const originalValues = values || selectValues
         const newSelectValues = {
             ...originalValues,
@@ -98,7 +90,7 @@ export const NavMenu: React.FC<NavMenuProps> = ({
             </div>
             <List>
                 {Object.keys(selectValues).map((key: string, index: number) => {
-                    const selectKey = key as SelectKeys
+                    const selectKey = key as NavMenuSelectKeys
                     return (
                         <FormControl variant="outlined" className={classes.formControl} key={index}>
                             <InputLabel htmlFor={`outlined-${selectKey}-simple`}>
@@ -113,7 +105,7 @@ export const NavMenu: React.FC<NavMenuProps> = ({
                                 <MenuItem value="">
                                     <em>None</em>
                                 </MenuItem>
-                                {Object.values(selectTitles[`${selectKey}s` as SelectTitleKeys]).map((name: string, index: number) => (
+                                {Object.values(selectTitles[`${selectKey}s` as NavMenuSelectTitleKeys]).map((name: string, index: number) => (
                                     <MenuItem value={name} key={index}>
                                         {name}
                                     </MenuItem>

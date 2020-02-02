@@ -4,6 +4,7 @@ import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles'
 import { MainMap } from './components/MainMap/MainMap'
 import { MeetingView } from './components/MeetingView/MeetingView'
 import { SiteNav } from './components/SiteNav'
+import { UpdateMeetings } from './components/UpdateMeetings/UpdateMeetings'
 import { QuakerMapsTheme } from './theme'
 import { Meeting } from './types'
 import { CssBaseline } from '@material-ui/core'
@@ -64,6 +65,12 @@ const App: React.FC = () => {
     <MainMapLoading />
   )
 
+  const UpdateMeetingsView = () => (
+      <UpdateMeetings
+          meetings={appState.meetings}
+      />
+  )
+
   return (
       <MuiThemeProvider theme={theme}>
         <Router>
@@ -83,6 +90,7 @@ const App: React.FC = () => {
             <Route exact path="/about" component={FaqPage} />
             <Route exact path="/frequently-asked-questions" component={FaqPage} />
             <Route exact path="/contact" component={ContactPage} />
+            <Route exact path="/update" component={UpdateMeetingsView} />
             <Route path="/meeting/:slug" children={<MeetingView meetings={appState.meetings}/>} />
             <Route component={FourOhFour} />
           </Switch>

@@ -1,27 +1,30 @@
 export interface Meeting {
+    /* options selected/updated with selects (there are pre-defined fields) */
     accessibility: string
-    address: string
     branch: string
+    worship_style: string
+    yearly_meeting: string
+    state: string
+    lgbt_affirming: boolean
+    mappable: boolean
+
+    /* options selected/updated with text inputs */
+    address: string
     city: string
     created_at: {
         _seconds: number,
         _nanoseconds: number
-    }
+    } // auto-generated
     description: string
-    id: string
+    id: string // auto-generated primary key
     latitude: number
-    lgbt_affirming: boolean
     longitude: number
-    mappable: boolean
     phone: string
     school_time: string
-    slug: string
-    state: string
+    slug: string // auto-generated based on title
     title: string
     website: string
-    worship_style: string
     worship_time: string
-    yearly_meeting: string
     zip: string
 }
 
@@ -47,23 +50,3 @@ export type MeetingFields =
     'worship_time' |
     'yearly_meeting' |
     'zip'
-
-export type SelectKeys = 'branch' | 'lgbt_affirming' | 'state' | 'worship_style' | 'yearly_meeting'
-
-export interface SelectValues {
-    branch: string
-    lgbt_affirming: string
-    state: string
-    worship_style: string
-    yearly_meeting: string
-}
-
-export type SelectTitleKeys = 'branchs' | 'lgbt_affirmings' | 'states' | 'worship_styles' | 'yearly_meetings'
-
-export interface SelectTitles {
-    branchs: string[]
-    lgbt_affirmings: string[]
-    states: string[]
-    worship_styles: string[]
-    yearly_meetings: string[]
-}

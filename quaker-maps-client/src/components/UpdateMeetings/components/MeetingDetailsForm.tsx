@@ -1,0 +1,163 @@
+import {
+    FormControl,
+    InputLabel,
+    List,
+    makeStyles,
+    MenuItem,
+    OutlinedInput,
+    Select,
+    TextField
+} from '@material-ui/core'
+import React from 'react'
+import { Meeting } from '../../../types'
+import { getTitles } from '../../NavMenu/utils/get_titles'
+import {
+    UpdateMeetingsInputTitleKeys,
+    UpdateMeetingsInputValues,
+    UpdateMeetingsSelectKeys,
+    UpdateMeetingsSelectTitleKeys,
+    UpdateMeetingsSelectValues,
+    UpdateMeetingsTitles
+} from '../types'
+
+interface MeetingDetailsFormProps {
+    meetingKey: string
+    handleMeetingUpdateChange: (key: string, updatedMeeting: object) => void
+    meetings: Meeting[]
+}
+
+export const MeetingDetailsForm: React.FC<MeetingDetailsFormProps> = ({
+    meetingKey,
+    handleMeetingUpdateChange,
+    meetings
+ }) => {
+
+    const classes = useStyles()
+
+    const [selectTitles] = React.useState<UpdateMeetingsTitles>({
+        accessibilitys: getTitles(meetings, 'accessibility'),
+        branchs: getTitles(meetings, 'branch'),
+        lgbt_affirmings: ['true', 'false'],
+        states: getTitles(meetings, 'state'),
+        worship_styles: getTitles(meetings, 'worship_style'),
+        yearly_meetings: getTitles(meetings, 'yearly_meeting'),
+    })
+
+
+    const [selectValues, setSelectValues] = React.useState<UpdateMeetingsSelectValues>({
+        accessibility: '',
+        branch: '',
+        lgbt_affirming: '',
+        state: '',
+        worship_style: '',
+        yearly_meeting: '',
+    })
+
+    const [inputValues, setInputValues] = React.useState<UpdateMeetingsInputValues>({
+        title: '',
+        address: '',
+        city: '',
+        state: '',
+        zip: '',
+        latitude: '',
+        longitude: '',
+        phone: '',
+        website: '',
+        worship_time: '',
+        school_time: '',
+        description: ''
+    })
+
+    const updateSelectValues = (name: string, value: string, values?: UpdateMeetingsSelectValues) => {
+        const originalValues = values || selectValues
+        const newSelectValues = {
+            ...originalValues,
+            [name as string]: value,
+        }
+        setSelectValues(newSelectValues)
+        handleMeetingUpdateChange(meetingKey, { ...inputValues, ...newSelectValues})
+    }
+
+    const handleSelectChange = (event: React.ChangeEvent<{ name?: string; value: unknown }>) => {
+        const name: string = event.target.name || ''
+        const value: string = String(event.target.value)
+        updateSelectValues(name, value)
+    }
+
+    const updateInputValues = (name: string, value: string) =>
+        setInputValues({ ...inputValues, [name as string]: value })
+
+    const handleInputChange = (event: React.ChangeEvent<{ name?: string; value: unknown }>) => {
+        const name: string = event.target.name || ''
+        const value: string = String(event.target.value)
+        const updatedMeetingValues = { ...selectValues, ...inputValues, [name]: value }
+        updateInputValues(name, value)
+        handleMeetingUpdateChange(meetingKey, updatedMeetingValues)
+    }
+
+    return (
+        <>
+            <h2>{inputValues.title || 'Meeting to Update'}</h2>
+
+            <List style={{width: '75%'}}>
+                {Object.keys(inputValues).map((key: string, index: number) => {
+                    const selectKey = key as UpdateMeetingsInputTitleKeys
+                    return (
+                        <FormControl
+                            variant="outlined"
+                            className={classes.formControl}
+                            key={index}
+                            fullWidth={true}
+                        >
+                            <TextField
+                                name={selectKey}
+                                onChange={handleInputChange}
+                                label={selectKey}
+                                id={`standard-${selectKey}-basic`}
+                            />
+                        </FormControl>
+                    )
+                })}
+            </List>
+
+            <List style={{width: '75%'}}>
+                {Object.keys(selectValues).map((key: string, index: number) => {
+                    const selectKey = key as UpdateMeetingsSelectKeys
+                    return (
+                        <FormControl
+                            variant="outlined"
+                            className={classes.formControl}
+                            key={index}
+                            fullWidth={true}
+                        >
+                            <InputLabel htmlFor={`outlined-${selectKey}-simple`}>
+                                {selectKey.replace(/_/g, ' ')}
+                            </InputLabel>
+                            <Select
+                                value={selectValues[selectKey]}
+                                onChange={handleSelectChange}
+                                input={<OutlinedInput labelWidth={selectKey.length * 7.5} name={selectKey} id={`outlined-${selectKey}-simple`} />}
+                            >
+                                <MenuItem value="">
+                                    <em>None</em>
+                                </MenuItem>
+                                {Object.values(selectTitles[`${selectKey}s` as UpdateMeetingsSelectTitleKeys]).map((name: string, index: number) => (
+                                    <MenuItem value={name} key={index}>
+                                        {name}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
+                    )
+                })}
+            </List>
+        </>
+    )
+}
+
+const useStyles = makeStyles(theme => ({
+    formControl: {
+        margin: theme.spacing(1),
+        minWidth: 225,
+    }
+}))

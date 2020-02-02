@@ -1,5 +1,6 @@
 import * as functions from 'firebase-functions'
 import * as express from 'express'
+import { sendUpdateEmail } from './controllers/email'
 import { getMeeting, getMeetings } from './controllers/meetings'
 
 // Initialize Express
@@ -18,6 +19,7 @@ app.use((req: any, res: any, next: any) => {
 
 app.get('/meetings', getMeetings)
 app.get('/meetings/:docId', getMeeting)
+app.post('/update_request', sendUpdateEmail)
 
 // Expose express API to Firebase
 exports.api = functions.https.onRequest(app)
