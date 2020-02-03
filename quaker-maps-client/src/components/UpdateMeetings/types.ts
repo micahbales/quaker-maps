@@ -1,4 +1,4 @@
-import { Meeting } from '../../types'
+import { AlertVariants, Meeting } from '../../types'
 
 export interface UpdateMeetingsViewProps {
     meetings: Meeting[]
@@ -49,4 +49,10 @@ export interface UpdateMeetingsTitles {
     states: string[]
     worship_styles: string[]
     yearly_meetings: string[]
+}
+
+export interface AlertStatus {
+    show: boolean,
+    message: string,
+    variant: AlertVariants
 }

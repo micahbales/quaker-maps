@@ -10,6 +10,7 @@ import SnackbarContent from '@material-ui/core/SnackbarContent'
 import WarningIcon from '@material-ui/icons/Warning'
 import { makeStyles, Theme } from '@material-ui/core/styles'
 import { QuakerMapsTheme } from '../theme'
+import { AlertVariants } from '../types'
 
 /**
  * FlashAlert is an alert message that is displayed temporarily on the screen
@@ -45,9 +46,9 @@ const AlertWrapper: React.FC<Props> = ({
             aria-describedby="client-snackbar"
             message={
                 <span id="client-snackbar" className={classes.message}>
-          <Icon className={clsx(classes.icon, classes.iconVariant)} />
-                    {message}
-        </span>
+                  <Icon className={clsx(classes.icon, classes.iconVariant)} />
+                            {message}
+                </span>
             }
             action={[
                 <IconButton key="close" aria-label="close" color="inherit" onClick={onClose}>
@@ -63,7 +64,7 @@ interface SnackbarAlertProps {
     closeTimeout?: number
     horizontal: 'left' | 'right' | 'center'
     message: string
-    variant?: 'success' | 'error' | 'info' | 'warning'
+    variant?: AlertVariants
     vertical: 'bottom' | 'top'
 }
 

@@ -50,3 +50,5 @@ export type MeetingFields =
     'worship_time' |
     'yearly_meeting' |
     'zip'
+
+export type AlertVariants = 'success' | 'error' | 'info' | 'warning' | undefined

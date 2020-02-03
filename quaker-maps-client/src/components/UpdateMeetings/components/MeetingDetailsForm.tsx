@@ -24,12 +24,20 @@ interface MeetingDetailsFormProps {
     meetingKey: string
     handleMeetingUpdateChange: (key: string, updatedMeeting: object) => void
     meetings: Meeting[]
+    inputValues: UpdateMeetingsInputValues
+    setInputValues: (values: UpdateMeetingsInputValues) => void
+    selectValues: UpdateMeetingsSelectValues
+    setSelectValues: (values: UpdateMeetingsSelectValues) => void
 }
 
 export const MeetingDetailsForm: React.FC<MeetingDetailsFormProps> = ({
     meetingKey,
     handleMeetingUpdateChange,
-    meetings
+    meetings,
+    inputValues,
+    setInputValues,
+    selectValues,
+    setSelectValues
  }) => {
 
     const classes = useStyles()
@@ -41,31 +49,6 @@ export const MeetingDetailsForm: React.FC<MeetingDetailsFormProps> = ({
         states: getTitles(meetings, 'state'),
         worship_styles: getTitles(meetings, 'worship_style'),
         yearly_meetings: getTitles(meetings, 'yearly_meeting'),
-    })
-
-
-    const [selectValues, setSelectValues] = React.useState<UpdateMeetingsSelectValues>({
-        accessibility: '',
-        branch: '',
-        lgbt_affirming: '',
-        state: '',
-        worship_style: '',
-        yearly_meeting: '',
-    })
-
-    const [inputValues, setInputValues] = React.useState<UpdateMeetingsInputValues>({
-        title: '',
-        address: '',
-        city: '',
-        state: '',
-        zip: '',
-        latitude: '',
-        longitude: '',
-        phone: '',
-        website: '',
-        worship_time: '',
-        school_time: '',
-        description: ''
     })
 
     const updateSelectValues = (name: string, value: string, values?: UpdateMeetingsSelectValues) => {
@@ -112,6 +95,7 @@ export const MeetingDetailsForm: React.FC<MeetingDetailsFormProps> = ({
                             <TextField
                                 name={selectKey}
                                 onChange={handleInputChange}
+                                value={inputValues[selectKey]}
                                 label={selectKey}
                                 id={`standard-${selectKey}-basic`}
                             />
