@@ -39,12 +39,12 @@ export const SiteNav: React.FC<SiteNavProps> = ({
             <Drawer open={navMenuIsOpen} onClose={toggleDrawer(false)} variant="persistent" anchor="left">
                 {/* Don't render NavMenu until/unless we have meetings; we need meetings to populate our form fields */}
                 {appState.meetings.length > 0 &&
-                <NavMenu
-                    filterMeetings={filterMeetings}
-                    meetings={appState.meetings}
-                    setDrawerIsOpen={setNavMenuIsOpen}
-                    navMenuWidth={navMenuWidth}
-                />
+                    <NavMenu
+                        filterMeetings={filterMeetings}
+                        meetings={appState.meetings}
+                        setDrawerIsOpen={setNavMenuIsOpen}
+                        navMenuWidth={navMenuWidth}
+                    />
                 }
             </Drawer>
             <NavBar

@@ -1,9 +1,9 @@
 export interface Meeting {
     /* options selected/updated with selects (there are pre-defined fields) */
-    accessibility: string
-    branch: string
-    worship_style: string
-    yearly_meeting: string
+    accessibility: string[]
+    branch: string[]
+    worship_style: string[]
+    yearly_meeting: string[]
     state: string
     lgbt_affirming: boolean
     mappable: boolean

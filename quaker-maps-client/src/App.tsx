@@ -31,7 +31,7 @@ export interface AppState {
 }
 
 const initialAppState: AppState = {
-    filteredMeetings: meetings,
+    filteredMeetings: [],
     meetings,
 }
 

@@ -13,12 +13,12 @@ export interface SubmitterDetails {
 }
 
 export interface UpdateMeetingsSelectValues {
-    accessibility: string
-    branch: string
+    accessibility: string[]
+    branch: string[]
     lgbt_affirming: string
     state: string
-    worship_style: string
-    yearly_meeting: string
+    worship_style: string[]
+    yearly_meeting: string[]
 }
 
 export interface UpdateMeetingsInputValues {

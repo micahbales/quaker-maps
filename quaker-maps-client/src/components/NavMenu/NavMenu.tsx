@@ -41,21 +41,39 @@ export const NavMenu: React.FC<NavMenuProps> = ({
     })
 
     const [selectValues, setSelectValues] = React.useState<NavMenuSelectValues>({
-        branch: '',
+        branch: [],
         lgbt_affirming: '',
         state: '',
-        worship_style: '',
-        yearly_meeting: '',
+        worship_style: [],
+        yearly_meeting: [],
     })
 
-    const updateSelectValuesAndFilterMeetings = (name: string, value: string, values?: NavMenuSelectValues) => {
-        const originalValues = values || selectValues
+    const updateMeetingsOnMap = (selectValues: NavMenuSelectValues) => () => filterMeetings(selectValues)
+
+    const updateSelectValuesAndFilterMeetings = (name: string, selection: string | string[], initialLoad = false) => {
+        const originalValues = selectValues
+        // Sanitize selection string[] for empty strings and other useless non-values
+        if (Array.isArray(selection)) {
+            selection = selection.reduce((arr: string[], val: string) => {
+                if (val) {
+                    arr.push(val)
+                }
+                return arr
+            }, [])
+        }
         const newSelectValues = {
             ...originalValues,
-            [name as string]: value,
+            [name as string]: selection,
         }
-        filterMeetings(newSelectValues)
         setSelectValues(newSelectValues)
+
+        /**
+         * When we first load the MainMap, we have to make a special call to populate the map
+         * After this, updateMeetingsOnMap is only called by the onBlur method of Select dropdowns
+         */
+        if (initialLoad) {
+            updateMeetingsOnMap(newSelectValues)()
+        }
     }
 
     /**
@@ -66,13 +84,13 @@ export const NavMenu: React.FC<NavMenuProps> = ({
     React.useEffect(() => {
         const randomYearlyMeeting: string | undefined = sample(getTitles(meetings, 'yearly_meeting'))
         if (randomYearlyMeeting) {
-            updateSelectValuesAndFilterMeetings('yearly_meeting', randomYearlyMeeting)
+            updateSelectValuesAndFilterMeetings('yearly_meeting', [randomYearlyMeeting], true)
         }
     }, [])
 
-    const handleChange = (event: React.ChangeEvent<{ name?: string; value: unknown }>) => {
+    const handleChange = (event: React.ChangeEvent<{ name?: string; value: unknown }>, b: any) => {
         const name: string = event.target.name || ''
-        const value: string = String(event.target.value)
+        const value = event.target.value as string | string[]
         updateSelectValuesAndFilterMeetings(name, value)
     }
 
@@ -91,6 +109,7 @@ export const NavMenu: React.FC<NavMenuProps> = ({
             <List>
                 {Object.keys(selectValues).map((key: string, index: number) => {
                     const selectKey = key as NavMenuSelectKeys
+                    const isMulti = Array.isArray(selectValues[selectKey])
                     return (
                         <FormControl variant="outlined" className={classes.formControl} key={index}>
                             <InputLabel htmlFor={`outlined-${selectKey}-simple`}>
@@ -101,10 +120,9 @@ export const NavMenu: React.FC<NavMenuProps> = ({
                                 onChange={handleChange}
                                 input={<OutlinedInput labelWidth={selectKey.length * 7.5} name={selectKey} id={`outlined-${selectKey}-simple`} />}
                                 className={classes.select}
+                                multiple={isMulti}
+                                onBlur={updateMeetingsOnMap(selectValues)}
                             >
-                                <MenuItem value="">
-                                    <em>None</em>
-                                </MenuItem>
                                 {Object.values(selectTitles[`${selectKey}s` as NavMenuSelectTitleKeys]).map((name: string, index: number) => (
                                     <MenuItem value={name} key={index}>
                                         {name}

@@ -1,6 +1,5 @@
 import uniq from 'lodash/uniq'
 import flatten from 'lodash/flatten'
-import map from 'lodash/map'
 import { Meeting, MeetingFields } from '../../../types'
 
 /**
@@ -10,4 +9,19 @@ import { Meeting, MeetingFields } from '../../../types'
  */
 
 export const getTitles = (meetings: Meeting[], attr: MeetingFields): string[] =>
-    uniq(flatten(meetings.map((meeting) => map(meeting[attr] && meeting[attr].split(','), (m) => m.trim())))).sort()
+    uniq(
+        flatten(
+            meetings.map(
+                (meeting) => {
+                    if (!meeting.mappable) return ''
+                    const values = meeting[attr] as string | string[]
+                    if (!values) return []
+                    if (typeof values === 'string') {
+                        return values
+                    }
+                    return values.map((m) => m.trim())
+                }
+            )
+        )
+    )
+        .sort()

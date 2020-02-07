@@ -4,12 +4,12 @@ export const initialSubmitterDetails = {
     authority: ''
 }
 export const initialSelectValues = {
-    accessibility: '',
-    branch: '',
+    accessibility: [],
+    branch: [],
     lgbt_affirming: '',
     state: '',
-    worship_style: '',
-    yearly_meeting: '',
+    worship_style: [],
+    yearly_meeting: [],
 }
 export const initialInputValues = {
     title: '',

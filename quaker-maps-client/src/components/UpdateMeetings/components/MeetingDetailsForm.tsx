@@ -51,7 +51,7 @@ export const MeetingDetailsForm: React.FC<MeetingDetailsFormProps> = ({
         yearly_meetings: getTitles(meetings, 'yearly_meeting'),
     })
 
-    const updateSelectValues = (name: string, value: string, values?: UpdateMeetingsSelectValues) => {
+    const updateSelectValues = (name: string, value: string | string[], values?: UpdateMeetingsSelectValues) => {
         const originalValues = values || selectValues
         const newSelectValues = {
             ...originalValues,
@@ -63,7 +63,8 @@ export const MeetingDetailsForm: React.FC<MeetingDetailsFormProps> = ({
 
     const handleSelectChange = (event: React.ChangeEvent<{ name?: string; value: unknown }>) => {
         const name: string = event.target.name || ''
-        const value: string = String(event.target.value)
+        const value = event.target.value as string[]
+
         updateSelectValues(name, value)
     }
 
@@ -107,6 +108,7 @@ export const MeetingDetailsForm: React.FC<MeetingDetailsFormProps> = ({
             <List style={{width: '75%'}}>
                 {Object.keys(selectValues).map((key: string, index: number) => {
                     const selectKey = key as UpdateMeetingsSelectKeys
+                    const isMulti = Array.isArray(selectValues[selectKey])
                     return (
                         <FormControl
                             variant="outlined"
@@ -119,12 +121,10 @@ export const MeetingDetailsForm: React.FC<MeetingDetailsFormProps> = ({
                             </InputLabel>
                             <Select
                                 value={selectValues[selectKey]}
+                                multiple={isMulti}
                                 onChange={handleSelectChange}
                                 input={<OutlinedInput labelWidth={selectKey.length * 7.5} name={selectKey} id={`outlined-${selectKey}-simple`} />}
                             >
-                                <MenuItem value="">
-                                    <em>None</em>
-                                </MenuItem>
                                 {Object.values(selectTitles[`${selectKey}s` as UpdateMeetingsSelectTitleKeys]).map((name: string, index: number) => (
                                     <MenuItem value={name} key={index}>
                                         {name}

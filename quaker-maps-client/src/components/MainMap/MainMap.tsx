@@ -48,12 +48,12 @@ export const MainMap: React.FC<MainMapProps> = ({
                 // Populate and bound map with meetings
                 onGoogleApiLoaded={({ map, maps }) => {
                     const filteredMeetings = appState.filteredMeetings
-                    updateMapBounds({ 
+                    updateMapBounds({
                         filteredMeetings,
-                        map, 
-                        maps, 
-                        setMainMapState, 
-                        mainMapState 
+                        map,
+                        maps,
+                        setMainMapState,
+                        mainMapState
                     })
                 }}
                 /**
@@ -64,7 +64,7 @@ export const MainMap: React.FC<MainMapProps> = ({
                  */
                 yesIWantToUseGoogleMapApiInternals={true}
             >
-                {appState.filteredMeetings.map((meeting: Meeting, i) => (
+                {appState.filteredMeetings.length > 0 && appState.filteredMeetings.map((meeting: Meeting, i) => (
                     <MapMarker
                         lat={meeting.latitude}
                         lng={meeting.longitude}

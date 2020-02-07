@@ -8,11 +8,11 @@ export interface NavMenuProps {
 }
 
 export interface NavMenuSelectValues {
-    branch: string
+    branch: string[]
     lgbt_affirming: string
     state: string
-    worship_style: string
-    yearly_meeting: string
+    worship_style: string[]
+    yearly_meeting: string[]
 }
 
 export type NavMenuSelectKeys = 'branch' | 'lgbt_affirming' | 'state' | 'worship_style' | 'yearly_meeting'
