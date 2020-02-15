@@ -20,6 +20,10 @@ import {
     UpdateMeetingsTitles
 } from '../types'
 
+/**
+ * MeetingDetailsForm takes details about a meeting that should be updated
+ */
+
 interface MeetingDetailsFormProps {
     meetingKey: string
     handleMeetingUpdateChange: (key: string, updatedMeeting: object) => void

@@ -1,4 +1,5 @@
 import * as Mailgun from 'mailgun-js'
+import { Meeting } from '../../../../quaker-maps-client/src/types'
 // We get our Mailgun credentials from the firebase functions config
 // For more details: https://firebase.google.com/docs/functions/config-env
 const functions = require('firebase-functions')
@@ -17,9 +18,9 @@ export const sendUpdateEmail = async (req: any, res: any) => {
     const mailgun = new Mailgun({ apiKey, domain })
 
     const meetings = []
-    for (let [key, value] of Object.entries(req.body.meetingUpdates)) {
-        console.log(key) // TODO: Update linter rules so we don't have to use every variable we declare
-        meetings.push(JSON.stringify(value))
+    for (let key of req.body.meetingUpdates) {
+        let meeting = req.body.meetingUpdates[key] as Meeting
+        meetings.push(JSON.stringify(meeting))
     }
 
     const html = `
@@ -40,8 +41,8 @@ export const sendUpdateEmail = async (req: any, res: any) => {
 
     await mailgun.messages().send(data, (err: any, body: any) => {
         if (err) {
-            return res.json({ error: 'Houston, we have a problem' })
             console.error(`Got an error: ${err}`)
+            return res.json({ error: 'Houston, we have a problem' })
         }
     })
 

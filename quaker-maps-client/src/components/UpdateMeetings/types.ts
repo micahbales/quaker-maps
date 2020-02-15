@@ -27,8 +27,6 @@ export interface UpdateMeetingsInputValues {
     city: string
     state: string
     zip: string
-    latitude: string
-    longitude: string
     phone: string
     website: string
     worship_time: string
@@ -40,7 +38,7 @@ export type UpdateMeetingsSelectKeys = 'branch' | 'lgbt_affirming' | 'state' | '
 
 export type UpdateMeetingsSelectTitleKeys = 'accessibilitys' | 'branchs' | 'lgbt_affirmings' | 'states' | 'worship_styles' | 'yearly_meetings'
 
-export type UpdateMeetingsInputTitleKeys = 'title' | 'address' | 'city' | 'state' | 'zip' | 'latitude' | 'longitude' | 'phone' | 'website' | 'worship_time' | 'school_time' | 'description' // | 'created_at' | 'id' | 'slug'
+export type UpdateMeetingsInputTitleKeys = 'title' | 'address' | 'city' | 'state' | 'zip' | 'phone' | 'website' | 'worship_time' | 'school_time' | 'description' // | 'created_at' | 'id' | 'slug' | 'latitude' | 'longitude'
 
 export interface UpdateMeetingsTitles {
     accessibilitys: string[]

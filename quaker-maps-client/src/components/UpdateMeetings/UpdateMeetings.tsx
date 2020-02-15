@@ -1,8 +1,11 @@
-import { createStyles, makeStyles, Button, List, Theme, TextField, FormControl } from '@material-ui/core'
+import { createStyles, makeStyles, Button, Theme } from '@material-ui/core'
 import React from 'react'
 import Container from '@material-ui/core/Container'
 import { FlashAlert } from '../FlashAlert'
+import { sendUpdateMeetingRequest } from './api/send_update_meeting_request'
+import { showResponseAlert } from './api/show_response_alert'
 import { MeetingDetailsForm } from './components/MeetingDetailsForm'
+import { SubmitterDetailsForm } from './components/SubmitterDetailsForm'
 import {
     AlertStatus,
     MeetingUpdates,
@@ -53,92 +56,23 @@ export const UpdateMeetings: React.FC<UpdateMeetingsViewProps> = ({
     }
 
     const handleSubmit = async () => {
-        const response = await fetch('https://us-central1-quaker-maps.cloudfunctions.net/api/update_request', {
-            method: 'POST',
-            mode: 'cors',
-            cache: 'no-cache',
-            credentials: 'same-origin',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            redirect: 'follow',
-            referrerPolicy: 'no-referrer',
-            body: JSON.stringify({submitterDetails, meetingUpdates}) // body data type must match 'Content-Type' header
+        const response = await sendUpdateMeetingRequest({ meetingUpdates, submitterDetails })
+        showResponseAlert({
+            response,
+            setAlertStatus,
+            alertTimeout,
+            resetForm
         })
-        if (response.ok) {
-            // Show success message
-            setAlertStatus({
-                show: true,
-                message: 'Your request has been submitted! If you provided your email, we\'ll confirm if we accept your changes',
-                variant: undefined
-            })
-            resetForm()
-        } else {
-            // Show error messgae
-            setAlertStatus({
-                show: true,
-                message: 'There was a problem sending your request. If this problem continues, please email admin@quakermaps.com',
-                variant: 'warning'
-            })
-        }
-        // Once the alert has closed, make it possible to open it again
-        setTimeout(
-            () => setAlertStatus(initialAlertStatus),
-            alertTimeout + 1000
-        )
     }
 
     return (
         <Container maxWidth="lg" style={{ paddingBottom: '50px' }}>
             <h1>Update Meetings</h1>
 
-            <>
-                <h2>Information About You</h2>
-
-                <List style={{width: '75%'}}>
-                    <FormControl
-                        variant="outlined"
-                        fullWidth={true}
-                        className={classes.formControl}
-                    >
-                        <TextField
-                            name={'name'}
-                            placeholder="Your full name"
-                            value={submitterDetails.name}
-                            onChange={handleSubmitterDetailsChange}
-                            label={'Name'}
-                        />
-                    </FormControl>
-
-                    <FormControl
-                        variant="outlined"
-                        fullWidth={true}
-                        className={classes.formControl}
-                    >
-                        <TextField
-                            name={'email'}
-                            placeholder="Your email"
-                            value={submitterDetails.email}
-                            onChange={handleSubmitterDetailsChange}
-                            label={'Email'}
-                        />
-                    </FormControl>
-
-                    <FormControl
-                        variant="outlined"
-                        fullWidth={true}
-                        className={classes.formControl}
-                    >
-                        <TextField
-                            name={'authority'}
-                            value={submitterDetails.authority}
-                            onChange={handleSubmitterDetailsChange}
-                            placeholder="What authorized source are you drawing your information from?"
-                            label={'Authority'}
-                        />
-                    </FormControl>
-                </List>
-            </>
+            <SubmitterDetailsForm
+                submitterDetails={submitterDetails}
+                handleSubmitterDetailsChange={handleSubmitterDetailsChange}
+            />
 
             <MeetingDetailsForm
                 meetingKey={'1'}
@@ -176,10 +110,6 @@ export const UpdateMeetings: React.FC<UpdateMeetingsViewProps> = ({
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
-        formControl: {
-            margin: theme.spacing(1),
-            minWidth: 225,
-        },
         margin: {
             margin: theme.spacing(1),
         },

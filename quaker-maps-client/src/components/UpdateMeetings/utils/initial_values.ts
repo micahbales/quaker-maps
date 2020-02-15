@@ -17,8 +17,6 @@ export const initialInputValues = {
     city: '',
     state: '',
     zip: '',
-    latitude: '',
-    longitude: '',
     phone: '',
     website: '',
     worship_time: '',
