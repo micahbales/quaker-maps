@@ -49,7 +49,7 @@ export const MeetingDetailsForm: React.FC<MeetingDetailsFormProps> = ({
     const [selectTitles] = React.useState<UpdateMeetingsTitles>({
         accessibilitys: getTitles(meetings, 'accessibility'),
         branchs: getTitles(meetings, 'branch'),
-        lgbt_affirmings: ['true', 'false'],
+        lgbt_affirmings: ['', 'true', 'false'],
         states: getTitles(meetings, 'state'),
         worship_styles: getTitles(meetings, 'worship_style'),
         yearly_meetings: getTitles(meetings, 'yearly_meeting'),

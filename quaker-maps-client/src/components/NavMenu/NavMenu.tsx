@@ -34,7 +34,7 @@ export const NavMenu: React.FC<NavMenuProps> = ({
 
     const [selectTitles] = React.useState<NavMenuSelectTitles>({
         branchs: getTitles(meetings, 'branch'),
-        lgbt_affirmings: ['true', 'false'],
+        lgbt_affirmings: ['', 'true', 'false'],
         states: getTitles(meetings, 'state'),
         worship_styles: getTitles(meetings, 'worship_style'),
         yearly_meetings: getTitles(meetings, 'yearly_meeting'),
