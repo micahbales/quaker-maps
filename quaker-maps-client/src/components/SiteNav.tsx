@@ -51,6 +51,7 @@ export const SiteNav: React.FC<SiteNavProps> = ({
                 isViewingMainMap={isViewingMainMap}
                 toggleDrawer={toggleDrawer}
                 marginLeft={marginLeft}
+                navMenuIsOpen={navMenuIsOpen}
             />
             {/* Alert user if they have selected invalid search criteria */}
             {navMenuIsOpen && isViewingMainMap && appState.filteredMeetings.length === 0 && (

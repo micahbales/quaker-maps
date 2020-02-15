@@ -2,7 +2,7 @@ import AppBar from '@material-ui/core/AppBar'
 import IconButton from '@material-ui/core/IconButton'
 import { makeStyles } from '@material-ui/core/styles'
 import Toolbar from '@material-ui/core/Toolbar'
-import SearchIcon from '@material-ui/icons/Search'
+import { ChevronRight } from '@material-ui/icons'
 import Tooltip from '@material-ui/core/Tooltip'
 import Button from '@material-ui/core/Button'
 import Link from '@material-ui/core/Link'
@@ -16,23 +16,25 @@ interface NavBarProps {
     isViewingMainMap: boolean
     toggleDrawer: (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => void
     marginLeft: string
+    navMenuIsOpen: boolean
 }
 
 export const NavBar: React.FC<NavBarProps> = ({
     isViewingMainMap,
     toggleDrawer,
-    marginLeft
+    marginLeft,
+    navMenuIsOpen
 }) => {
     const classes = useStyles()
     return (
         <div style={{ marginLeft }}>
             <AppBar position="static">
                 <Toolbar>
-                    { /* Only show this button if we're on the root path - the MainMap view */
-                        isViewingMainMap &&
+                    { /* Only show this button if we're on the MainMap view and the NavMenu is closed */
+                        isViewingMainMap && !navMenuIsOpen &&
                         <Tooltip title="Filter Meetings">
                             <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={toggleDrawer(true)}>
-                                <SearchIcon />
+                                <ChevronRight />
                             </IconButton>
                         </Tooltip>
                     }
