@@ -44,6 +44,9 @@ const App: React.FC = () => {
   const navMenuWidth = isMobile ? '100%' : '250px'
   // Offset the main navigation and MainMap by the width of the NavMenu
   const navMargin = navMenuIsOpen ? navMenuWidth : '0px'
+  // Reduce width of MainMap by the width of the open NavMenu
+  // (otherwise, we end up with a map that is wider than the viewport)
+  const mainMapWidth = navMenuIsOpen ? `calc(100% - ${navMenuWidth}` : '100%'
 
   window.onresize = debounce(() => {
       if (window.innerWidth < 960) {
@@ -59,6 +62,7 @@ const App: React.FC = () => {
       <MainMap
         apiKey={apiKey || ''}
         appState={appState}
+        width={mainMapWidth}
         marginLeft={navMargin}
       />
   ) : (

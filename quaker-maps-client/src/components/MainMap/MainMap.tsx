@@ -14,6 +14,7 @@ interface MainMapProps {
     apiKey: string
     appState: AppState
     marginLeft: string
+    width: string
 }
 
 export interface MainMapState {
@@ -35,12 +36,13 @@ const initialMainMapState: MainMapState = {
 export const MainMap: React.FC<MainMapProps> = ({
     apiKey,
     appState,
-    marginLeft
+    marginLeft,
+    width
 }) => {
     const classes = useStyles()
     const [mainMapState, setMainMapState] = React.useState(initialMainMapState)
     return (
-        <div className={classes.root} style={{ marginLeft }}>
+        <div className={classes.root} style={{ marginLeft, width }}>
             <GoogleMapReact
                 bootstrapURLKeys={{ key: apiKey }}
                 center={mainMapState.center}
