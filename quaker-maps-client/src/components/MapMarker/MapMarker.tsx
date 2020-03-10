@@ -74,12 +74,11 @@ const useStyles = makeStyles((theme: Theme) =>
         /**
          * The marker must be repositioned manually because google-map-react positions the marker according to its upper-left-hand corner, rather than its center
          * Without this styling, the markers change positions depending on the level of zoom
-         * For more information, see this bug report: https://github.com/google-map-react/google-map-react/issues/796
-         * This might be a bug that's worth fixing and submitting a PR to the library
+         * For more information, see https://github.com/google-map-react/google-map-react/blob/master/API.md#positioning-a-marker
          */
         marker: {
             position: 'absolute',
-            transform: 'translate(-50%, -100%)'
+            transform: 'translate(-50%, -50%)'
         },
     }),
 )
