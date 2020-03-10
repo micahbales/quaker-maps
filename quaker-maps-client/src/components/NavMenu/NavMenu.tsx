@@ -1,4 +1,5 @@
 import {
+    Button,
     FormControl,
     IconButton,
     InputLabel,
@@ -9,6 +10,7 @@ import {
     Select
 } from '@material-ui/core'
 import { ChevronLeft } from '@material-ui/icons'
+import { QuakerMapsTheme } from '../../theme'
 import {
     NavMenuProps,
     NavMenuSelectKeys,
@@ -121,7 +123,6 @@ export const NavMenu: React.FC<NavMenuProps> = ({
                                 input={<OutlinedInput labelWidth={selectKey.length * 7.5} name={selectKey} id={`outlined-${selectKey}-simple`} />}
                                 className={classes.select}
                                 multiple={isMulti}
-                                onBlur={updateMeetingsOnMap(selectValues)}
                             >
                                 {Object.values(selectTitles[`${selectKey}s` as NavMenuSelectTitleKeys]).map((name: string, index: number) => (
                                     <MenuItem value={name} key={index}>
@@ -133,6 +134,7 @@ export const NavMenu: React.FC<NavMenuProps> = ({
                     )
                 })}
             </List>
+            <Button onClick={updateMeetingsOnMap(selectValues)} className={classes.button}>Update Map</Button>
         </div>
     )
 }
@@ -140,6 +142,13 @@ export const NavMenu: React.FC<NavMenuProps> = ({
 const useStyles = makeStyles(theme => ({
     root: {
         height: 50,
+    },
+    button: {
+      backgroundColor: QuakerMapsTheme.palette.primary[500],
+      color: 'white',
+      marginLeft: '8px',
+      maxWidth: 230,
+      width: 230,
     },
     button_invalid: {
         margin: '0 10px',
