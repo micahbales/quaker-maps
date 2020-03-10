@@ -14,38 +14,32 @@ export const getFilterMeetings = (appState: AppState, setAppState: (appState: Ap
                 // Assure TypeScript that we expect all our keys will have the expected values
                 const attr = key as UpdateMeetingsSelectKeys | NavMenuSelectKeys
                 // Declare these two variables at the top, so Typescript believes they are the same values throughout
-                const existingValue = meeting[attr]
-                const newValue = newSelectValues[attr]
+                const meetingAttribute = meeting[attr]
+                const filterValue = newSelectValues[attr]
 
-                if (!meeting.mappable || existingValue === undefined) return false
+                if (!meeting.mappable || meetingAttribute === undefined) return false
 
                 // Handle for boolean values
-                if (typeof existingValue === 'boolean') {
+                if (typeof meetingAttribute === 'boolean') {
                     // We have to convert the meeting attribute to a string to match the value we get from the select dropdown
-                    if ((newValue !== '' && // Don't filter based on a boolean if no option was selected
-                        (existingValue && newValue !== 'true')) ||
-                        (!existingValue && newValue === 'true')) {
+                    if ((filterValue !== '' && // Don't filter based on a boolean if no option was selected
+                        (meetingAttribute && filterValue !== 'true')) ||
+                        (!meetingAttribute && filterValue === 'true')) {
                         return false
                     }
 
                 // Handle for string values
-                } else if (typeof existingValue === 'string') {
-                    if (newValue && newValue !== existingValue) return false
+                } else if (typeof meetingAttribute === 'string') {
+                    if (filterValue && filterValue !== meetingAttribute) return false
 
                 // Otherwise, it's an array
                 } else if (
-                    Array.isArray(existingValue) &&
-                    Array.isArray(newValue) &&
-                    newValue.length > 0
+                    Array.isArray(meetingAttribute) &&
+                    Array.isArray(filterValue) &&
+                    filterValue.length > 0
                 ) {
-                    if (existingValue.length !== newValue.length) return false
-                    const arr1 = existingValue.sort()
-                    const arr2 = newValue.sort()
-                    for (let i = 0; i < arr1.length; i++) {
-                        if (arr1[i] !== arr2[i]) {
-                            return false
-                        }
-                    }
+                    // Don't include a meeting unless its attribute array contains every filter value
+                    return filterValue.every(value => meetingAttribute.includes(value))
                 }
             }
             return true
