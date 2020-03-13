@@ -25,3 +25,5 @@ export const initialInputValues = {
 }
 
 export const initialAlertStatus = { show: false, message: '', variant: undefined }
+
+export const initialMeetingUpdates = [{}]

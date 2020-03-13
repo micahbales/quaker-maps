@@ -1,6 +1,17 @@
-import { createStyles, makeStyles, Button, Theme } from '@material-ui/core'
+import {
+    createStyles,
+    makeStyles,
+    Button,
+    Theme,
+    Icon,
+    IconButton,
+    CircularProgress,
+    Box,
+    Card
+} from '@material-ui/core'
 import React from 'react'
 import Container from '@material-ui/core/Container'
+import cloneDeep from 'lodash/cloneDeep'
 import { FlashAlert } from '../FlashAlert'
 import { sendUpdateMeetingRequest } from './api/send_update_meeting_request'
 import { showResponseAlert } from './api/show_response_alert'
@@ -8,34 +19,34 @@ import { MeetingDetailsForm } from './components/MeetingDetailsForm'
 import { SubmitterDetailsForm } from './components/SubmitterDetailsForm'
 import {
     AlertStatus,
-    MeetingUpdates,
     SubmitterDetails,
-    UpdateMeetingsInputValues,
-    UpdateMeetingsSelectValues,
     UpdateMeetingsViewProps
 } from './types'
 import {
     initialAlertStatus,
-    initialInputValues,
-    initialSelectValues,
+    initialMeetingUpdates,
     initialSubmitterDetails
 } from './utils/initial_values'
+
+/**
+ * UpdateMeetings is the view-level component that is displayed for the /update route
+ * This view allows the user to submit one or more meetings to be updated by the site maintainers
+ */
 
 export const UpdateMeetings: React.FC<UpdateMeetingsViewProps> = ({
     meetings
 }) => {
     const classes = useStyles()
 
-    const [meetingUpdates, setMeetingUpdates] = React.useState<MeetingUpdates>({})
+    const [formSubmitting, setFormSubmitting] = React.useState<Boolean>(false)
+    const [meetingUpdates, setMeetingUpdates] = React.useState<object[]>(initialMeetingUpdates)
     const [submitterDetails, setSubmitterDetails] = React.useState<SubmitterDetails>(initialSubmitterDetails)
-    const [canSubmit, setCanSubmit] = React.useState<boolean>(Object.entries(meetingUpdates).length > 0)
+    const [canSubmit, setCanSubmit] = React.useState<boolean>(Object.entries(meetingUpdates).length > 0) // TODO: use a .every to make sure each form complies
     const [alertStatus, setAlertStatus] = React.useState<AlertStatus>(initialAlertStatus)
-    const [selectValues, setSelectValues] = React.useState<UpdateMeetingsSelectValues>(initialSelectValues)
-    const [inputValues, setInputValues] = React.useState<UpdateMeetingsInputValues>(initialInputValues)
     const alertTimeout = 10000 // time alert message will stay visible if not manually closed
 
-    const handleMeetingUpdateChange = (meetingKey: string, updatedMeeting: object) => {
-        const changedUpdates = meetingUpdates
+    const handleMeetingUpdateChange = (meetingKey: number, updatedMeeting: object) => {
+        const changedUpdates: object[] = meetingUpdates
         changedUpdates[meetingKey] = updatedMeeting
         setMeetingUpdates(changedUpdates)
         setCanSubmit(Object.entries(changedUpdates).length > 0)
@@ -48,15 +59,18 @@ export const UpdateMeetings: React.FC<UpdateMeetingsViewProps> = ({
     }
 
     const resetForm = () => {
-        setMeetingUpdates({})
+        setMeetingUpdates(initialMeetingUpdates)
         setSubmitterDetails(initialSubmitterDetails)
-        setSelectValues(initialSelectValues)
-        setInputValues(initialInputValues)
         setCanSubmit(false)
+        setFormSubmitting(false)
     }
 
     const handleSubmit = async () => {
-        const response = await sendUpdateMeetingRequest({ meetingUpdates, submitterDetails })
+        const meetings = cloneDeep(meetingUpdates)
+        await setMeetingUpdates([])
+        setFormSubmitting(true)
+
+        const response = await sendUpdateMeetingRequest({ meetingUpdates: meetings, submitterDetails })
         showResponseAlert({
             response,
             setAlertStatus,
@@ -65,35 +79,59 @@ export const UpdateMeetings: React.FC<UpdateMeetingsViewProps> = ({
         })
     }
 
+    const addUpdateForm = () => {
+        const updates = cloneDeep(meetingUpdates)
+        updates.push({})
+        setMeetingUpdates(updates)
+    }
+
     return (
         <Container maxWidth="lg" style={{ paddingBottom: '50px' }}>
-            <h1>Update Meetings</h1>
+            <h1 className={classes.header}>Update Meetings</h1>
 
-            <SubmitterDetailsForm
-                submitterDetails={submitterDetails}
-                handleSubmitterDetailsChange={handleSubmitterDetailsChange}
-            />
+            {formSubmitting ? (
+                <>
+                    <CircularProgress variant="indeterminate" />
+                    <CircularProgress variant="indeterminate" color="secondary" />
+                </>
+            ) : (
+                <>
+                    <Card className={classes.formCard}>
+                        <SubmitterDetailsForm
+                            submitterDetails={submitterDetails}
+                            handleSubmitterDetailsChange={handleSubmitterDetailsChange}
+                        />
+                    </Card>
 
-            <MeetingDetailsForm
-                meetingKey={'1'}
-                handleMeetingUpdateChange={handleMeetingUpdateChange}
-                inputValues={inputValues}
-                setInputValues={setInputValues}
-                selectValues={selectValues}
-                setSelectValues={setSelectValues}
-                meetings={meetings}
-            />
+                    {meetingUpdates.map((meeting, index) =>
+                        <Card className={classes.formCard}>
+                            <MeetingDetailsForm
+                                key={index}
+                                meetingKey={index}
+                                handleMeetingUpdateChange={handleMeetingUpdateChange}
+                                meetings={meetings}
+                            />
+                        </Card>)}
 
-            <Button
-                color="primary"
-                disabled={!canSubmit}
-                onClick={handleSubmit}
-                variant="contained"
-                size="large"
-                className={classes.margin}
-            >
-                Submit
-            </Button>
+                    <Box display="flex" className={classes.addButton}>
+                        <IconButton onClick={addUpdateForm}>
+                            <Icon color="primary" fontSize="large">add_circle</Icon>
+                        </IconButton>
+                        <p>Add Another Meeting</p>
+                    </Box>
+
+                    <Button
+                        color="primary"
+                        disabled={!canSubmit}
+                        onClick={handleSubmit}
+                        variant="contained"
+                        size="large"
+                        className={classes.submitButton}
+                    >
+                        Submit
+                    </Button>
+                </>
+            )}
 
             {alertStatus.show && (
                 <FlashAlert
@@ -110,7 +148,18 @@ export const UpdateMeetings: React.FC<UpdateMeetingsViewProps> = ({
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
-        margin: {
+        addButton: {
+            fontSize: 18,
+            fontWeight: 500,
+        },
+        formCard: {
+            margin: theme.spacing(2),
+            padding: 20,
+        },
+        header: {
+            margin: '24px 8px 18px 8px',
+        },
+        submitButton: {
             margin: theme.spacing(1),
         },
     }),

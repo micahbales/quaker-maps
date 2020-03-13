@@ -4,10 +4,6 @@ export interface UpdateMeetingsViewProps {
     meetings: Meeting[]
 }
 
-export interface MeetingUpdates {
-    [key: string] : object
-}
-
 export interface SubmitterDetails {
     [key: string] : string
 }

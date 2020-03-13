@@ -17,11 +17,8 @@ const from = functions.config().mailgun.email
 export const sendUpdateEmail = async (req: any, res: any) => {
     const mailgun = new Mailgun({ apiKey, domain })
 
-    const meetings = []
-    for (let key of req.body.meetingUpdates) {
-        let meeting = req.body.meetingUpdates[key] as Meeting
-        meetings.push(JSON.stringify(meeting))
-    }
+    const meetings: string[] = []
+    req.body.meetingUpdates.forEach((meeting: Meeting) => meetings.push(JSON.stringify(meeting)))
 
     const html = `
     <h1>You have a new update request:</h1>

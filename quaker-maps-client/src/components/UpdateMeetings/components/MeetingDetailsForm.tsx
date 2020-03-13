@@ -19,32 +19,28 @@ import {
     UpdateMeetingsSelectValues,
     UpdateMeetingsTitles
 } from '../types'
+import { initialInputValues, initialSelectValues } from '../utils/initial_values'
 
 /**
  * MeetingDetailsForm takes details about a meeting that should be updated
  */
 
 interface MeetingDetailsFormProps {
-    meetingKey: string
-    handleMeetingUpdateChange: (key: string, updatedMeeting: object) => void
+    meetingKey: number
+    handleMeetingUpdateChange: (key: number, updatedMeeting: object) => void
     meetings: Meeting[]
-    inputValues: UpdateMeetingsInputValues
-    setInputValues: (values: UpdateMeetingsInputValues) => void
-    selectValues: UpdateMeetingsSelectValues
-    setSelectValues: (values: UpdateMeetingsSelectValues) => void
 }
 
 export const MeetingDetailsForm: React.FC<MeetingDetailsFormProps> = ({
     meetingKey,
     handleMeetingUpdateChange,
-    meetings,
-    inputValues,
-    setInputValues,
-    selectValues,
-    setSelectValues
+    meetings
  }) => {
 
     const classes = useStyles()
+
+    const [selectValues, setSelectValues] = React.useState<UpdateMeetingsSelectValues>(initialSelectValues)
+    const [inputValues, setInputValues] = React.useState<UpdateMeetingsInputValues>(initialInputValues)
 
     const [selectTitles] = React.useState<UpdateMeetingsTitles>({
         accessibilitys: getTitles(meetings, 'accessibility'),
@@ -85,7 +81,7 @@ export const MeetingDetailsForm: React.FC<MeetingDetailsFormProps> = ({
 
     return (
         <>
-            <h2>{inputValues.title || 'Meeting to Update'}</h2>
+            <h2>{inputValues.title || `Meeting to Update #${meetingKey + 1}`}</h2>
 
             <List style={{width: '75%'}}>
                 {Object.keys(inputValues).map((key: string, index: number) => {
@@ -102,7 +98,7 @@ export const MeetingDetailsForm: React.FC<MeetingDetailsFormProps> = ({
                                 onChange={handleInputChange}
                                 value={inputValues[selectKey]}
                                 label={selectKey}
-                                id={`standard-${selectKey}-basic`}
+                                id={`standard-${selectKey}-basic-${meetingKey}`}
                             />
                         </FormControl>
                     )
