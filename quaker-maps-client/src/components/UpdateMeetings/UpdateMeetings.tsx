@@ -92,7 +92,6 @@ export const UpdateMeetings: React.FC<UpdateMeetingsViewProps> = ({
             {formSubmitting ? (
                 <>
                     <CircularProgress variant="indeterminate" />
-                    <CircularProgress variant="indeterminate" color="secondary" />
                 </>
             ) : (
                 <>

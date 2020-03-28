@@ -79,18 +79,23 @@ export const MeetingDetailsForm: React.FC<MeetingDetailsFormProps> = ({
         handleMeetingUpdateChange(meetingKey, updatedMeetingValues)
     }
 
+    // We have to sort our object keys because we can't rely on a consistent order
+    // (Found this out the hard way when Safari's JS engine changed the order on the fly when our values were updated)
+    const inputKeys = Object.keys(inputValues).sort()
+    const selectKeys = Object.keys(selectValues).sort()
+
     return (
         <>
             <h2>{inputValues.title || `Meeting to Update #${meetingKey + 1}`}</h2>
 
             <List style={{width: '75%'}}>
-                {Object.keys(inputValues).map((key: string, index: number) => {
+                {inputKeys.map((key: string) => {
                     const selectKey = key as UpdateMeetingsInputTitleKeys
                     return (
                         <FormControl
                             variant="outlined"
                             className={classes.formControl}
-                            key={index}
+                            key={selectKey}
                             fullWidth={true}
                         >
                             <TextField
@@ -106,14 +111,14 @@ export const MeetingDetailsForm: React.FC<MeetingDetailsFormProps> = ({
             </List>
 
             <List style={{width: '75%'}}>
-                {Object.keys(selectValues).map((key: string, index: number) => {
+                {selectKeys.map((key: string) => {
                     const selectKey = key as UpdateMeetingsSelectKeys
                     const isMulti = Array.isArray(selectValues[selectKey])
                     return (
                         <FormControl
                             variant="outlined"
                             className={classes.formControl}
-                            key={index}
+                            key={selectKey}
                             fullWidth={true}
                         >
                             <InputLabel htmlFor={`outlined-${selectKey}-simple`}>
