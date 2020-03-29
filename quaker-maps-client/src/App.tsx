@@ -21,6 +21,7 @@ import { Loading } from './Loading'
  * It contains all our routes and is responsible for app-wide state
  */
 
+const sessionStorage = window.sessionStorage
 const apiKey: string | undefined = process.env.REACT_APP_GOOGLE_MAPS_API_KEY
 const theme = createMuiTheme(QuakerMapsTheme)
 
@@ -49,11 +50,20 @@ const App: React.FC = () => {
   const mainMapWidth = navMenuIsOpen ? `calc(100% - ${navMenuWidth}` : '100%'
 
 React.useEffect(() => {
-    (async () => {
-        const meetings = await fetchMeetings('https://quaker-maps.s3-us-west-1.amazonaws.com/meetings.json')
-        await setAppState({ ...appState, meetings })
+    const sessionData = sessionStorage.getItem('quaker-maps-meetings-data')
+    if (sessionData) {
+        const meetings = JSON.parse(sessionData)
+        setAppState({ ...appState, meetings })
         setMeetingsLoaded(true)
-    })()
+    } else {
+        // Fetch meetings data if it has not already been cached in session storage
+        (async () => {
+            const meetings = await fetchMeetings('https://quaker-maps.s3-us-west-1.amazonaws.com/meetings.json')
+            await setAppState({ ...appState, meetings })
+            sessionStorage.setItem('quaker-maps-meetings-data', JSON.stringify(meetings))
+            setMeetingsLoaded(true)
+        })()
+    }
 }, [])
 
   window.onresize = debounce(() => {
