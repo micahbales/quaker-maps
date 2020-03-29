@@ -2,10 +2,10 @@ import React from 'react'
 import CircularProgress from '@material-ui/core/CircularProgress'
 
 /**
- * This spinner is displayed if the main map is taking time to load
+ * This spinner is displayed if site data hasn't loaded yet
  */
 
-export const MainMapLoading = () => (
+export const Loading = () => (
     <div style={{
         display: 'flex',
         justifyContent: 'center',

@@ -1,6 +1,7 @@
 import React from 'react'
 import debounce from 'lodash/debounce'
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles'
+import { fetchMeetings } from './api/fetch_meetings'
 import { MainMap } from './components/MainMap/MainMap'
 import { MeetingView } from './components/MeetingView/MeetingView'
 import { SiteNav } from './components/SiteNav'
@@ -13,8 +14,7 @@ import { InfoPage } from './static_pages/InfoPage'
 import { FaqPage } from './static_pages/FaqPage'
 import { ContactPage } from './static_pages/ContactPage'
 import { FourOhFour } from './static_pages/FourOhFour'
-import { MainMapLoading } from './components/MainMap/components/MainMapLoading'
-import * as data from './data/meetings.json'
+import { Loading } from './Loading'
 
 /**
  * App is the top-level component for Quaker Maps
@@ -22,7 +22,6 @@ import * as data from './data/meetings.json'
  */
 
 const apiKey: string | undefined = process.env.REACT_APP_GOOGLE_MAPS_API_KEY
-const meetings: Meeting[] = data.meetings
 const theme = createMuiTheme(QuakerMapsTheme)
 
 export interface AppState {
@@ -32,7 +31,7 @@ export interface AppState {
 
 const initialAppState: AppState = {
     filteredMeetings: [],
-    meetings,
+    meetings: [],
 }
 
 const App: React.FC = () => {
@@ -40,6 +39,7 @@ const App: React.FC = () => {
   const isViewingMainMap = window.location.pathname === '/'
   const [navMenuIsOpen, setNavMenuIsOpen] = React.useState(isViewingMainMap)
   const [isMobile, setIsMobile] = React.useState(window.innerWidth < 960)
+  const [meetingsLoaded, setMeetingsLoaded] = React.useState(false)
   // NavMenu will cover the full screen in mobile, otherwise just 250px
   const navMenuWidth = isMobile ? '100%' : '250px'
   // Offset the main navigation and MainMap by the width of the NavMenu
@@ -47,6 +47,14 @@ const App: React.FC = () => {
   // Reduce width of MainMap by the width of the open NavMenu
   // (otherwise, we end up with a map that is wider than the viewport)
   const mainMapWidth = navMenuIsOpen ? `calc(100% - ${navMenuWidth}` : '100%'
+
+React.useEffect(() => {
+    (async () => {
+        const meetings = await fetchMeetings('https://quaker-maps.s3-us-west-1.amazonaws.com/meetings.json')
+        await setAppState({ ...appState, meetings })
+        setMeetingsLoaded(true)
+    })()
+}, [])
 
   window.onresize = debounce(() => {
       if (window.innerWidth < 960) {
@@ -56,17 +64,15 @@ const App: React.FC = () => {
       }
   }, 100)
 
-  if (!apiKey) return (<h1>Error: Google Maps API Key Is Invalid</h1>)
+  if (!apiKey) return (<h1>Error: Google Maps API Key Is Required</h1>)
 
-  const MainMapView = () => appState.meetings.length ? (
+  const MainMapView = () => (
       <MainMap
-        apiKey={apiKey || ''}
-        appState={appState}
-        width={mainMapWidth}
-        marginLeft={navMargin}
+          apiKey={apiKey || ''}
+          appState={appState}
+          width={mainMapWidth}
+          marginLeft={navMargin}
       />
-  ) : (
-    <MainMapLoading />
   )
 
   const UpdateMeetingsView = () => (
@@ -75,7 +81,7 @@ const App: React.FC = () => {
       />
   )
 
-  return (
+  return meetingsLoaded ? (
       <MuiThemeProvider theme={theme}>
         <Router>
           <CssBaseline />
@@ -100,6 +106,8 @@ const App: React.FC = () => {
           </Switch>
         </Router>
       </MuiThemeProvider>
+  ): (
+      <Loading />
   )
 }
 
