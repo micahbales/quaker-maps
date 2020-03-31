@@ -1,7 +1,9 @@
 import {
+    Checkbox,
     FormControl,
     InputLabel,
     List,
+    ListItemText,
     makeStyles,
     MenuItem,
     OutlinedInput,
@@ -129,11 +131,21 @@ export const MeetingDetailsForm: React.FC<MeetingDetailsFormProps> = ({
                                 multiple={isMulti}
                                 onChange={handleSelectChange}
                                 input={<OutlinedInput labelWidth={selectKey.length * 7.5} name={selectKey} id={`outlined-${selectKey}-simple`} />}
+                                // renderValue determines which value is displayed in the select box when not focused
+                                renderValue={((selected) => Array.isArray(selected) ? (selected as string[]).join(', ') : selected as string)}
                             >
-                                {Object.values(selectTitles[`${selectKey}s` as UpdateMeetingsSelectTitleKeys]).map((name: string, index: number) => (
-                                    <MenuItem value={name} key={index}>
-                                        {name}
-                                    </MenuItem>
+                                {Object.values(selectTitles[`${selectKey}s` as UpdateMeetingsSelectTitleKeys]).map((name: string, index: number) =>
+                                    // Multi-selects get checkboxes; simple selects just text items
+                                    isMulti ? (
+                                        name &&
+                                        <MenuItem value={name} key={index}>
+                                            <Checkbox checked={selectValues[selectKey].indexOf(name) > -1} />
+                                            <ListItemText primary={name} />
+                                        </MenuItem>
+                                    ) : (
+                                        <MenuItem value={name} key={index}>
+                                            {name}
+                                        </MenuItem>
                                 ))}
                             </Select>
                         </FormControl>
