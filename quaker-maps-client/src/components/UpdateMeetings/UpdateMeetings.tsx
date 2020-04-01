@@ -103,7 +103,7 @@ export const UpdateMeetings: React.FC<UpdateMeetingsViewProps> = ({
                     </Card>
 
                     {meetingUpdates.map((meeting, index) =>
-                        <Card className={classes.formCard}>
+                        <Card className={classes.formCard} key={index}>
                             <MeetingDetailsForm
                                 key={index}
                                 meetingKey={index}

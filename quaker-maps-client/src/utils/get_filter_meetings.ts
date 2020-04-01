@@ -32,14 +32,15 @@ export const getFilterMeetings = (appState: AppState, setAppState: (appState: Ap
                 } else if (typeof meetingAttribute === 'string') {
                     if (filterValue && filterValue !== meetingAttribute) return false
 
-                // Otherwise, it's an array
+                // Otherwise, it's an array (multi-select)
                 } else if (
                     Array.isArray(meetingAttribute) &&
                     Array.isArray(filterValue) &&
                     filterValue.length > 0
                 ) {
                     // Don't include a meeting unless its attribute array contains every filter value
-                    return filterValue.every(value => meetingAttribute.includes(value))
+                    const notEveryFilterValue = !filterValue.every(value => meetingAttribute.includes(value))
+                    if (notEveryFilterValue) return false
                 }
             }
             return true
