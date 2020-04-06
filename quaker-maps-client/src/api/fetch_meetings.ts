@@ -7,9 +7,9 @@ export const fetchMeetings = async (url: string) => {
     try {
         const response = await fetch(url)
         if (response.ok) {
-            const data = await response.json()
-            return data.meetings
+            return await response.json()
         } else {
+            console.error('No meetings available!')
             return []
         }
     } catch (err) {
