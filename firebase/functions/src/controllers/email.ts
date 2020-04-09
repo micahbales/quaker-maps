@@ -1,11 +1,10 @@
-import * as Mailgun from 'mailgun-js'
+const sgMail = require('@sendgrid/mail')
 import { Meeting } from '../../../../quaker-maps-client/src/types'
-// We get our Mailgun credentials from the firebase functions config
+// We get our SendGrid credentials from the firebase functions config
 // For more details: https://firebase.google.com/docs/functions/config-env
 const functions = require('firebase-functions')
-const apiKey: string = functions.config().mailgun.key
-const domain = functions.config().mailgun.domain
-const from = functions.config().mailgun.email
+const apiKey: string = functions.config().sendgrid.key
+const from = functions.config().sendgrid.email
 
 /**
  * sendUpdateEmail is fired when UpdateMeetings.tsx provides meetings to be updated
@@ -15,7 +14,7 @@ const from = functions.config().mailgun.email
  */
 
 export const sendUpdateEmail = async (req: any, res: any) => {
-    const mailgun = new Mailgun({ apiKey, domain })
+    sgMail.setApiKey(apiKey)
 
     const meetings: string[] = []
     req.body.meetingUpdates.forEach((meeting: Meeting) => meetings.push(JSON.stringify(meeting)))
@@ -26,9 +25,9 @@ export const sendUpdateEmail = async (req: any, res: any) => {
     <p>${JSON.stringify(req.body.submitterDetails)}</p>
     <h2>Meeting(s) to Update (${meetings.length} Total):</h2>
     <div>${meetings.map((meeting) => `<div>${meeting}</div>`)}</div>
-`
+    `
 
-    const data = {
+    const msg = {
         from,
         to: from,
         subject: 'New Update Request for Quaker Maps',
@@ -36,12 +35,7 @@ export const sendUpdateEmail = async (req: any, res: any) => {
         message: 'multipart/form-data'
     }
 
-    await mailgun.messages().send(data, (err: any, body: any) => {
-        if (err) {
-            console.error(`Got an error: ${err}`)
-            return res.json({ error: 'Houston, we have a problem' })
-        }
-    })
+    await sgMail.send(msg)
 
     return res.json({ res: 'Success!' })
 }
