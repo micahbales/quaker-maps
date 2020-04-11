@@ -53,7 +53,7 @@ React.useEffect(() => {
     const sessionData = sessionStorage.getItem('quaker-maps-meetings-data')
     if (sessionData) {
         const meetings = JSON.parse(sessionData)
-        setAppState({ ...appState, meetings: { ...meetings.britain, ...meetings.north_america }})
+        setAppState({ ...appState, meetings })
         setMeetingsLoaded(true)
     } else {
         // Fetch meetings data if it has not already been cached in session storage
