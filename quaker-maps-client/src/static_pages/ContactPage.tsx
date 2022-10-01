@@ -12,6 +12,6 @@ export const ContactPage: React.FC = () => (
 
         <p>Quakermaps.com is not complete or exhaustive. We are still in the programming and testing stages of this project, and we know that some of the information is not fully accurate. Thanks for helping us to make Quaker Maps better.</p>
 
-        <p>Still have a question? Reach out to us via email at: info@quakermaps.org</p>
+        <p>Still have a question? Reach out to us via email at: info@quakermaps.com</p>
     </div>
 )
