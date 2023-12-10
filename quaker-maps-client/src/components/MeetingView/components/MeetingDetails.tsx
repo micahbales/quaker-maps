@@ -1,6 +1,6 @@
-import { Card, Link, createStyles, makeStyles, Theme } from "@material-ui/core";
-import React from "react";
-import { Meeting } from "../../../types";
+import { Card, Link, createStyles, makeStyles, Theme } from '@material-ui/core';
+import React from 'react';
+import { Meeting } from '../../../types';
 
 /**
  * MeetingDetails is a card that contains the details for an individual meeting
@@ -14,8 +14,8 @@ interface MeetingDetailsProps {
 
 function handleMultiValueFields(multiValueArr: string[]): string {
   return multiValueArr.reduce(
-    (acc, val, i, m) => acc + `${val + (m[i + 1] ? ", " : " ")}`,
-    " "
+    (acc, val, i, m) => acc + `${val + (m[i + 1] ? ', ' : ' ')}`,
+    ' '
   );
 }
 
@@ -26,7 +26,7 @@ export const MeetingDetails: React.FC<MeetingDetailsProps> = ({
 }) => {
   const classes = useStyles();
   return (
-    <Card style={{ ...style, padding: "10px" }}>
+    <Card style={{ ...style, padding: '10px' }}>
       {title && (
         <Link href={`/meeting/${meeting.slug}`}>
           <h2 className={classes.header}>{meeting.title}</h2>
@@ -35,7 +35,7 @@ export const MeetingDetails: React.FC<MeetingDetailsProps> = ({
       <ul className={classes.list}>
         {meeting.city && meeting.state && (
           <li>
-            Location: {meeting.address && meeting.address} in {meeting.city},{" "}
+            Location: {meeting.address && meeting.address} in {meeting.city},{' '}
             {meeting.state}
           </li>
         )}
@@ -64,9 +64,9 @@ export const MeetingDetails: React.FC<MeetingDetailsProps> = ({
         {meeting.description && <li>Notes: {meeting.description}</li>}
         {meeting.website && (
           <li>
-            Website:{" "}
+            Website:{' '}
             <a
-              href={"http://" + meeting.website}
+              href={'http://' + meeting.website}
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -83,10 +83,10 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     header: {
       fontSize: 24,
-      textAlign: "center",
+      textAlign: 'center',
     },
     list: {
-      listStyleType: "none",
+      listStyleType: 'none',
       padding: 4,
     },
   })
