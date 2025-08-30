@@ -1,5 +1,5 @@
 import React from 'react'
-import Container from '@material-ui/core/Container'
+import Container from '@mui/material/Container'
 import presence from '../images/presence_in_the_midst.png'
 import preaching from '../images/quakers_preaching.jpg'
 import kingdom from '../images/peaceable_kingdom.png'

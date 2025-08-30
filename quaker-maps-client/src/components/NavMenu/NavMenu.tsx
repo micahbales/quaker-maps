@@ -1,4 +1,5 @@
 import {
+    Box,
     Button,
     Checkbox,
     FormControl,
@@ -6,12 +7,13 @@ import {
     InputLabel,
     List,
     ListItemText,
-    makeStyles,
     MenuItem,
     OutlinedInput,
-    Select
-} from '@material-ui/core'
-import { ChevronLeft } from '@material-ui/icons'
+    Select,
+    SelectChangeEvent,
+    Typography
+} from '@mui/material'
+import { ChevronLeft } from '@mui/icons-material'
 import { QuakerMapsTheme } from '../../theme'
 import {
     NavMenuProps,
@@ -34,7 +36,6 @@ export const NavMenu: React.FC<NavMenuProps> = ({
     setDrawerIsOpen,
     navMenuWidth
 }) => {
-    const classes = useStyles()
 
     const [selectTitles] = React.useState<NavMenuSelectTitles>({
         branchs: getTitles(meetings, 'branch'),
@@ -92,38 +93,45 @@ export const NavMenu: React.FC<NavMenuProps> = ({
         }
     }, [])
 
-    const handleChange = (event: React.ChangeEvent<{ name?: string; value: unknown }>, b: any) => {
+    const handleChange = (event: SelectChangeEvent<string | string[]>) => {
         const name: string = event.target.name || ''
         const value = event.target.value as string | string[]
         updateSelectValuesAndFilterMeetings(name, value)
     }
 
     return (
-        <div
-            className={classes.root}
+        <Box
             role="presentation"
-            style={{ width: navMenuWidth }}
+            sx={{ width: '100%', minHeight: '100vh' }}
         >
-            <div className={classes.drawerHeader}>
-                <h1 className={classes.header}>Filter Meetings</h1>
+            <Box sx={{
+                display: 'flex',
+                alignItems: 'center',
+                padding: '0 8px',
+                minHeight: 64,
+                justifyContent: 'space-between',
+            }}>
+                <Typography variant="h4" sx={{ fontSize: 24, textAlign: 'center' }}>
+                    Filter Meetings
+                </Typography>
                 <IconButton onClick={() => setDrawerIsOpen(false)}>
                     <ChevronLeft />
                 </IconButton>
-            </div>
+            </Box>
             <List>
                 {Object.keys(selectValues).map((key: string, index: number) => {
                     const selectKey = key as NavMenuSelectKeys
                     const isMulti = Array.isArray(selectValues[selectKey])
                     return (
-                        <FormControl variant="outlined" className={classes.formControl} key={index}>
+                        <FormControl variant="outlined" sx={{ margin: 1, minWidth: 225 }} key={index}>
                             <InputLabel htmlFor={`outlined-${selectKey}-simple`}>
                                 {selectKey.replace(/_/g, ' ')}
                             </InputLabel>
                             <Select
                                 value={selectValues[selectKey]}
                                 onChange={handleChange}
-                                input={<OutlinedInput labelWidth={selectKey.length * 7.5} name={selectKey} id={`outlined-${selectKey}-simple`} />}
-                                className={classes.select}
+                                input={<OutlinedInput name={selectKey} id={`outlined-${selectKey}-simple`} />}
+                                sx={{ maxWidth: 230, width: 230 }}
                                 multiple={isMulti}
                                 // renderValue determines which value is displayed in the select box when not focused
                                 renderValue={((selected) => Array.isArray(selected) ? (selected as string[]).join(', ') : selected as string)}
@@ -146,42 +154,20 @@ export const NavMenu: React.FC<NavMenuProps> = ({
                     )
                 })}
             </List>
-            <Button onClick={updateMeetingsOnMap(selectValues)} className={classes.button}>Update Map</Button>
-        </div>
+            <Button 
+                onClick={updateMeetingsOnMap(selectValues)} 
+                sx={{
+                    backgroundColor: QuakerMapsTheme.palette.primary.main,
+                    color: 'white',
+                    marginLeft: '8px',
+                    maxWidth: 230,
+                    width: 230,
+                }}
+            >
+                Update Map
+            </Button>
+        </Box>
     )
 }
 
-const useStyles = makeStyles(theme => ({
-    root: {
-        height: 50,
-    },
-    button: {
-      backgroundColor: QuakerMapsTheme.palette.primary[500],
-      color: 'white',
-      marginLeft: '8px',
-      maxWidth: 230,
-      width: 230,
-    },
-    button_invalid: {
-        margin: '0 10px',
-    },
-    drawerHeader: {
-        display: 'flex',
-        alignItems: 'center',
-        padding: theme.spacing(0, 1),
-        ...theme.mixins.toolbar,
-        justifyContent: 'space-between',
-    },
-    formControl: {
-        margin: theme.spacing(1),
-        minWidth: 225,
-    },
-    header: {
-        fontSize: 24,
-        textAlign: 'center',
-    },
-    select: {
-        maxWidth: 230,
-        width: 230,
-    }
-}))
+

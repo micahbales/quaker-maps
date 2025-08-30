@@ -1,4 +1,4 @@
-import { createStyles, FormControl, List, makeStyles, TextField, Theme } from '@material-ui/core'
+import { FormControl, List, TextField, Typography } from '@mui/material'
 import React from 'react'
 import { SubmitterDetails } from '../types'
 
@@ -15,17 +15,16 @@ export const SubmitterDetailsForm = ({
     submitterDetails,
     handleSubmitterDetailsChange,
 }: SubmitterDetailsFormProps) => {
-    const classes = useStyles()
 
     return (
         <>
-            <h2>Information About You</h2>
+            <Typography variant="h5" component="h2">Information About You</Typography>
 
             <List style={{width: '75%'}}>
                 <FormControl
                     variant="outlined"
                     fullWidth={true}
-                    className={classes.formControl}
+                    sx={{ margin: 1, minWidth: 225 }}
                 >
                     <TextField
                         name={'name'}
@@ -39,7 +38,7 @@ export const SubmitterDetailsForm = ({
                 <FormControl
                     variant="outlined"
                     fullWidth={true}
-                    className={classes.formControl}
+                    sx={{ margin: 1, minWidth: 225 }}
                 >
                     <TextField
                         name={'email'}
@@ -53,7 +52,7 @@ export const SubmitterDetailsForm = ({
                 <FormControl
                     variant="outlined"
                     fullWidth={true}
-                    className={classes.formControl}
+                    sx={{ margin: 1, minWidth: 225 }}
                 >
                     <TextField
                         name={'authority'}
@@ -68,11 +67,4 @@ export const SubmitterDetailsForm = ({
     )
 }
 
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        formControl: {
-            margin: theme.spacing(1),
-            minWidth: 225,
-        },
-    }),
-)
+

@@ -1,4 +1,4 @@
-import { Card, Link, createStyles, makeStyles, Theme } from '@material-ui/core';
+import { Card, Link, Typography, Box } from '@mui/material';
 import React from 'react';
 import { Meeting } from '../../../types';
 
@@ -24,15 +24,28 @@ export const MeetingDetails: React.FC<MeetingDetailsProps> = ({
   style,
   title,
 }) => {
-  const classes = useStyles();
   return (
-    <Card style={{ ...style, padding: '10px' }}>
+    <Card sx={{ ...style, padding: '10px' }}>
       {title && (
         <Link href={`/meeting/${meeting.slug}`}>
-          <h2 className={classes.header}>{meeting.title}</h2>
+          <Typography 
+            variant="h2" 
+            sx={{
+              fontSize: 24,
+              textAlign: 'center',
+            }}
+          >
+            {meeting.title}
+          </Typography>
         </Link>
       )}
-      <ul className={classes.list}>
+      <Box 
+        component="ul" 
+        sx={{
+          listStyleType: 'none',
+          padding: '4px',
+        }}
+      >
         {meeting.city && meeting.state && (
           <li>
             Location: {meeting.address && meeting.address} in {meeting.city},{' '}
@@ -74,20 +87,7 @@ export const MeetingDetails: React.FC<MeetingDetailsProps> = ({
             </a>
           </li>
         )}
-      </ul>
+      </Box>
     </Card>
   );
 };
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    header: {
-      fontSize: 24,
-      textAlign: 'center',
-    },
-    list: {
-      listStyleType: 'none',
-      padding: 4,
-    },
-  })
-);

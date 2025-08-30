@@ -1,6 +1,6 @@
 import GoogleMapReact from 'google-map-react'
 import React from 'react'
-import { Card } from '@material-ui/core'
+import { Card } from '@mui/material'
 import { Meeting } from '../../../types'
 import { MapMarker } from '../../MapMarker/MapMarker'
 const apiKey: string | undefined = process.env.REACT_APP_GOOGLE_MAPS_API_KEY
