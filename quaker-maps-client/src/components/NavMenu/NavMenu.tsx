@@ -34,7 +34,7 @@ export const NavMenu: React.FC<NavMenuProps> = ({
     filterMeetings,
     meetings,
     setDrawerIsOpen,
-    navMenuWidth
+    navMenuWidth: _navMenuWidth
 }) => {
 
     const [selectTitles] = React.useState<NavMenuSelectTitles>({

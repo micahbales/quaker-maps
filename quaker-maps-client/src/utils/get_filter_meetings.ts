@@ -10,7 +10,7 @@ export const getFilterMeetings = (appState: AppState, setAppState: (appState: Ap
     return (newSelectValues: NavMenuSelectValues | UpdateMeetingsSelectValues) => {
         // Remove all meetings that don't meet ALL selected criteria
         const filteredMeetings = appState.meetings.filter(meeting => {
-            for (let key in newSelectValues) {
+            for (const key in newSelectValues) {
                 // Assure TypeScript that we expect all our keys will have the expected values
                 const attr = key as UpdateMeetingsSelectKeys | NavMenuSelectKeys
                 // Declare these two variables at the top, so Typescript believes they are the same values throughout

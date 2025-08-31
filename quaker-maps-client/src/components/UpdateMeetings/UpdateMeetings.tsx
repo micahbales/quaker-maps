@@ -37,7 +37,7 @@ export const UpdateMeetings: React.FC<UpdateMeetingsViewProps> = ({
 }) => {
     const theme = useTheme()
 
-    const [formSubmitting, setFormSubmitting] = React.useState<Boolean>(false)
+    const [formSubmitting, setFormSubmitting] = React.useState<boolean>(false)
     const [meetingUpdates, setMeetingUpdates] = React.useState<object[]>(initialMeetingUpdates)
     const [submitterDetails, setSubmitterDetails] = React.useState<SubmitterDetails>(initialSubmitterDetails)
     const [canSubmit, setCanSubmit] = React.useState<boolean>(Object.entries(meetingUpdates).length > 0) // TODO: use a .every to make sure each form complies
@@ -111,7 +111,7 @@ export const UpdateMeetings: React.FC<UpdateMeetingsViewProps> = ({
                         />
                     </Card>
 
-                    {meetingUpdates.map((meeting, index) =>
+                    {meetingUpdates.map((_meeting, index) =>
                         <Card 
                             sx={{
                                 margin: theme.spacing(2),

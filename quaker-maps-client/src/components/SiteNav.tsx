@@ -31,7 +31,7 @@ export const SiteNav: React.FC<SiteNavProps> = ({
     navMenuWidth
 }) => {
     const filterMeetings = getFilterMeetings(appState, setAppState)
-    const toggleDrawer = (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
+    const toggleDrawer = (open: boolean) => (_event: React.KeyboardEvent | React.MouseEvent) => {
         setNavMenuIsOpen(open)
     }
     return (

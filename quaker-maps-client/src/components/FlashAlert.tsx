@@ -51,7 +51,7 @@ const AlertWrapper = React.forwardRef<HTMLDivElement, Props>(({
     return (
         <SnackbarContent
             sx={{ backgroundColor: getBackgroundColor() }}
-            className={className}
+            className={className || ''}
             aria-describedby="client-snackbar"
             message={
                 <Box
@@ -97,7 +97,7 @@ export const FlashAlert: React.FC<SnackbarAlertProps> = ({
 }) => {
     const [open, setOpen] = React.useState(true)
     const timeout = closeTimeout || 6000
-    const handleClose = (event?: SyntheticEvent | Event, reason?: string) => {
+    const handleClose = (_event?: SyntheticEvent | Event, reason?: string) => {
         if (reason === 'clickaway') return
         setOpen(false)
     }

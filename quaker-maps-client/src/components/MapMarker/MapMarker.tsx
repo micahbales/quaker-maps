@@ -16,8 +16,8 @@ interface MapMarkerProps {
 }
 
 export const MapMarker: React.FC<MapMarkerProps> = ({
-    lat,
-    lng,
+    lat: _lat,
+    lng: _lng,
     meeting,
 }) => {
     const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null)
@@ -42,8 +42,9 @@ export const MapMarker: React.FC<MapMarkerProps> = ({
                     position: 'absolute',
                     transform: 'translate(-50%, -50%)'
                 }}
-                children={<HomeIcon color="primary" />} 
-            />
+            >
+                <HomeIcon color="primary" />
+            </IconButton>
             <Popover
                 id={id}
                 open={open}

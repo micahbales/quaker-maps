@@ -60,7 +60,7 @@ export const logPerformanceMetrics = (metrics: Partial<PerformanceMetrics>): voi
 /**
  * Create a performance observer for measuring specific metrics
  */
-export const createPerformanceObserver = (callback: (metrics: PerformanceMetrics) => void): void => {
+export const createPerformanceObserver = (_callback: (metrics: PerformanceMetrics) => void): void => {
   if (typeof window !== 'undefined' && 'PerformanceObserver' in window) {
     const observer = new PerformanceObserver((list) => {
       const entries = list.getEntries();
