@@ -14,15 +14,13 @@ We release this project to the world under the [+CAL license](https://legaldesig
 
 ## Technology Stack
 
-This project has been upgraded to use modern React and related technologies:
-
-* **React 18.2** with TypeScript
+* **React 18** with TypeScript
 * **MUI v5** (Material-UI) for UI components and theming
 * **React Router v6** for client-side routing
 * **Google Maps React 2.1** for interactive mapping
 * **Styled Components 5.3** for additional styling
 * **ESLint** for code linting (migrated from TSLint)
-* **Create React App 5.0** with TypeScript template
+* **Create React App 5** with TypeScript template
 
 ## Install Project Dependencies
 
