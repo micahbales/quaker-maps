@@ -8,8 +8,21 @@ We release this project to the world under the [+CAL license](https://legaldesig
 
 ## Requirements
 
-* Node 12
-* Typescript 3
+* Node 16+ (recommended: Node 18+)
+* TypeScript 5+
+* npm 8+
+
+## Technology Stack
+
+This project has been upgraded to use modern React and related technologies:
+
+* **React 18.2** with TypeScript
+* **MUI v5** (Material-UI) for UI components and theming
+* **React Router v6** for client-side routing
+* **Google Maps React 2.1** for interactive mapping
+* **Styled Components 5.3** for additional styling
+* **ESLint** for code linting (migrated from TSLint)
+* **Create React App 5.0** with TypeScript template
 
 ## Install Project Dependencies
 
@@ -32,9 +45,22 @@ Then add your API key to the new `.env` file.
 
 ## Run Project Locally
 
-```
+```bash
 $ npm start
 ```
+
+## Available Scripts
+
+In the project directory, you can run:
+
+* `npm start` - Runs the app in development mode
+* `npm test` - Launches the test runner
+* `npm run build` - Builds the app for production
+* `npm run lint` - Runs ESLint to check code quality
+* `npm run lint:fix` - Automatically fixes ESLint issues
+* `npm run type-check` - Runs TypeScript compiler to check types
+* `npm run format` - Formats code using Prettier
+* `npm run format:check` - Checks if code is properly formatted
 
 ## Deploy Project to Surge
 
@@ -55,3 +81,30 @@ There are currently two steps to setting this up:
 2. Set up the config variables invoked near the top of `email.ts` as described in the [Firebase documentation](https://firebase.google.com/docs/functions/config-env)
 
 (The URL for our backend call is hard-coded in `send_update_meeting_request`; this might need to be changed if we were to have multiple deployments with different emailing requirements)
+
+## React 18 Upgrade Notes
+
+This project has been successfully upgraded from React 16.9 to React 18.2. Key changes include:
+
+### Breaking Changes
+* **React Root API**: Updated from `ReactDOM.render()` to `createRoot().render()`
+* **Material-UI to MUI v5**: All `@material-ui/*` imports changed to `@mui/*`
+* **React Router v6**: Route definitions updated to use `element` prop instead of `component`
+* **TSLint to ESLint**: Linting configuration migrated to modern ESLint setup
+
+### New Features Available
+* **Automatic Batching**: React 18 automatically batches state updates for better performance
+* **Concurrent Features**: Ready for future adoption of React 18's concurrent rendering
+* **Improved TypeScript Support**: Updated to TypeScript 5+ with better React 18 integration
+
+### Development Notes
+* All existing functionality has been preserved during the upgrade
+* Performance has been maintained or improved with React 18's optimizations
+* The application is now future-ready for React 18's advanced features
+* React Router v6 warnings about future flags are expected and can be addressed in future updates
+
+### Compatibility
+* Firebase Functions backend remains fully compatible
+* Google Maps integration continues to work without changes
+* Surge.sh deployment process unchanged
+* All existing npm scripts continue to function as expected

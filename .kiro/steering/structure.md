@@ -49,6 +49,7 @@ src/
 - Files and folders use snake_case or kebab-case
 - TypeScript interfaces are PascalCase
 - Component props interfaces follow `ComponentNameProps` pattern
+- MUI v5 styling uses `styled` components or `sx` prop instead of `makeStyles`
 
 ## State Management
 - App-level state managed in `App.tsx` using React hooks
@@ -56,6 +57,7 @@ src/
 - No external state management library (Redux, etc.)
 
 ## Routing
-- Client-side routing with React Router
-- Route definitions centralized in `App.tsx`
+- Client-side routing with React Router v6
+- Route definitions centralized in `App.tsx` using `Routes` and `element` prop
 - Meeting detail pages use slug-based URLs (`/meeting/:slug`)
+- Updated from Switch/component pattern to Routes/element pattern

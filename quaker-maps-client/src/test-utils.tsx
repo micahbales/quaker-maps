@@ -105,10 +105,12 @@ export const setupTestMocks = () => {
   });
 
   // Mock PerformanceObserver
-  global.PerformanceObserver = jest.fn().mockImplementation(() => ({
+  const MockPerformanceObserver = jest.fn().mockImplementation(() => ({
     observe: jest.fn(),
     disconnect: jest.fn(),
   }));
+  (MockPerformanceObserver as any).supportedEntryTypes = ['measure', 'navigation', 'resource'];
+  global.PerformanceObserver = MockPerformanceObserver as any;
 
   // Mock google-map-react
   jest.mock('google-map-react', () => {
