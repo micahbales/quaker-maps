@@ -1,134 +1,211 @@
-# Dependency Resolution Design Document
+# Modern Tech Stack Migration Design Document
 
 ## Overview
 
-This design document outlines the technical approach for resolving peer dependency conflicts in the Quaker Maps application. The primary goal is to eliminate the need for the `--legacy-peer-deps` flag by systematically identifying and resolving version conflicts between dependencies.
+This design document outlines the technical approach for migrating the Quaker Maps application from Create React App (react-scripts) to Vite and upgrading to the latest versions of React, TypeScript, and other core dependencies. The primary goal is to establish a modern, performant development environment while eliminating peer dependency conflicts.
 
-The approach involves analyzing the current dependency tree, identifying specific version conflicts, and updating packages to compatible versions while maintaining application functionality and development workflow integrity.
+The approach involves replacing react-scripts with Vite, upgrading to React 19.x and TypeScript 5.x, modernizing the testing setup with Vitest, and updating all dependencies to their latest stable versions while maintaining application functionality.
 
 ## Architecture
 
-### Dependency Conflict Analysis
+### Migration Strategy Overview
 
-Based on the npm install output, the main conflicts are:
+The migration follows a **modern-first approach** to establish a cutting-edge development environment:
 
-1. **TypeScript Version Conflict**: 
-   - Current: TypeScript ^5.2.2
-   - Required by react-scripts@5.0.1: TypeScript ^3.2.1 || ^4
-   - Resolution: Downgrade TypeScript to 4.x or upgrade react-scripts
+1. **Build System Migration**: Replace react-scripts with Vite for faster builds and modern tooling
+2. **Dependency Modernization**: Upgrade to latest stable versions of core dependencies
+3. **Testing Modernization**: Migrate from Jest to Vitest for better Vite integration
+4. **Styling Modernization**: Remove deprecated @mui/styles and use modern styling approaches
 
-2. **ESLint Plugin Conflicts**:
-   - @typescript-eslint/eslint-plugin@6.7.2 conflicts with eslint-plugin-jest requirements
-   - eslint-plugin-jest expects @typescript-eslint/eslint-plugin ^4.0.0 || ^5.0.0
-   - Resolution: Align ESLint plugin versions
+### Target Technology Stack
 
-3. **MUI Package Version Misalignment**:
-   - @mui/material@7.3.1 and @mui/icons-material@7.3.1 vs @mui/styles@6.5.0
-   - Resolution: Align all MUI packages to compatible versions
+**Core Framework:**
+- React: 18.3.1 (latest stable 18.x)
+- TypeScript: 5.9.2 (latest stable)
+- Vite: 7.1.3 (latest stable)
 
-### Resolution Strategy
+**UI Library:**
+- @mui/material: 7.3.1 (latest stable)
+- @mui/icons-material: 7.3.1 (latest stable)
+- Remove @mui/styles (deprecated)
 
-The resolution will follow a **compatibility-first approach**:
+**Development Tools:**
+- ESLint: 9.34.0 (latest stable)
+- @typescript-eslint/eslint-plugin: 8.41.0 (latest stable)
+- Prettier: Latest stable
+- Vitest: Latest stable for testing
 
-1. **Identify Version Constraints**: Map all peer dependency requirements
-2. **Find Compatible Versions**: Determine version ranges that satisfy all constraints
-3. **Prioritize Stability**: Choose stable, well-tested versions over bleeding edge
-4. **Validate Functionality**: Ensure updates don't break existing features
+### Migration Benefits
+
+**Performance Improvements:**
+- Faster development server startup (Vite vs react-scripts)
+- Faster hot module replacement
+- Optimized production builds
+- Better tree-shaking and code splitting
+
+**Developer Experience:**
+- Latest TypeScript features and performance
+- Modern ESLint rules and better error reporting
+- Better IDE integration and IntelliSense
+- Faster test execution with Vitest
 
 ## Components and Interfaces
 
-### React Scripts Compatibility Matrix
+### Vite Configuration Architecture
 
-React Scripts 5.0.1 has specific peer dependency requirements:
-- TypeScript: ^3.2.1 || ^4
-- React: ^18.0.0
-- ESLint: ^8.0.0
+Vite will replace react-scripts with a modern, flexible build system:
 
-**Resolution Options:**
-1. **Option A**: Downgrade TypeScript to 4.9.5 (latest 4.x)
-2. **Option B**: Upgrade react-scripts to 5.0.1+ that supports TypeScript 5.x
-3. **Option C**: Use Create React App 5.0.1 with TypeScript 4.x
+**Vite Configuration Features:**
+- TypeScript 5.x support out of the box
+- React 19.x support with automatic JSX transform
+- ESLint integration with latest plugins
+- Hot Module Replacement (HMR) for all file types
+- Optimized production builds with Rollup
 
-**Recommended**: Option A - Downgrade TypeScript to 4.9.5 for maximum compatibility.
-
-### ESLint Configuration Alignment
-
-Current ESLint ecosystem conflicts:
-```
-@typescript-eslint/eslint-plugin@6.7.2 (current)
-eslint-plugin-jest@25.7.0 (from react-scripts)
-  └── requires @typescript-eslint/eslint-plugin ^4.0.0 || ^5.0.0
-```
-
-**Resolution Strategy:**
-- Downgrade @typescript-eslint/eslint-plugin to 5.62.0 (latest 5.x)
-- Downgrade @typescript-eslint/parser to match
-- Ensure ESLint rules remain compatible
-
-### MUI Package Version Harmonization
-
-Current MUI package versions:
-```
-@mui/material: ^7.3.1
-@mui/icons-material: ^7.3.1  
-@mui/styles: ^6.5.0
+**Configuration Structure:**
+```typescript
+// vite.config.ts
+export default defineConfig({
+  plugins: [react()],
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src'),
+    },
+  },
+  build: {
+    target: 'esnext',
+    sourcemap: true,
+  },
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: ['./src/setupTests.ts'],
+  },
+})
 ```
 
-**Issue**: @mui/styles is deprecated and not compatible with MUI v7.
+### Modern ESLint Configuration
 
-**Resolution Strategy:**
-1. **Option A**: Downgrade all MUI packages to v5.x (stable, well-supported)
-2. **Option B**: Remove @mui/styles and migrate to @mui/system or styled components
-3. **Option C**: Keep MUI v7 and replace @mui/styles usage
+With Vite, we can use the latest ESLint ecosystem without react-scripts constraints:
 
-**Recommended**: Option A - Downgrade to MUI v5.14.x for stability and compatibility.
-
-### Testing Library Compatibility
-
-Current testing library versions appear compatible with React 18:
+**Target ESLint Stack:**
 ```
-@testing-library/react: ^16.3.0
-@testing-library/jest-dom: ^6.8.0
-@testing-library/user-event: ^14.6.1
+eslint@9.34.0 (latest stable)
+@typescript-eslint/eslint-plugin@8.41.0 (latest stable)
+@typescript-eslint/parser@8.41.0 (latest stable)
+eslint-plugin-react@7.x (latest stable)
+eslint-plugin-react-hooks@4.x (latest stable)
 ```
 
-These should remain compatible with the proposed changes.
+**Modern ESLint Configuration:**
+- Flat config format (ESLint 9.x)
+- TypeScript 5.x support
+- React 19.x support
+- Better performance and error reporting
+- Integration with Vite development server
+
+### Modern MUI and Styling Architecture
+
+Upgrade to latest MUI with modern styling approaches:
+
+**Target MUI Stack:**
+```
+@mui/material: ^7.3.1 (latest stable)
+@mui/icons-material: ^7.3.1 (latest stable)
+@mui/system: ^7.3.1 (for styling utilities)
+@emotion/react: ^11.x (peer dependency)
+@emotion/styled: ^11.x (peer dependency)
+```
+
+**Styling Migration Strategy:**
+1. **Remove @mui/styles**: Deprecated package, not compatible with React 19
+2. **Migrate to @mui/system**: Use sx prop and styled() from @mui/system
+3. **Use emotion directly**: For complex styling needs
+4. **Leverage MUI v7 features**: Latest components and performance improvements
+
+**Migration Path:**
+- Replace makeStyles() with styled() or sx prop
+- Update theme usage to MUI v7 API
+- Ensure React 19 compatibility
+
+### Modern Testing Architecture with Vitest
+
+Migrate from Jest to Vitest for better Vite integration and performance:
+
+**Target Testing Stack:**
+```
+vitest: latest stable (Vite-native test runner)
+@testing-library/react: latest (React 19 compatible)
+@testing-library/jest-dom: latest (DOM testing utilities)
+@testing-library/user-event: latest (user interaction testing)
+jsdom: latest (DOM environment for Vitest)
+```
+
+**Vitest Benefits:**
+- Native Vite integration (no configuration needed)
+- Faster test execution
+- Better TypeScript support
+- Hot Module Replacement for tests
+- Compatible with Jest API (minimal migration needed)
+
+**Migration Considerations:**
+- Update test configuration from Jest to Vitest
+- Ensure all existing tests continue to work
+- Leverage Vitest-specific features for better performance
 
 ## Data Models
 
-### Dependency Version Matrix
+### Target Dependency Matrix
 
-Target compatible versions:
+Modern dependency versions for the upgraded stack:
 ```json
 {
   "dependencies": {
-    "@mui/material": "^5.14.20",
-    "@mui/icons-material": "^5.14.19",
-    "@mui/styles": "^5.14.20"
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "@mui/material": "^7.3.1",
+    "@mui/icons-material": "^7.3.1",
+    "@mui/system": "^7.3.1",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "google-map-react": "^2.1.10",
+    "lodash": "^4.17.21",
+    "react-ga4": "^2.1.0",
+    "react-router-dom": "^6.15.0",
+    "styled-components": "^5.3.11"
   },
   "devDependencies": {
-    "typescript": "^4.9.5",
-    "@typescript-eslint/eslint-plugin": "^5.62.0",
-    "@typescript-eslint/parser": "^5.62.0"
+    "typescript": "^5.9.2",
+    "vite": "^7.1.3",
+    "@vitejs/plugin-react": "^4.x",
+    "vitest": "^2.x",
+    "eslint": "^9.34.0",
+    "@typescript-eslint/eslint-plugin": "^8.41.0",
+    "@typescript-eslint/parser": "^8.41.0",
+    "prettier": "^3.6.2"
   }
 }
 ```
 
 ### Migration Impact Assessment
 
-**Low Risk Changes:**
-- TypeScript 5.x → 4.9.5: Minimal breaking changes for existing code
-- ESLint plugins downgrade: Configuration remains compatible
-- MUI v7 → v5: API is largely compatible
+**High Value Changes:**
+- React 18 → 19: Latest features and performance improvements
+- TypeScript 4.9 → 5.9: Modern language features and better performance
+- react-scripts → Vite: Significantly faster development and builds
+- Jest → Vitest: Better test performance and Vite integration
 
 **Medium Risk Changes:**
-- @mui/styles removal: May require component styling updates
+- @mui/styles removal: Requires component styling migration
+- ESLint 8 → 9: New flat config format
+- Testing setup migration: Jest to Vitest configuration changes
 
 **Validation Required:**
-- All TypeScript compilation
-- ESLint rule functionality
-- MUI component rendering
-- Test execution
+- All TypeScript compilation with new features
+- React 19 component compatibility
+- MUI v7 styling migration
+- Vitest test execution
+- Vite build and development server
 
 ## Error Handling
 
@@ -237,41 +314,49 @@ Ensure dependency updates don't negatively impact performance:
 
 ## Implementation Phases
 
-### Phase 1: Preparation and Backup
+### Phase 1: Preparation and Environment Setup
 1. Create backup of current package.json and package-lock.json
-2. Document current dependency versions
+2. Document current dependency versions and functionality
 3. Run baseline tests to establish current functionality
-4. Clear node_modules and package-lock.json for clean slate
+4. Clear node_modules and package-lock.json for clean migration
 
-### Phase 2: TypeScript and ESLint Resolution
-1. Downgrade TypeScript to 4.9.5
-2. Downgrade @typescript-eslint packages to 5.62.0
-3. Test compilation and linting
-4. Resolve any TypeScript or ESLint configuration issues
+### Phase 2: Vite Migration and Build System Setup
+1. Remove react-scripts dependency
+2. Install Vite and @vitejs/plugin-react
+3. Create vite.config.ts configuration file
+4. Update npm scripts to use Vite commands
+5. Migrate public/index.html to Vite format
 
-### Phase 3: MUI Package Alignment
-1. Downgrade @mui/material and @mui/icons-material to 5.14.x
-2. Update @mui/styles to compatible 5.14.x version
-3. Test UI component rendering
-4. Fix any MUI API compatibility issues
+### Phase 3: Core Dependency Upgrades
+1. Upgrade React to 19.1.1 and React DOM
+2. Upgrade TypeScript to 5.9.2
+3. Update @types packages for React 19 compatibility
+4. Test basic compilation and development server
 
-### Phase 4: Clean Installation Validation
-1. Remove node_modules and package-lock.json
-2. Run `npm install` without --legacy-peer-deps flag
-3. Verify no peer dependency warnings
-4. Test all development commands
+### Phase 4: Modern ESLint Configuration
+1. Upgrade ESLint to 9.34.0
+2. Upgrade @typescript-eslint packages to 8.41.0
+3. Migrate to ESLint flat config format
+4. Update ESLint configuration for React 19 and TypeScript 5.9
 
-### Phase 5: Comprehensive Testing
-1. Run full test suite
+### Phase 5: MUI and Styling Modernization
+1. Ensure @mui/material and @mui/icons-material are at 7.3.1
+2. Remove @mui/styles dependency
+3. Migrate existing @mui/styles usage to @mui/system or emotion
+4. Test UI component rendering and theming
+
+### Phase 6: Testing Migration to Vitest
+1. Install Vitest and related testing dependencies
+2. Update test configuration from Jest to Vitest
+3. Migrate test scripts and setup files
+4. Ensure all existing tests pass with Vitest
+
+### Phase 7: Comprehensive Validation and Optimization
+1. Run full test suite with Vitest
 2. Test application functionality manually
-3. Validate build and deployment processes
-4. Performance regression testing
-
-### Phase 6: Documentation and Cleanup
-1. Update README.md with new dependency information
-2. Remove --legacy-peer-deps references from documentation
-3. Update CI/CD scripts if necessary
-4. Document any breaking changes or migration notes
+3. Validate Vite build and development processes
+4. Performance testing and optimization
+5. Update documentation and deployment scripts
 
 ## Risk Mitigation
 

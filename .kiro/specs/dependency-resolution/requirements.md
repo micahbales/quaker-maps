@@ -2,9 +2,9 @@
 
 ## Introduction
 
-This specification outlines the requirements for resolving peer dependency conflicts in the Quaker Maps application that currently require the use of the `--legacy-peer-deps` flag. The goal is to eliminate the need for this flag by updating dependencies to compatible versions, ensuring a stable and maintainable dependency tree while preserving all existing functionality.
+This specification outlines the requirements for modernizing the Quaker Maps application's build system and dependency stack. The goal is to migrate from Create React App (react-scripts) to Vite and upgrade to the latest versions of React, TypeScript, and other core dependencies, eliminating peer dependency conflicts and establishing a modern, performant development environment.
 
-The current application has peer dependency conflicts primarily between TypeScript versions, ESLint configurations, and some MUI package versions that prevent clean installation without the legacy flag.
+The current application uses react-scripts which constrains TypeScript to version 4.x and creates peer dependency conflicts. By migrating to Vite, we can use the latest TypeScript 5.x, React 18.3.x, and modern tooling while achieving faster build times and better developer experience.
 
 ## Requirements
 
@@ -20,17 +20,17 @@ The current application has peer dependency conflicts primarily between TypeScri
 4. WHEN the package-lock.json is generated THEN it SHALL reflect a clean dependency tree without overrides
 5. WHEN new developers clone the project THEN they SHALL be able to run `npm install` without additional flags
 
-### Requirement 2: TypeScript Version Compatibility
+### Requirement 2: Modern TypeScript and React Versions
 
-**User Story:** As a developer, I want TypeScript to be at a version compatible with all project dependencies so that compilation works correctly without version conflicts.
+**User Story:** As a developer, I want to use the latest stable versions of TypeScript and React so that I can leverage modern language features and performance improvements.
 
 #### Acceptance Criteria
 
-1. WHEN TypeScript is updated THEN it SHALL be compatible with react-scripts version requirements
-2. WHEN TypeScript is updated THEN all existing TypeScript code SHALL compile without errors
-3. WHEN TypeScript is updated THEN ESLint TypeScript plugins SHALL be compatible
-4. WHEN TypeScript is updated THEN the version SHALL support all current language features used in the project
-5. WHEN TypeScript is updated THEN type checking SHALL pass for all components and utilities
+1. WHEN TypeScript is updated THEN it SHALL be upgraded to the latest stable version (5.9.x)
+2. WHEN React is updated THEN it SHALL be upgraded to the latest stable 18.x version (18.3.x)
+3. WHEN TypeScript is updated THEN all existing TypeScript code SHALL compile without errors
+4. WHEN TypeScript is updated THEN ESLint TypeScript plugins SHALL be compatible with the new version
+5. WHEN React is updated THEN all existing components SHALL render and function correctly with proven dependency compatibility
 
 ### Requirement 3: ESLint Configuration Compatibility
 
@@ -44,41 +44,41 @@ The current application has peer dependency conflicts primarily between TypeScri
 4. WHEN ESLint runs THEN it SHALL maintain the same linting rules and code quality standards
 5. WHEN ESLint plugins are updated THEN they SHALL work correctly with react-scripts
 
-### Requirement 4: React Scripts Compatibility
+### Requirement 4: Vite Build System Migration
 
-**User Story:** As a developer, I want react-scripts to work with compatible dependency versions so that the build system functions correctly.
-
-#### Acceptance Criteria
-
-1. WHEN react-scripts dependencies are resolved THEN they SHALL be compatible with the installed TypeScript version
-2. WHEN react-scripts runs THEN the development server SHALL start without dependency warnings
-3. WHEN react-scripts builds the project THEN the build SHALL complete successfully
-4. WHEN react-scripts is used THEN all existing npm scripts SHALL continue to function
-5. WHEN react-scripts is updated THEN it SHALL maintain compatibility with React 18 and MUI v5
-
-### Requirement 5: MUI Package Version Alignment
-
-**User Story:** As a developer, I want all MUI packages to be at compatible versions so that the UI library functions correctly without conflicts.
+**User Story:** As a developer, I want to use Vite as the build system so that I have faster development builds, better TypeScript support, and modern tooling capabilities.
 
 #### Acceptance Criteria
 
-1. WHEN MUI packages are updated THEN @mui/material, @mui/icons-material, and @mui/styles SHALL be at compatible versions
-2. WHEN MUI packages are updated THEN they SHALL maintain compatibility with React 18
-3. WHEN MUI packages are updated THEN they SHALL maintain compatibility with emotion dependencies
+1. WHEN Vite is configured THEN the development server SHALL start faster than react-scripts
+2. WHEN Vite builds the project THEN the build SHALL complete successfully with optimized output
+3. WHEN Vite is used THEN hot module replacement SHALL work correctly for all file types
+4. WHEN Vite is configured THEN it SHALL support the latest TypeScript and React versions natively
+5. WHEN Vite replaces react-scripts THEN all existing npm scripts SHALL be updated to work with Vite
+
+### Requirement 5: Latest MUI and Modern Styling
+
+**User Story:** As a developer, I want to use the latest MUI version with modern styling approaches so that I have access to the newest components and performance improvements.
+
+#### Acceptance Criteria
+
+1. WHEN MUI packages are updated THEN @mui/material and @mui/icons-material SHALL be at the latest stable version (7.x)
+2. WHEN MUI packages are updated THEN they SHALL be compatible with React 18.3.x
+3. WHEN @mui/styles is removed THEN existing styled components SHALL be migrated to @mui/system or emotion
 4. WHEN MUI packages are updated THEN all existing UI components SHALL render correctly
-5. WHEN MUI packages are updated THEN the theme system SHALL continue to function as expected
+5. WHEN MUI packages are updated THEN the theme system SHALL continue to function with modern styling approaches
 
-### Requirement 6: Testing Library Compatibility
+### Requirement 6: Modern Testing Setup with Vitest
 
-**User Story:** As a developer, I want testing libraries to be compatible with React 18 and other dependencies so that tests run correctly.
+**User Story:** As a developer, I want to use modern testing tools that integrate well with Vite so that tests run faster and have better TypeScript support.
 
 #### Acceptance Criteria
 
-1. WHEN testing libraries are updated THEN they SHALL be compatible with React 18
-2. WHEN testing libraries are updated THEN they SHALL be compatible with the Jest version provided by react-scripts
-3. WHEN tests are run THEN they SHALL execute without dependency-related errors
+1. WHEN testing setup is migrated THEN it SHALL use Vitest for unit testing with Vite integration
+2. WHEN testing libraries are updated THEN they SHALL be compatible with React 18.3.x
+3. WHEN tests are run THEN they SHALL execute faster than the previous Jest setup
 4. WHEN testing libraries are updated THEN all existing tests SHALL continue to pass
-5. WHEN testing libraries are updated THEN test utilities SHALL function correctly with updated components
+5. WHEN Vitest is configured THEN it SHALL provide better TypeScript support and error reporting
 
 ### Requirement 7: Application Functionality Preservation
 
@@ -93,7 +93,19 @@ The current application has peer dependency conflicts primarily between TypeScri
 5. WHEN dependency updates are complete THEN responsive design SHALL work on all devices
 6. WHEN dependency updates are complete THEN all existing user workflows SHALL remain functional
 
-### Requirement 8: Development Workflow Preservation
+### Requirement 8: Modern ESLint and Code Quality Tools
+
+**User Story:** As a developer, I want to use the latest ESLint and TypeScript ESLint plugins so that I have access to the newest linting rules and better code quality enforcement.
+
+#### Acceptance Criteria
+
+1. WHEN ESLint is updated THEN it SHALL be upgraded to the latest stable version (9.x)
+2. WHEN TypeScript ESLint plugins are updated THEN they SHALL be upgraded to the latest stable version (8.x)
+3. WHEN ESLint is updated THEN it SHALL work seamlessly with Vite and TypeScript 5.x
+4. WHEN ESLint configuration is updated THEN it SHALL maintain existing code quality standards
+5. WHEN ESLint is updated THEN it SHALL provide better performance and error reporting
+
+### Requirement 9: Development Workflow Preservation
 
 **User Story:** As a developer, I want all development commands and workflows to continue working so that productivity is maintained.
 
