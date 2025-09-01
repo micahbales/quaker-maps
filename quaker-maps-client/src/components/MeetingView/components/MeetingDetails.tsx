@@ -12,7 +12,10 @@ interface MeetingDetailsProps {
   title?: string;
 }
 
-function handleMultiValueFields(multiValueArr: string[]): string {
+function handleMultiValueFields(multiValueArr: string[] | undefined): string {
+  if (!multiValueArr || multiValueArr.length === 0) {
+    return '';
+  }
   return multiValueArr.reduce(
     (acc, val, i, m) => acc + `${val + (m[i + 1] ? ', ' : ' ')}`,
     ' '
@@ -53,23 +56,23 @@ export const MeetingDetails: React.FC<MeetingDetailsProps> = ({
           </li>
         )}
         {meeting.worship_time && <li>Worship Time: {meeting.worship_time}</li>}
-        {meeting.worship_style.length > 0 && (
+        {(meeting.worship_style?.length ?? 0) > 0 && (
           <li>
             Worship Style: {handleMultiValueFields(meeting.worship_style)}
           </li>
         )}
-        {meeting.yearly_meeting.length > 0 && (
+        {(meeting.yearly_meeting?.length ?? 0) > 0 && (
           <li>
             Yearly Meeting: {handleMultiValueFields(meeting.yearly_meeting)}
           </li>
         )}
-        {meeting.branch.length > 0 && (
+        {(meeting.branch?.length ?? 0) > 0 && (
           <li>
             Branch:
             {handleMultiValueFields(meeting.branch)}
           </li>
         )}
-        {meeting.accessibility.length > 0 && (
+        {(meeting.accessibility?.length ?? 0) > 0 && (
           <li>
             Accessibility: {handleMultiValueFields(meeting.accessibility)}
           </li>
