@@ -5,7 +5,7 @@ import { fetchMeetings } from './api/fetch_meetings'
 import { MainMap } from './components/MainMap/MainMap'
 import { MeetingView } from './components/MeetingView/MeetingView'
 import { SiteNav } from './components/SiteNav'
-import { UpdateMeetings } from './components/UpdateMeetings/UpdateMeetings'
+// import { UpdateMeetings } from './components/UpdateMeetings/UpdateMeetings'
 import { QuakerMapsTheme } from './theme'
 import { Meeting } from './types'
 import { CssBaseline } from '@mui/material'
@@ -124,11 +124,13 @@ React.useEffect(() => {
       />
   )
 
-  const UpdateMeetingsView = () => (
-      <UpdateMeetings
-          meetings={appState.meetings}
-      />
-  )
+// The backend for this feature is currently out of commission.
+// TODO: We can restore this once the server-side issues are addressed.
+//   const UpdateMeetingsView = () => (
+//       <UpdateMeetings
+//           meetings={appState.meetings}
+//       />
+//   )
 
   return meetingsLoaded ? (
       <ThemeProvider theme={theme}>
@@ -149,7 +151,7 @@ React.useEffect(() => {
             <Route path="/about" element={<FaqPage />} />
             <Route path="/frequently-asked-questions" element={<FaqPage />} />
             <Route path="/contact" element={<ContactPage />} />
-            <Route path="/update" element={<UpdateMeetingsView />} />
+            {/* <Route path="/update" element={<UpdateMeetingsView />} /> */}
             <Route path="/meeting/:slug" element={<MeetingView meetings={appState.meetings}/>} />
             <Route path="*" element={<FourOhFour />} />
           </Routes>
