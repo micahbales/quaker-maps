@@ -4,7 +4,7 @@ import * as serviceWorker from './serviceWorker'
 import ReactGA from 'react-ga4'
 
 // Google Analytics keeps track of pages that users visit
-const trackingId: string | undefined = process.env.REACT_APP_GA_TRACKING_ID
+const trackingId: string | undefined = import.meta.env.VITE_GA_TRACKING_ID
 if (trackingId) {
     ReactGA.initialize(trackingId)
     ReactGA.send({ hitType: "pageview", page: window.location.pathname + window.location.search })

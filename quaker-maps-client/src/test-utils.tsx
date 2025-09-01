@@ -73,8 +73,7 @@ export const mockSessionStorage = {
 
 // Setup function for common test mocks
 export const setupTestMocks = () => {
-  // Mock Google Maps API key
-  process.env.REACT_APP_GOOGLE_MAPS_API_KEY = 'test-api-key';
+  // Environment variables are mocked in vite.config.ts test.env section
 
   // Mock fetch
   global.fetch = jest.fn();

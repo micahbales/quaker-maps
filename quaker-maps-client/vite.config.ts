@@ -22,4 +22,13 @@ export default defineConfig({
   preview: {
     port: 3000,
   },
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: ['./src/setupTests.ts'],
+    env: {
+      VITE_GOOGLE_MAPS_API_KEY: 'test-api-key',
+      VITE_GA_TRACKING_ID: 'test-tracking-id',
+    },
+  },
 })

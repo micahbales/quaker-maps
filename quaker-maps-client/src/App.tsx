@@ -24,7 +24,7 @@ import { testBackendCompatibility, logBackendTestResults, testMeetingDataStructu
  */
 
 const sessionStorage = window.sessionStorage
-const apiKey: string | undefined = process.env.REACT_APP_GOOGLE_MAPS_API_KEY
+const apiKey: string | undefined = import.meta.env.VITE_GOOGLE_MAPS_API_KEY
 const theme = QuakerMapsTheme
 
 export interface AppState {
