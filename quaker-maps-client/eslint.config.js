@@ -124,8 +124,7 @@ export default [
     files: ['**/*.test.{ts,tsx}', '**/*.spec.{ts,tsx}', '**/test-utils.tsx'],
     languageOptions: {
       globals: {
-        // Jest/Vitest globals
-        jest: 'readonly',
+        // Vitest globals
         describe: 'readonly',
         it: 'readonly',
         test: 'readonly',

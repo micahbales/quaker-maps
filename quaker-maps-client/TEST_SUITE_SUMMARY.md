@@ -59,12 +59,12 @@ This document summarizes the comprehensive test suite created for the React 18, 
 
 ### Testing Libraries Installed
 - `@testing-library/react` - React 18 compatible
-- `@testing-library/jest-dom` - DOM assertions
+- `@testing-library/jest-dom` - DOM assertions (compatible with Vitest)
 - `@testing-library/user-event` - User interaction testing
 
 ### Test Utilities Created
 - **test-utils.tsx**: Reusable render functions with providers
-- **setupTests.ts**: Jest DOM configuration
+- **setupTests.ts**: Vitest DOM configuration
 - Mock data and utilities for consistent testing
 
 ### Mocking Strategy

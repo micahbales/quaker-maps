@@ -1,6 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { ThemeProvider } from '@mui/material/styles';
+import { vi } from 'vitest';
 import { NavBar } from './NavBar';
 import { QuakerMapsTheme } from '../../theme';
 
@@ -15,13 +16,13 @@ const renderWithTheme = (component: React.ReactElement) => {
 describe('NavBar Component', () => {
   const defaultProps = {
     isViewingMainMap: true,
-    toggleDrawer: jest.fn(() => jest.fn()),
+    toggleDrawer: vi.fn(() => vi.fn()),
     marginLeft: '0px',
     navMenuIsOpen: false,
   };
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders the Quaker Maps title', () => {
@@ -52,7 +53,7 @@ describe('NavBar Component', () => {
   });
 
   it('calls toggleDrawer when filter button is clicked', () => {
-    const mockToggleDrawer = jest.fn(() => jest.fn());
+    const mockToggleDrawer = vi.fn(() => vi.fn());
     renderWithTheme(<NavBar {...defaultProps} toggleDrawer={mockToggleDrawer} />);
     
     const filterButton = screen.getByLabelText('menu');

@@ -2,6 +2,7 @@ import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
+import { vi } from 'vitest';
 import { QuakerMapsTheme } from './theme';
 import { NavBar } from './components/NavBar/NavBar';
 import { Loading } from './Loading';
@@ -9,10 +10,10 @@ import { Loading } from './Loading';
 // Mock performance API
 Object.defineProperty(window, 'performance', {
   value: {
-    now: jest.fn(() => Date.now()),
-    mark: jest.fn(),
-    measure: jest.fn(),
-    getEntriesByType: jest.fn((type: string) => {
+    now: vi.fn(() => Date.now()),
+    mark: vi.fn(),
+    measure: vi.fn(),
+    getEntriesByType: vi.fn((type: string) => {
       if (type === 'navigation') {
         return [{
           loadEventEnd: 100,

@@ -2,6 +2,7 @@ import React from 'react';
 import { render, RenderOptions } from '@testing-library/react';
 import { ThemeProvider } from '@mui/material/styles';
 import { BrowserRouter } from 'react-router-dom';
+import { vi } from 'vitest';
 import { QuakerMapsTheme } from './theme';
 import { Meeting } from './types';
 
@@ -65,10 +66,10 @@ export const mockMeetings: Meeting[] = [
 
 // Mock session storage
 export const mockSessionStorage = {
-  getItem: jest.fn(),
-  setItem: jest.fn(),
-  removeItem: jest.fn(),
-  clear: jest.fn(),
+  getItem: vi.fn(),
+  setItem: vi.fn(),
+  removeItem: vi.fn(),
+  clear: vi.fn(),
 };
 
 // Setup function for common test mocks
@@ -76,7 +77,7 @@ export const setupTestMocks = () => {
   // Environment variables are mocked in vite.config.ts test.env section
 
   // Mock fetch
-  global.fetch = jest.fn();
+  global.fetch = vi.fn();
 
   // Mock sessionStorage
   Object.defineProperty(window, 'sessionStorage', {
@@ -87,10 +88,10 @@ export const setupTestMocks = () => {
   // Mock performance API
   Object.defineProperty(window, 'performance', {
     value: {
-      now: jest.fn(() => Date.now()),
-      mark: jest.fn(),
-      measure: jest.fn(),
-      getEntriesByType: jest.fn((type: string) => {
+      now: vi.fn(() => Date.now()),
+      mark: vi.fn(),
+      measure: vi.fn(),
+      getEntriesByType: vi.fn((type: string) => {
         if (type === 'navigation') {
           return [{
             loadEventEnd: 100,
@@ -104,24 +105,26 @@ export const setupTestMocks = () => {
   });
 
   // Mock PerformanceObserver
-  const MockPerformanceObserver = jest.fn().mockImplementation(() => ({
-    observe: jest.fn(),
-    disconnect: jest.fn(),
+  const MockPerformanceObserver = vi.fn().mockImplementation(() => ({
+    observe: vi.fn(),
+    disconnect: vi.fn(),
   }));
   (MockPerformanceObserver as any).supportedEntryTypes = ['measure', 'navigation', 'resource'];
   global.PerformanceObserver = MockPerformanceObserver as any;
 
   // Mock google-map-react
-  jest.mock('google-map-react', () => {
-    return function GoogleMapReact() {
-      return <div data-testid="google-map">Google Map</div>;
+  vi.mock('google-map-react', () => {
+    return {
+      default: function GoogleMapReact() {
+        return <div data-testid="google-map">Google Map</div>;
+      }
     };
   });
 };
 
 // Cleanup function for tests
 export const cleanupTestMocks = () => {
-  jest.clearAllMocks();
+  vi.clearAllMocks();
   mockSessionStorage.getItem.mockReturnValue(null);
 };
 
