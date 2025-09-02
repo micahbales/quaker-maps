@@ -1,6 +1,6 @@
-import { createStyles, makeStyles, Theme, Typography } from '@material-ui/core'
+import { Box, Typography } from '@mui/material'
 import React from 'react'
-import { useParams } from 'react-router'
+import { useParams } from 'react-router-dom'
 import { FourOhFour } from '../../static_pages/FourOhFour'
 import { Meeting } from '../../types'
 import { MeetingDetails } from './components/MeetingDetails'
@@ -17,8 +17,7 @@ interface MeetingViewProps {
 export const MeetingView: React.FC<MeetingViewProps> = ({
      meetings
  }) => {
-    const classes = useStyles()
-    const { slug } = useParams()
+    const { slug } = useParams<{ slug: string }>()
     const meeting: Meeting | undefined = meetings.find(m => m.slug === slug)
 
     if (!meeting) {
@@ -28,27 +27,21 @@ export const MeetingView: React.FC<MeetingViewProps> = ({
     }
 
     return (
-        // Typography's base component is <p>, but this caused issues. See: https://stackoverflow.com/a/53494821/5767962
-        <Typography className={classes.typography} component={'div'}>
-            <h1 className={classes.header}>{meeting.title}</h1>
+        <Box sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            padding: 2,
+            paddingTop: 0,
+        }}>
+            <Typography variant="h3" component="h1" sx={{ fontSize: 36 }}>
+                {meeting.title}
+            </Typography>
 
             <MeetingMap meeting={meeting} height="300px" width="100%" />
 
             <MeetingDetails meeting={meeting} style={{ marginTop: '25px' }} />
-        </Typography>
+        </Box>
     )
 }
 
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        header: {
-            fontSize: 36,
-        },
-        typography: {
-            display: 'flex',
-            flexDirection: 'column',
-            padding: theme.spacing(2),
-            paddingTop: theme.spacing(0),
-        }
-    })
-)
+

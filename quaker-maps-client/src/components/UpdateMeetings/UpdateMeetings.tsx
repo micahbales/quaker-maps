@@ -1,16 +1,15 @@
 import {
-    createStyles,
-    makeStyles,
     Button,
-    Theme,
     Icon,
     IconButton,
     CircularProgress,
     Box,
-    Card
-} from '@material-ui/core'
+    Card,
+    Container,
+    Typography
+} from '@mui/material'
+import { useTheme } from '@mui/material/styles'
 import React from 'react'
-import Container from '@material-ui/core/Container'
 import cloneDeep from 'lodash/cloneDeep'
 import { FlashAlert } from '../FlashAlert'
 import { sendUpdateMeetingRequest } from './api/send_update_meeting_request'
@@ -36,9 +35,9 @@ import {
 export const UpdateMeetings: React.FC<UpdateMeetingsViewProps> = ({
     meetings
 }) => {
-    const classes = useStyles()
+    const theme = useTheme()
 
-    const [formSubmitting, setFormSubmitting] = React.useState<Boolean>(false)
+    const [formSubmitting, setFormSubmitting] = React.useState<boolean>(false)
     const [meetingUpdates, setMeetingUpdates] = React.useState<object[]>(initialMeetingUpdates)
     const [submitterDetails, setSubmitterDetails] = React.useState<SubmitterDetails>(initialSubmitterDetails)
     const [canSubmit, setCanSubmit] = React.useState<boolean>(Object.entries(meetingUpdates).length > 0) // TODO: use a .every to make sure each form complies
@@ -86,8 +85,15 @@ export const UpdateMeetings: React.FC<UpdateMeetingsViewProps> = ({
     }
 
     return (
-        <Container maxWidth="lg" style={{ paddingBottom: '50px' }}>
-            <h1 className={classes.header}>Update Meetings</h1>
+        <Container maxWidth="lg" sx={{ paddingBottom: '50px' }}>
+            <Typography 
+                variant="h1" 
+                sx={{ 
+                    margin: '24px 8px 18px 8px',
+                }}
+            >
+                Update Meetings
+            </Typography>
 
             {formSubmitting ? (
                 <>
@@ -95,15 +101,24 @@ export const UpdateMeetings: React.FC<UpdateMeetingsViewProps> = ({
                 </>
             ) : (
                 <>
-                    <Card className={classes.formCard}>
+                    <Card sx={{
+                        margin: theme.spacing(2),
+                        padding: '20px',
+                    }}>
                         <SubmitterDetailsForm
                             submitterDetails={submitterDetails}
                             handleSubmitterDetailsChange={handleSubmitterDetailsChange}
                         />
                     </Card>
 
-                    {meetingUpdates.map((meeting, index) =>
-                        <Card className={classes.formCard} key={index}>
+                    {meetingUpdates.map((_meeting, index) =>
+                        <Card 
+                            sx={{
+                                margin: theme.spacing(2),
+                                padding: '20px',
+                            }} 
+                            key={index}
+                        >
                             <MeetingDetailsForm
                                 key={index}
                                 meetingKey={index}
@@ -112,7 +127,13 @@ export const UpdateMeetings: React.FC<UpdateMeetingsViewProps> = ({
                             />
                         </Card>)}
 
-                    <Box display="flex" className={classes.addButton}>
+                    <Box 
+                        display="flex" 
+                        sx={{
+                            fontSize: 18,
+                            fontWeight: 500,
+                        }}
+                    >
                         <IconButton onClick={addUpdateForm}>
                             <Icon color="primary" fontSize="large">add_circle</Icon>
                         </IconButton>
@@ -125,7 +146,7 @@ export const UpdateMeetings: React.FC<UpdateMeetingsViewProps> = ({
                         onClick={handleSubmit}
                         variant="contained"
                         size="large"
-                        className={classes.submitButton}
+                        sx={{ margin: theme.spacing(1) }}
                     >
                         Submit
                     </Button>
@@ -145,21 +166,4 @@ export const UpdateMeetings: React.FC<UpdateMeetingsViewProps> = ({
     )
 }
 
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        addButton: {
-            fontSize: 18,
-            fontWeight: 500,
-        },
-        formCard: {
-            margin: theme.spacing(2),
-            padding: 20,
-        },
-        header: {
-            margin: '24px 8px 18px 8px',
-        },
-        submitButton: {
-            margin: theme.spacing(1),
-        },
-    }),
-)
+

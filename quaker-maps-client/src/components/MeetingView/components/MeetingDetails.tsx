@@ -1,4 +1,4 @@
-import { Card, Link, createStyles, makeStyles, Theme } from '@material-ui/core';
+import { Card, Link, Typography, Box } from '@mui/material';
 import React from 'react';
 import { Meeting } from '../../../types';
 
@@ -12,7 +12,10 @@ interface MeetingDetailsProps {
   title?: string;
 }
 
-function handleMultiValueFields(multiValueArr: string[]): string {
+function handleMultiValueFields(multiValueArr: string[] | undefined): string {
+  if (!multiValueArr || multiValueArr.length === 0) {
+    return '';
+  }
   return multiValueArr.reduce(
     (acc, val, i, m) => acc + `${val + (m[i + 1] ? ', ' : ' ')}`,
     ' '
@@ -24,15 +27,28 @@ export const MeetingDetails: React.FC<MeetingDetailsProps> = ({
   style,
   title,
 }) => {
-  const classes = useStyles();
   return (
-    <Card style={{ ...style, padding: '10px' }}>
+    <Card sx={{ ...style, padding: '10px' }}>
       {title && (
         <Link href={`/meeting/${meeting.slug}`}>
-          <h2 className={classes.header}>{meeting.title}</h2>
+          <Typography 
+            variant="h2" 
+            sx={{
+              fontSize: 24,
+              textAlign: 'center',
+            }}
+          >
+            {meeting.title}
+          </Typography>
         </Link>
       )}
-      <ul className={classes.list}>
+      <Box 
+        component="ul" 
+        sx={{
+          listStyleType: 'none',
+          padding: '4px',
+        }}
+      >
         {meeting.city && meeting.state && (
           <li>
             Location: {meeting.address && meeting.address} in {meeting.city},{' '}
@@ -40,23 +56,23 @@ export const MeetingDetails: React.FC<MeetingDetailsProps> = ({
           </li>
         )}
         {meeting.worship_time && <li>Worship Time: {meeting.worship_time}</li>}
-        {meeting.worship_style.length > 0 && (
+        {(meeting.worship_style?.length ?? 0) > 0 && (
           <li>
             Worship Style: {handleMultiValueFields(meeting.worship_style)}
           </li>
         )}
-        {meeting.yearly_meeting.length > 0 && (
+        {(meeting.yearly_meeting?.length ?? 0) > 0 && (
           <li>
             Yearly Meeting: {handleMultiValueFields(meeting.yearly_meeting)}
           </li>
         )}
-        {meeting.branch.length > 0 && (
+        {(meeting.branch?.length ?? 0) > 0 && (
           <li>
             Branch:
             {handleMultiValueFields(meeting.branch)}
           </li>
         )}
-        {meeting.accessibility.length > 0 && (
+        {(meeting.accessibility?.length ?? 0) > 0 && (
           <li>
             Accessibility: {handleMultiValueFields(meeting.accessibility)}
           </li>
@@ -74,20 +90,7 @@ export const MeetingDetails: React.FC<MeetingDetailsProps> = ({
             </a>
           </li>
         )}
-      </ul>
+      </Box>
     </Card>
   );
 };
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    header: {
-      fontSize: 24,
-      textAlign: 'center',
-    },
-    list: {
-      listStyleType: 'none',
-      padding: 4,
-    },
-  })
-);

@@ -4,12 +4,14 @@ import {
     InputLabel,
     List,
     ListItemText,
-    makeStyles,
     MenuItem,
     OutlinedInput,
     Select,
-    TextField
-} from '@material-ui/core'
+    SelectChangeEvent,
+    TextField,
+    Typography
+} from '@mui/material'
+import { useTheme } from '@mui/material/styles'
 import React from 'react'
 import { Meeting } from '../../../types'
 import { getTitles } from '../../NavMenu/utils/get_titles'
@@ -39,7 +41,7 @@ export const MeetingDetailsForm: React.FC<MeetingDetailsFormProps> = ({
     meetings
  }) => {
 
-    const classes = useStyles()
+    const theme = useTheme()
 
     const [selectValues, setSelectValues] = React.useState<UpdateMeetingsSelectValues>(initialSelectValues)
     const [inputValues, setInputValues] = React.useState<UpdateMeetingsInputValues>(initialInputValues)
@@ -63,7 +65,7 @@ export const MeetingDetailsForm: React.FC<MeetingDetailsFormProps> = ({
         handleMeetingUpdateChange(meetingKey, { ...inputValues, ...newSelectValues})
     }
 
-    const handleSelectChange = (event: React.ChangeEvent<{ name?: string; value: unknown }>) => {
+    const handleSelectChange = (event: SelectChangeEvent<string | string[]>) => {
         const name: string = event.target.name || ''
         const value = event.target.value as string[]
 
@@ -88,7 +90,9 @@ export const MeetingDetailsForm: React.FC<MeetingDetailsFormProps> = ({
 
     return (
         <>
-            <h2>{inputValues.title || `Meeting to Update #${meetingKey + 1}`}</h2>
+            <Typography variant="h5" component="h2">
+                {inputValues.title || `Meeting to Update #${meetingKey + 1}`}
+            </Typography>
 
             <List style={{width: '75%'}}>
                 {inputKeys.map((key: string) => {
@@ -96,7 +100,10 @@ export const MeetingDetailsForm: React.FC<MeetingDetailsFormProps> = ({
                     return (
                         <FormControl
                             variant="outlined"
-                            className={classes.formControl}
+                            sx={{
+                                margin: theme.spacing(1),
+                                minWidth: 225,
+                            }}
                             key={selectKey}
                             fullWidth={true}
                         >
@@ -119,7 +126,10 @@ export const MeetingDetailsForm: React.FC<MeetingDetailsFormProps> = ({
                     return (
                         <FormControl
                             variant="outlined"
-                            className={classes.formControl}
+                            sx={{
+                                margin: theme.spacing(1),
+                                minWidth: 225,
+                            }}
                             key={selectKey}
                             fullWidth={true}
                         >
@@ -130,7 +140,7 @@ export const MeetingDetailsForm: React.FC<MeetingDetailsFormProps> = ({
                                 value={selectValues[selectKey]}
                                 multiple={isMulti}
                                 onChange={handleSelectChange}
-                                input={<OutlinedInput labelWidth={selectKey.length * 7.5} name={selectKey} id={`outlined-${selectKey}-simple`} />}
+                                input={<OutlinedInput name={selectKey} id={`outlined-${selectKey}-simple`} />}
                                 // renderValue determines which value is displayed in the select box when not focused
                                 renderValue={((selected) => Array.isArray(selected) ? (selected as string[]).join(', ') : selected as string)}
                             >
@@ -156,9 +166,4 @@ export const MeetingDetailsForm: React.FC<MeetingDetailsFormProps> = ({
     )
 }
 
-const useStyles = makeStyles(theme => ({
-    formControl: {
-        margin: theme.spacing(1),
-        minWidth: 225,
-    }
-}))
+

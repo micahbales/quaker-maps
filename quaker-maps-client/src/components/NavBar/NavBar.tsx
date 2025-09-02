@@ -1,11 +1,11 @@
-import AppBar from '@material-ui/core/AppBar'
-import IconButton from '@material-ui/core/IconButton'
-import { makeStyles } from '@material-ui/core/styles'
-import Toolbar from '@material-ui/core/Toolbar'
-import { ChevronRight } from '@material-ui/icons'
-import Tooltip from '@material-ui/core/Tooltip'
-import Button from '@material-ui/core/Button'
-import Link from '@material-ui/core/Link'
+import AppBar from '@mui/material/AppBar'
+import IconButton from '@mui/material/IconButton'
+import Toolbar from '@mui/material/Toolbar'
+import { ChevronRight } from '@mui/icons-material'
+import Tooltip from '@mui/material/Tooltip'
+import Button from '@mui/material/Button'
+import Link from '@mui/material/Link'
+import { Box } from '@mui/material'
 import React from 'react'
 
 /**
@@ -25,20 +25,36 @@ export const NavBar: React.FC<NavBarProps> = ({
     marginLeft,
     navMenuIsOpen
 }) => {
-    const classes = useStyles()
     return (
-        <div style={{ marginLeft }}>
+        <Box sx={{ marginLeft }}>
             <AppBar position="static">
                 <Toolbar>
                     { /* Only show this button if we're on the MainMap view and the NavMenu is closed */
                         isViewingMainMap && !navMenuIsOpen &&
                         <Tooltip title="Filter Meetings">
-                            <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={toggleDrawer(true)}>
+                            <IconButton 
+                                edge="start" 
+                                color="inherit" 
+                                aria-label="menu" 
+                                onClick={toggleDrawer(true)}
+                                sx={{ marginRight: 2 }}
+                            >
                                 <ChevronRight />
                             </IconButton>
                         </Tooltip>
                     }
-                    <Link href="/" className={classes.homeButton}>
+                    <Link 
+                        href="/" 
+                        sx={{
+                            color: '#fff',
+                            flexGrow: 1,
+                            fontSize: 18,
+                            textDecoration: 'none',
+                            '&:hover': {
+                                textDecoration: 'none',
+                            }
+                        }}
+                    >
                         Quaker Maps
                     </Link>
 
@@ -46,7 +62,7 @@ export const NavBar: React.FC<NavBarProps> = ({
                         variant="contained"
                         href="/info"
                         color={window.location.pathname === '/info' ? 'secondary' : 'primary'}
-                        className={classes.button}
+                        sx={{ margin: '0px 5px' }}
                     >
                         Quakers?
                     </Button>
@@ -54,7 +70,7 @@ export const NavBar: React.FC<NavBarProps> = ({
                         variant="contained"
                         href="/frequently-asked-questions"
                         color={window.location.pathname === '/frequently-asked-questions' ? 'secondary' : 'primary'}
-                        className={classes.button}
+                        sx={{ margin: '0px 5px' }}
                     >
                         FAQ
                     </Button>
@@ -62,30 +78,14 @@ export const NavBar: React.FC<NavBarProps> = ({
                         variant="contained"
                         href="/contact"
                         color={window.location.pathname === '/contact' ? 'secondary' : 'primary'}
-                        className={classes.button}
+                        sx={{ margin: '0px 5px' }}
                     >
                         Contact
                     </Button>
                 </Toolbar>
             </AppBar>
-        </div>
+        </Box>
     )
 }
 
-const useStyles = makeStyles(theme => ({
-    menuButton: {
-        marginRight: theme.spacing(2),
-    },
-    homeButton: {
-        color: '#fff',
-        flexGrow: 1,
-        fontSize: 18,
-        textDecoration: 'none',
-        '&:hover': {
-            textDecoration: 'none',
-        }
-    },
-    button: {
-        margin: '0px 5px'
-    }
-}))
+

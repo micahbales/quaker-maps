@@ -8,8 +8,19 @@ We release this project to the world under the [+CAL license](https://legaldesig
 
 ## Requirements
 
-* Node 12
-* Typescript 3
+* Node 16+ (recommended: Node 18+)
+* TypeScript 5+
+* npm 8+
+
+## Technology Stack
+
+* **React 18** with TypeScript
+* **MUI v5** (Material-UI) for UI components and theming
+* **React Router v6** for client-side routing
+* **Google Maps React 2.1** for interactive mapping
+* **Styled Components 5.3** for additional styling
+* **ESLint** for code linting (migrated from TSLint)
+* **Create React App 5** with TypeScript template
 
 ## Install Project Dependencies
 
@@ -32,9 +43,22 @@ Then add your API key to the new `.env` file.
 
 ## Run Project Locally
 
-```
+```bash
 $ npm start
 ```
+
+## Available Scripts
+
+In the project directory, you can run:
+
+* `npm start` - Runs the app in development mode
+* `npm test` - Launches the test runner
+* `npm run build` - Builds the app for production
+* `npm run lint` - Runs ESLint to check code quality
+* `npm run lint:fix` - Automatically fixes ESLint issues
+* `npm run type-check` - Runs TypeScript compiler to check types
+* `npm run format` - Formats code using Prettier
+* `npm run format:check` - Checks if code is properly formatted
 
 ## Deploy Project to Surge
 

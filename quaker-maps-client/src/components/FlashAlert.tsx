@@ -1,14 +1,13 @@
 import React, { SyntheticEvent } from 'react'
-import clsx from 'clsx'
-import CheckCircleIcon from '@material-ui/icons/CheckCircle'
-import ErrorIcon from '@material-ui/icons/Error'
-import InfoIcon from '@material-ui/icons/Info'
-import CloseIcon from '@material-ui/icons/Close'
-import IconButton from '@material-ui/core/IconButton'
-import Snackbar from '@material-ui/core/Snackbar'
-import SnackbarContent from '@material-ui/core/SnackbarContent'
-import WarningIcon from '@material-ui/icons/Warning'
-import { makeStyles, Theme } from '@material-ui/core/styles'
+import CheckCircleIcon from '@mui/icons-material/CheckCircle'
+import ErrorIcon from '@mui/icons-material/Error'
+import InfoIcon from '@mui/icons-material/Info'
+import CloseIcon from '@mui/icons-material/Close'
+import IconButton from '@mui/material/IconButton'
+import Snackbar from '@mui/material/Snackbar'
+import SnackbarContent from '@mui/material/SnackbarContent'
+import WarningIcon from '@mui/icons-material/Warning'
+import { Box } from '@mui/material'
 import { QuakerMapsTheme } from '../theme'
 import { AlertVariants } from '../types'
 
@@ -30,35 +29,56 @@ export interface Props {
     variant: keyof typeof variantIcon
 }
 
-const AlertWrapper: React.FC<Props> = ({
-   className,
-   message,
-   onClose,
-   variant,
-   ...other
-}) => {
-    const classes = useStyles()
+const AlertWrapper = React.forwardRef<HTMLDivElement, Props>(({
+    className,
+    message,
+    onClose,
+    variant,
+    ...other
+}, ref) => {
     const Icon = variantIcon[variant]
+
+    const getBackgroundColor = () => {
+        switch (variant) {
+            case 'success': return QuakerMapsTheme.palette.success.main
+            case 'error': return QuakerMapsTheme.palette.error.main
+            case 'info': return QuakerMapsTheme.palette.info.main
+            case 'warning': return QuakerMapsTheme.palette.warning.main
+            default: return QuakerMapsTheme.palette.success.main
+        }
+    }
 
     return (
         <SnackbarContent
-            className={clsx(classes[variant], className)}
+            sx={{ backgroundColor: getBackgroundColor() }}
+            className={className || ''}
             aria-describedby="client-snackbar"
             message={
-                <span id="client-snackbar" className={classes.message}>
-                  <Icon className={clsx(classes.icon, classes.iconVariant)} />
-                            {message}
-                </span>
+                <Box
+                    id="client-snackbar"
+                    sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                    }}
+                >
+                    <Icon sx={{
+                        fontSize: 20,
+                        opacity: 0.9,
+                        marginRight: 1,
+                    }} />
+                    {message}
+                </Box>
             }
             action={[
                 <IconButton key="close" aria-label="close" color="inherit" onClick={onClose}>
-                    <CloseIcon className={classes.icon} />
+                    <CloseIcon sx={{ fontSize: 20 }} />
                 </IconButton>,
             ]}
+            ref={ref}
             {...other}
         />
     )
-}
+})
 
 interface SnackbarAlertProps {
     closeTimeout?: number
@@ -77,7 +97,7 @@ export const FlashAlert: React.FC<SnackbarAlertProps> = ({
 }) => {
     const [open, setOpen] = React.useState(true)
     const timeout = closeTimeout || 6000
-    const handleClose = (event?: SyntheticEvent, reason?: string) => {
+    const handleClose = (_event?: SyntheticEvent | Event, reason?: string) => {
         if (reason === 'clickaway') return
         setOpen(false)
     }
@@ -91,6 +111,9 @@ export const FlashAlert: React.FC<SnackbarAlertProps> = ({
             open={open}
             autoHideDuration={timeout}
             onClose={handleClose}
+            TransitionProps={{
+                timeout: 0,
+            }}
         >
             <AlertWrapper
                 onClose={handleClose}
@@ -101,28 +124,4 @@ export const FlashAlert: React.FC<SnackbarAlertProps> = ({
     )
 }
 
-const useStyles = makeStyles((theme: Theme) => ({
-    success: {
-        backgroundColor: QuakerMapsTheme.palette.success[500],
-    },
-    error: {
-        backgroundColor: QuakerMapsTheme.palette.secondary[500]
-    },
-    info: {
-        backgroundColor: QuakerMapsTheme.palette.info[500]
-    },
-    warning: {
-        backgroundColor: QuakerMapsTheme.palette.warning[500]
-    },
-    icon: {
-        fontSize: 20,
-    },
-    iconVariant: {
-        opacity: 0.9,
-        marginRight: theme.spacing(1),
-    },
-    message: {
-        display: 'flex',
-        alignItems: 'center',
-    },
-}))
+

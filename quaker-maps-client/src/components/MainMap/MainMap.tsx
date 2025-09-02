@@ -1,10 +1,11 @@
-import { makeStyles } from '@material-ui/core'
-import React from 'react'
+import { Box } from '@mui/material'
+import React, { useMemo } from 'react'
 import GoogleMapReact from 'google-map-react'
 import { MapMarker } from '../MapMarker/MapMarker'
 import { updateMapBounds } from '../../utils/update_map_bounds'
 import { AppState } from '../../App'
 import { Meeting } from '../../types'
+import { measureMapRenderTime, logPerformanceMetrics } from '../../utils/performance'
 
 /**
  * MainMap is the primary map of meetings that is displayed on the home page
@@ -39,10 +40,44 @@ export const MainMap: React.FC<MainMapProps> = ({
     marginLeft,
     width
 }) => {
-    const classes = useStyles()
     const [mainMapState, setMainMapState] = React.useState(initialMainMapState)
+    
+    // Memoize map markers to prevent unnecessary re-renders with React 18
+    const mapMarkers = useMemo(() => {
+        const renderStartTime = performance.now();
+        
+        const markers = appState.filteredMeetings.length > 0 ? 
+            appState.filteredMeetings.map((meeting: Meeting, i) => (
+                <MapMarker
+                    lat={meeting.latitude}
+                    lng={meeting.longitude}
+                    meeting={meeting}
+                    key={i}
+                />
+            )) : [];
+            
+        const renderTime = measureMapRenderTime(renderStartTime);
+        
+        // Log map rendering performance
+        if (appState.filteredMeetings.length > 0) {
+            logPerformanceMetrics({ 
+                mapRenderTime: renderTime
+            });
+        }
+        
+        return markers;
+    }, [appState.filteredMeetings]);
+    
     return (
-        <div className={classes.root} style={{ marginLeft, width }}>
+        <Box
+            sx={{
+                flexGrow: 1,
+                height: '93vh',
+                position: 'static',
+                width,
+                marginLeft
+            }}
+        >
             <GoogleMapReact
                 bootstrapURLKeys={{ key: apiKey }}
                 center={mainMapState.center}
@@ -66,28 +101,10 @@ export const MainMap: React.FC<MainMapProps> = ({
                  */
                 yesIWantToUseGoogleMapApiInternals={true}
             >
-                {appState.filteredMeetings.length > 0 && appState.filteredMeetings.map((meeting: Meeting, i) => (
-                    <MapMarker
-                        lat={meeting.latitude}
-                        lng={meeting.longitude}
-                        meeting={meeting}
-                        key={i}
-                    />
-                ))}
+                {mapMarkers}
             </GoogleMapReact>
-        </div>
+        </Box>
     )
 }
 
-const useStyles = makeStyles(theme => ({
-    root: {
-        flexGrow: 1,
-        height: '93vh',
-        position: 'static',
-        width: '100%',
-        transition: theme.transitions.create('margin', {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.leavingScreen,
-        }),
-    },
-}))
+
