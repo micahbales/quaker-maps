@@ -1,0 +1,18 @@
+{
+  "projects": {
+    "default": "quaker-maps"
+  },
+  "targets": {
+    "quaker-maps": {
+      "hosting": {
+        "quaker-maps-dev": [
+          "quaker-maps-dev"
+        ],
+        "quaker-maps": [
+          "quaker-maps"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}
