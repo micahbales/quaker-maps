@@ -1,9 +1,9 @@
 import React from 'react'
-import HomeIcon from '@mui/icons-material/Home'
-import IconButton from '@mui/material/IconButton'
 import Popover from '@mui/material/Popover'
+import { Marker } from '@vis.gl/react-google-maps'
 import { Meeting } from '../../types'
 import { MeetingDetails } from '../MeetingView/components/MeetingDetails'
+import { deepPurple } from '@mui/material/colors'
 
 /**
  * MapMarker is the marker that represents a meeting on a map. It includes a popover with details about the meeting
@@ -16,39 +16,46 @@ interface MapMarkerProps {
 }
 
 export const MapMarker: React.FC<MapMarkerProps> = ({
-    lat: _lat,
-    lng: _lng,
+    lat,
+    lng,
     meeting,
 }) => {
-    const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null)
+    const [anchorPosition, setAnchorPosition] = React.useState<{ mouseX: number; mouseY: number } | null>(null)
 
-    const handleClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-        setAnchorEl(event.currentTarget)
+
+    const handleClick = (e: google.maps.MapMouseEvent) => {
+        if (e.domEvent instanceof MouseEvent) {
+            setAnchorPosition({
+                mouseX: e.domEvent.clientX,
+                mouseY: e.domEvent.clientY,
+            })
+        }
     }
 
     const handleClose = () => {
-        setAnchorEl(null)
+        setAnchorPosition(null)
     }
 
-    const open = Boolean(anchorEl)
+    const open = Boolean(anchorPosition)
     const id = open ? 'meeting-popover' : undefined
 
     return (
         <>
-            <IconButton
-                aria-describedby={id}
+            <Marker 
+                position={{ lat, lng }} 
                 onClick={handleClick}
-                sx={{
-                    position: 'absolute',
-                    transform: 'translate(-50%, -50%)'
-                }}
-            >
-                <HomeIcon color="primary" />
-            </IconButton>
+                icon={`data:image/svg+xml,${homeIconSvg}`}
+                aria-describedby={id}
+            />
             <Popover
                 id={id}
                 open={open}
-                anchorEl={anchorEl}
+                anchorReference="anchorPosition"
+                anchorPosition={
+                    anchorPosition
+                        ? { top: anchorPosition.mouseY, left: anchorPosition.mouseX }
+                        : { top: 0, left: 0 }
+                }
                 onClose={handleClose}
                 anchorOrigin={{
                     vertical: 'bottom',
@@ -65,4 +72,9 @@ export const MapMarker: React.FC<MapMarkerProps> = ({
     )
 }
 
-
+// SVG icon for the map marker, encoded as a data URL
+const homeIconSvg = encodeURIComponent(`
+  <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="${deepPurple[500]}">
+    <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+  </svg>
+`);
