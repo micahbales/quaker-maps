@@ -1,12 +1,9 @@
 import { Box } from '@mui/material'
-import React, { useMemo } from 'react'
 import { APIProvider, Map } from '@vis.gl/react-google-maps'
 import { MapMarker } from '../MapMarker/MapMarker'
 import { updateMapBounds } from '../../utils/update_map_bounds'
 import { AppState } from '../../App'
 import { Meeting } from '../../types'
-import { measureMapRenderTime, logPerformanceMetrics } from '../../utils/performance'
-import { initial } from 'lodash'
 
 /**
  * MainMap is the primary map of meetings that is displayed on the home page
@@ -15,8 +12,6 @@ import { initial } from 'lodash'
 interface MainMapProps {
     apiKey: string
     appState: AppState
-    marginLeft: string
-    width: string
 }
 export interface MainMapState {
     center: {
@@ -34,7 +29,7 @@ const initialMainMapState: MainMapState = {
     defaultZoom: 4,
 }
 
-export const MainMap: React.FC<MainMapProps> = ({apiKey, appState, marginLeft, width}) => {
+export const MainMap: React.FC<MainMapProps> = ({apiKey, appState}) => {
     return <Box sx={{ height: '93vh', width: '100%' }}>
         <APIProvider apiKey={apiKey || ''}>
             <Map
