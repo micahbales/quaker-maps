@@ -60,22 +60,19 @@ In the project directory, you can run:
 * `npm run format` - Formats code using Prettier
 * `npm run format:check` - Checks if code is properly formatted
 
-## Deploy Project to Surge
+## Deploy Project to Firebase
+_The following steps assume that you have a firebase account and have set up a project_
 
+### Set up Firebase on your local
 ```
-$ npm install -g surge
+$ npm install -g firebase
+$ firebase login
+```
+
+### Deployment to dev or prod
+```
+$ npm run deploy-dev
+```
+```
 $ npm run deploy
 ```
-
-## Firebase Functions
-
-At present, Quaker Maps is an almost entirely front-end project. There is only one piece of the application that requires a backend call: the UpdateMeetings view, which forwards update meeting requests to an email that we designate.
-
-In order for this functionality to work, we need to ensure that our Firebase function for emailing (`firebase/functions/src/controllers/email.ts`) is properly configured and deployed.
-
-There are currently two steps to setting this up: 
-
-1. From the `firebase` directory, run `$ firebase deploy`
-2. Set up the config variables invoked near the top of `email.ts` as described in the [Firebase documentation](https://firebase.google.com/docs/functions/config-env)
-
-(The URL for our backend call is hard-coded in `send_update_meeting_request`; this might need to be changed if we were to have multiple deployments with different emailing requirements)
