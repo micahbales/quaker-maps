@@ -4,16 +4,16 @@
  */
 
 export const fetchMeetings = async (url: string) => {
-    try {
-        const response = await fetch(url)
-        if (response.ok) {
-            return await response.json()
-        } else {
-            console.error('No meetings available!')
-            return []
-        }
-    } catch (err) {
-        console.error(err)
-        return []
+  try {
+    const response = await fetch(url)
+    if (response.ok) {
+      return await response.json()
+    } else {
+      console.error('No meetings available!')
+      return []
     }
+  } catch (err) {
+    console.error(err)
+    return []
+  }
 }
