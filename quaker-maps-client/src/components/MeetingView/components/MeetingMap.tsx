@@ -1,8 +1,8 @@
-import GoogleMapReact from 'google-map-react'
 import React from 'react'
 import { Card } from '@mui/material'
 import { Meeting } from '../../../types'
 import { MapMarker } from '../../MapMarker/MapMarker'
+import { APIProvider, Map } from '@vis.gl/react-google-maps'
 const apiKey: string | undefined = import.meta.env.VITE_GOOGLE_MAPS_API_KEY
 
 /**
@@ -31,17 +31,19 @@ export const MeetingMap: React.FC<MeetingMapProps> = ({
             position: 'static',
             width
         }}>
-            <GoogleMapReact
-                bootstrapURLKeys={{ key: apiKey || '' }}
-                center={mainMapState.center}
-                defaultZoom={mainMapState.defaultZoom}
-            >
-                <MapMarker
-                    lat={meeting.latitude}
-                    lng={meeting.longitude}
-                    meeting={meeting}
-                />
-            </GoogleMapReact>
+            <APIProvider apiKey={apiKey || ''}>
+                <Map
+                    defaultCenter={mainMapState.center}
+                    defaultZoom={mainMapState.defaultZoom}
+                    style={{ width: '100%', height: '100%' }}
+                >
+                    <MapMarker
+                        lat={meeting.latitude}
+                        lng={meeting.longitude}
+                        meeting={meeting}
+                    />
+                </Map>
+            </APIProvider>
         </Card>
     )
 }
